@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import CTASection from '../components/CTASection';
 
 const FAQ: React.FC = () => {
   const { language } = useLanguage();
@@ -206,6 +207,8 @@ const FAQ: React.FC = () => {
           ))}
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };

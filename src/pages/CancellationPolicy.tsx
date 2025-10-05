@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import CTASection from '../components/CTASection';
 
 const CancellationPolicy: React.FC = () => {
   const { language } = useLanguage();
@@ -145,6 +146,8 @@ const CancellationPolicy: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };

@@ -1,38 +1,30 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Clock, Users } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useRetreats } from '../hooks/useRetreats';
+import { getImageUrl, handleImageError } from '../lib/imageUtils';
+import CTASection from '../components/CTASection';
 
 const International: React.FC = () => {
   const { language, t } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
+  const { retreats } = useRetreats();
 
-  const internationalRetreats = [
-    {
-      id: 'cebu-beach',
-      title: language === 'ja' ? 'セブ島・ビーチヨガ＆瞑想リトリート' : 'Cebu Island Beach Yoga & Meditation Retreat',
-      location: language === 'ja' ? 'フィリピン・セブ島' : 'Philippines, Cebu Island',
-      duration: 5,
-      price: 198000,
-      capacity: 10,
-      image: 'https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: language === 'ja' 
-        ? 'トロピカルビーチでのサンライズヨガ。エメラルドグリーンの海でのウォーターヨガも体験。' 
-        : 'Sunrise yoga on tropical beaches. Experience water yoga in emerald green seas.'
-    },
-    {
-      id: 'cebu-mountain',
-      title: language === 'ja' ? 'セブ島・マウンテンリトリート＆スパ' : 'Cebu Island Mountain Retreat & Spa',
-      location: language === 'ja' ? 'フィリピン・セブ島内陸部' : 'Philippines, Cebu Island Highlands',
-      duration: 7,
-      price: 268000,
-      capacity: 14,
-      image: 'https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: language === 'ja' 
-        ? 'セブ島の山間部での自然セラピー。フィリピン伝統のヒーリングとヨガの融合。' 
-        : 'Nature therapy in Cebu\'s mountainous regions. Fusion of traditional Filipino healing and yoga.'
-    }
-  ];
+  const internationalRetreats = useMemo(() => {
+    return retreats
+      .filter(r => r.type === 'international')
+      .map(retreat => ({
+        id: retreat.id,
+        title: language === 'ja' ? retreat.title_ja : retreat.title_en,
+        location: language === 'ja' ? retreat.location_ja : retreat.location_en,
+        duration: retreat.duration,
+        price: retreat.price,
+        capacity: retreat.capacity,
+        image: retreat.image,
+        description: language === 'ja' ? retreat.description_ja : retreat.description_en
+      }));
+  }, [retreats, language]);
 
   return (
     <div className="pt-16 min-h-screen bg-gray-50">
@@ -59,9 +51,12 @@ const International: React.FC = () => {
               <div key={retreat.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={retreat.image}
+                    src={getImageUrl(retreat.image)}
                     alt={retreat.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={handleImageError}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white bg-blue-500">
                     {language === 'ja' ? '海外' : 'International'}
@@ -159,6 +154,8 @@ const International: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };

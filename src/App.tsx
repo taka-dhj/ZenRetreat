@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { LanguageProvider } from './contexts/LanguageContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,15 +11,27 @@ import International from './pages/International';
 import Instructors from './pages/Instructors';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 import FAQ from './pages/FAQ';
 import CancellationPolicy from './pages/CancellationPolicy';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   return (
     <LanguageProvider>
       <Router>
+        <ScrollToTop />
         <div className="min-h-screen bg-white">
           <Header />
           <main>
@@ -40,6 +52,8 @@ function App() {
               <Route path="/en/contact" element={<Contact />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/en/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/en/blog/:id" element={<BlogPost />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/en/faq" element={<FAQ />} />
               <Route path="/cancellation-policy" element={<CancellationPolicy />} />

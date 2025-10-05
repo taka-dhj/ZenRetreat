@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import CTASection from '../components/CTASection';
 
 const PrivacyPolicy: React.FC = () => {
   const { language } = useLanguage();
@@ -181,6 +182,8 @@ const PrivacyPolicy: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };

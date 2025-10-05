@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Phone, Mail, Send } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import CTASection from '../components/CTASection';
 
 const Contact: React.FC = () => {
   const { language, t } = useLanguage();
@@ -12,12 +13,48 @@ const Contact: React.FC = () => {
     retreat: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    alert(language === 'ja' ? 'お問い合わせを送信しました。' : 'Your inquiry has been sent.');
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const apiUrl = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-contact-email`;
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus('success');
+        setFormData({
+          name: '',
+          email: '',
+          retreat: '',
+          message: ''
+        });
+        alert(language === 'ja' ? 'お問い合わせを送信しました。' : 'Your inquiry has been sent.');
+      } else {
+        setSubmitStatus('error');
+        alert(language === 'ja' ? '送信に失敗しました。もう一度お試しください。' : 'Failed to send. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+      alert(language === 'ja' ? '送信に失敗しました。もう一度お試しください。' : 'Failed to send. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -145,10 +182,16 @@ const Contact: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-green-600 text-white py-4 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium flex items-center justify-center space-x-2"
+                  disabled={isSubmitting}
+                  className="w-full bg-green-600 text-white py-4 rounded-lg hover:bg-green-700 transition-colors duration-200 font-medium flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send size={20} />
-                  <span>{t('contact.form.submit')}</span>
+                  <span>
+                    {isSubmitting
+                      ? (language === 'ja' ? '送信中...' : 'Sending...')
+                      : t('contact.form.submit')
+                    }
+                  </span>
                 </button>
               </form>
             </div>
@@ -221,6 +264,8 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };

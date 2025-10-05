@@ -22,7 +22,7 @@ const Footer: React.FC = () => {
               </span>
             </div>
             <p className="text-gray-600 mb-6 leading-relaxed">
-              {language === 'ja' 
+              {language === 'ja'
                 ? '日本とアジアの美しい自然の中で、心と体の調和を見つける癒しの旅をご提供しています。'
                 : 'We provide healing journeys to find harmony of mind and body in the beautiful nature of Japan and Asia.'
               }
@@ -31,7 +31,7 @@ const Footer: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <MapPin size={14} />
                 <span>
-                  {language === 'ja' 
+                  {language === 'ja'
                     ? '〒108-0074 東京都港区高輪2丁目11番9号'
                     : '2-11-9 Takanawa, Minato-ku, Tokyo 108-0074, Japan'
                   }

@@ -1,45 +1,31 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useBlogPosts } from '../hooks/useBlogPosts';
+import CTASection from '../components/CTASection';
 
 const Blog: React.FC = () => {
   const { language } = useLanguage();
+  const { posts, loading } = useBlogPosts();
 
-  const blogPosts = [
-    {
-      id: 1,
-      title: language === 'ja' ? '春のヨガリトリート：桜の季節に心を整える' : 'Spring Yoga Retreat: Aligning the Mind During Cherry Blossom Season',
-      excerpt: language === 'ja' 
-        ? '桜の咲く季節は、新しい始まりの時期です。この美しい季節に、心と体を整えるヨガリトリートの魅力についてご紹介します...'
-        : 'Cherry blossom season is a time of new beginnings. Discover the charm of yoga retreats that align mind and body during this beautiful season...',
-      author: language === 'ja' ? 'Maiko' : 'Maiko',
-      date: language === 'ja' ? '2025年1月15日' : 'January 15, 2025',
-      image: 'https://images.pexels.com/photos/2070033/pexels-photo-2070033.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: language === 'ja' ? 'ヨガ' : 'Yoga'
-    },
-    {
-      id: 2,
-      title: language === 'ja' ? '瞑想の始め方：初心者のための基本ガイド' : 'How to Start Meditation: A Basic Guide for Beginners',
-      excerpt: language === 'ja' 
-        ? '瞑想を始めたいけれど、どうすればいいかわからない方へ。基本的な瞑想の方法と、日常生活への取り入れ方をご紹介します...'
-        : 'For those who want to start meditating but don\'t know how. We introduce basic meditation methods and how to incorporate them into daily life...',
-      author: language === 'ja' ? 'Hiroshi' : 'Hiroshi',
-      date: language === 'ja' ? '2025年1月10日' : 'January 10, 2025',
-      image: 'https://images.pexels.com/photos/3775603/pexels-photo-3775603.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: language === 'ja' ? '瞑想' : 'Meditation'
-    },
-    {
-      id: 3,
-      title: language === 'ja' ? 'セブ島リトリート体験記：参加者の声' : 'Cebu Island Retreat Experience: Participant Stories',
-      excerpt: language === 'ja' 
-        ? 'セブ島でのリトリートに参加された方々の体験談をお聞きしました。トロピカルな環境での癒しの体験をご紹介します...'
-        : 'We interviewed participants of our Cebu Island retreats. Discover healing experiences in tropical environments...',
-      author: language === 'ja' ? 'Ayaka' : 'Ayaka',
-      date: language === 'ja' ? '2025年1月5日' : 'January 5, 2025',
-      image: 'https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800',
-      category: language === 'ja' ? '体験記' : 'Experience'
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    if (language === 'ja') {
+      return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
     }
-  ];
+    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  };
+
+  const blogPosts = posts.map(post => ({
+    id: post.id,
+    title: language === 'ja' ? post.title_ja : post.title_en,
+    excerpt: language === 'ja' ? post.excerpt_ja : post.excerpt_en,
+    author: post.author,
+    date: formatDate(post.published_date),
+    image: post.image,
+    category: language === 'ja' ? post.category_ja : post.category_en
+  }));
 
   return (
     <div className="pt-16 min-h-screen bg-gray-50">
@@ -61,14 +47,25 @@ const Blog: React.FC = () => {
       {/* Blog Posts */}
       <section className="py-16">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {blogPosts.map((post) => (
+          {loading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">{language === 'ja' ? '読み込み中...' : 'Loading...'}</p>
+            </div>
+          ) : blogPosts.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-600">{language === 'ja' ? 'まだ記事がありません' : 'No articles yet'}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {blogPosts.map((post) => (
               <article key={post.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
                 <div className="relative h-48 overflow-hidden">
                   <img
                     src={post.image}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700">
                     {post.category}
@@ -93,14 +90,18 @@ const Blog: React.FC = () => {
                     </div>
                   </div>
                   
-                  <button className="flex items-center space-x-2 text-green-600 hover:text-green-700 transition-colors duration-200 text-sm font-medium">
+                  <Link
+                    to={`/blog/${post.id}`}
+                    className="flex items-center space-x-2 text-green-600 hover:text-green-700 transition-colors duration-200 text-sm font-medium"
+                  >
                     <span>{language === 'ja' ? '続きを読む' : 'Read More'}</span>
                     <ArrowRight size={14} />
-                  </button>
+                  </Link>
                 </div>
               </article>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -128,6 +129,8 @@ const Blog: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };

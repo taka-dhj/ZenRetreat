@@ -1,6 +1,7 @@
 import React from 'react';
 import { Star, Award, Heart } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import CTASection from '../components/CTASection';
 
 const Instructors: React.FC = () => {
   const { language, t } = useLanguage();
@@ -12,9 +13,9 @@ const Instructors: React.FC = () => {
       specialty: language === 'ja' ? 'ヨガ・瞑想・身体表現' : 'Yoga, Meditation, Physical Expression',
       qualifications: language === 'ja' ? 'RYT200、現代舞踊、演劇' : 'RYT200, Modern Dance, Theater',
       image: 'https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=600',
-      biography: language === 'ja' 
-        ? '幼少期より現代舞踊に携わり、2013年にノダマップ舞台で演劇活動を開始。現在は俳優、モデル、ヨガインストラクターとして身体表現活動を行っています。東京2020オリンピック閉会式にも参加し、ヨガシークエンスの監修を担当しました。身体と心の調和を重視し、参加者一人一人の内なる美しさを引き出すことを大切にしています。'
-        : 'Involved in modern dance since childhood, began acting career in 2013 with Noda Map Theater. Currently engaged in physical expression activities as an actor, model, and yoga instructor. Participated in the closing ceremony of Tokyo 2020 Olympics and supervised yoga sequences. Values harmony of body and mind, and cherishes bringing out the inner beauty of each participant.',
+      biography: language === 'ja'
+        ? '幼少期より現代舞踊に携わり、2013年にノダマップ舞台で演劇活動を開始。現在はモデル、ヨガインストラクターとして身体表現活動を行っています。身体と心の調和を重視し、参加者一人一人の内なる美しさを引き出すことを大切にしています。'
+        : 'Involved in modern dance since childhood, began acting career in 2013 with Noda Map Theater. Currently engaged in physical expression activities as a model and yoga instructor. Values harmony of body and mind, and cherishes bringing out the inner beauty of each participant.',
       experience: 8,
       rating: 4.9
     },
@@ -85,6 +86,8 @@ const Instructors: React.FC = () => {
                       src={instructor.image}
                       alt={instructor.name}
                       className="w-full h-64 md:h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="md:w-2/3 p-8">
@@ -195,6 +198,8 @@ const Instructors: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };

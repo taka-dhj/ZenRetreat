@@ -1,59 +1,45 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, MapPin, Clock, Award, Heart, Mountain } from 'lucide-react';
+import { ArrowRight, Users, MapPin, Clock } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useRetreats } from '../hooks/useRetreats';
+import { getImageUrl, handleImageError } from '../lib/imageUtils';
 
 const Home: React.FC = () => {
   const { language, t } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
+  const { retreats } = useRetreats();
 
-  const featuredRetreats = [
-    {
-      id: 'kyoto-chishakuin',
-      title: language === 'ja' ? '京都・智積院寺院ヨガリトリート' : 'Kyoto Chishakuin Temple Yoga Retreat',
-      location: language === 'ja' ? '京都・智積院' : 'Kyoto, Chishakuin Temple',
-      duration: 6,
-      price: 298000,
-      capacity: 8,
-      type: 'domestic',
-      image: '/image copy.png',
-      description: language === 'ja' 
-        ? '古都の静寂な寺院での瞑想とヨガ' 
-        : 'Meditation and yoga in the serene temples of ancient capital'
-    },
-    {
-      id: 'yamanashi-forest',
-      title: language === 'ja' ? '山梨・森林セラピー＆ヨガリトリート' : 'Yamanashi Forest Therapy & Yoga Retreat',
-      location: language === 'ja' ? '山梨・富士五湖' : 'Yamanashi, Fuji Five Lakes',
-      duration: 4,
-      price: 168000,
-      capacity: 12,
-      type: 'domestic',
-      image: '/image copy copy.png',
-      description: language === 'ja' 
-        ? '富士山を望む森林でのヨガと温泉' 
-        : 'Yoga and hot springs in forests with Mt. Fuji views'
-    },
-    {
-      id: 'cebu-beach',
-      title: language === 'ja' ? 'セブ島・ビーチヨガ＆瞑想リトリート' : 'Cebu Island Beach Yoga & Meditation Retreat',
-      location: language === 'ja' ? 'フィリピン・セブ島' : 'Philippines, Cebu Island',
-      duration: 5,
-      price: 198000,
-      capacity: 10,
-      type: 'international',
-      image: 'https://images.pexels.com/photos/1450363/pexels-photo-1450363.jpeg?auto=compress&cs=tinysrgb&w=800',
-      description: language === 'ja' 
-        ? 'トロピカルビーチでのサンライズヨガ' 
-        : 'Sunrise yoga on tropical beaches'
-    }
-  ];
+  const featuredRetreats = useMemo(() => {
+    const featured = retreats.filter(r =>
+      ['kyoto-chishakuin', 'yamanashi-forest', 'cebu-beach'].includes(r.id)
+    );
+    return featured.map(retreat => ({
+      id: retreat.id,
+      title: language === 'ja' ? retreat.title_ja : retreat.title_en,
+      location: language === 'ja' ? retreat.location_ja : retreat.location_en,
+      duration: retreat.duration,
+      price: retreat.price,
+      capacity: retreat.capacity,
+      type: retreat.type,
+      image: retreat.image,
+      description: language === 'ja' ? retreat.description_ja : retreat.description_en
+    }));
+  }, [retreats, language]);
 
   return (
     <div className="pt-16">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-white via-green-50 to-blue-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-50"></div>
+        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400&dpr=2')] bg-cover bg-center opacity-50">
+          <img
+            src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            alt="Hero background"
+            className="w-full h-full object-cover opacity-0"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white/40"></div>
         <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-800 mb-6 leading-tight">
@@ -92,24 +78,42 @@ const Home: React.FC = () => {
           {/* Why Choose Us */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
             <div className="text-center group">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-green-200 transition-colors duration-300">
-                <Award className="text-green-600" size={24} />
+              <div className="w-48 h-48 rounded-2xl overflow-hidden mx-auto mb-6 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=200"
+                  alt="Expert instructor"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-3">{t('home.why.expertise')}</h3>
+              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.expertise')}</h3>
               <p className="text-gray-600">{t('home.why.expertise.desc')}</p>
             </div>
             <div className="text-center group">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors duration-300">
-                <Mountain className="text-blue-600" size={24} />
+              <div className="w-48 h-48 rounded-2xl overflow-hidden mx-auto mb-6 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://images.pexels.com/photos/3408354/pexels-photo-3408354.jpeg?auto=compress&cs=tinysrgb&w=200"
+                  alt="Beautiful location"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-3">{t('home.why.locations')}</h3>
+              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.locations')}</h3>
               <p className="text-gray-600">{t('home.why.locations.desc')}</p>
             </div>
             <div className="text-center group">
-              <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-pink-200 transition-colors duration-300">
-                <Heart className="text-pink-600" size={24} />
+              <div className="w-48 h-48 rounded-2xl overflow-hidden mx-auto mb-6 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://images.pexels.com/photos/3822621/pexels-photo-3822621.jpeg?auto=compress&cs=tinysrgb&w=200"
+                  alt="Holistic approach"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-3">{t('home.why.holistic')}</h3>
+              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.holistic')}</h3>
               <p className="text-gray-600">{t('home.why.holistic.desc')}</p>
             </div>
           </div>
@@ -130,9 +134,12 @@ const Home: React.FC = () => {
               <div key={retreat.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={retreat.image}
+                    src={getImageUrl(retreat.image)}
                     alt={retreat.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={handleImageError}
+                    loading="lazy"
+                    decoding="async"
                   />
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white ${
                     retreat.type === 'domestic' ? 'bg-green-500' : 'bg-blue-500'

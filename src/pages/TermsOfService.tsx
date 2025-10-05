@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import CTASection from '../components/CTASection';
 
 const TermsOfService: React.FC = () => {
   const { language } = useLanguage();
@@ -243,6 +244,8 @@ const TermsOfService: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <CTASection />
     </div>
   );
 };
