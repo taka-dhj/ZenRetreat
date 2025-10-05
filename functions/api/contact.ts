@@ -1,11 +1,3 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
-};
-
 interface ContactFormData {
   name: string;
   email: string;
@@ -13,18 +5,25 @@ interface ContactFormData {
   message: string;
 }
 
-Deno.serve(async (req: Request) => {
-  if (req.method === "OPTIONS") {
+interface Env {
+  RESEND_API_KEY: string;
+}
+
+export async function onRequestPost(context: { request: Request; env: Env }) {
+  const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type',
+  };
+
+  if (context.request.method === 'OPTIONS') {
     return new Response(null, {
-      status: 200,
       headers: corsHeaders,
     });
   }
 
   try {
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
-
-    const { name, email, retreat, message }: ContactFormData = await req.json();
+    const { name, email, retreat, message }: ContactFormData = await context.request.json();
 
     const retreatLabels: { [key: string]: string } = {
       'kyoto': '京都・智積院寺院ヨガリトリート',
@@ -48,38 +47,15 @@ Deno.serve(async (req: Request) => {
       <p>${message.replace(/\n/g, '<br>')}</p>
     `;
 
-    if (!resendApiKey) {
-      console.log('RESEND_API_KEY not configured. Contact form data:', {
-        name,
-        email,
-        retreat: retreatLabel,
-        message
-      });
-
-      return new Response(
-        JSON.stringify({
-          success: true,
-          message: "Form submitted successfully (email service not configured)"
-        }),
-        {
-          status: 200,
-          headers: {
-            ...corsHeaders,
-            "Content-Type": "application/json",
-          },
-        },
-      );
-    }
-
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${context.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "Discovery Hidden Japan <noreply@discoveryhiddenjapan.com>",
-        to: "tkaa@discoveryhiddenjapan.com",
+        from: 'Discovery Hidden Japan <noreply@discoveryhiddenjapan.com>',
+        to: 'tkaa@discoveryhiddenjapan.com',
         subject: `【お問い合わせ】${name}様より`,
         html: emailHtml,
         reply_to: email,
@@ -99,23 +75,23 @@ Deno.serve(async (req: Request) => {
         status: 200,
         headers: {
           ...corsHeaders,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      },
+      }
     );
   } catch (error) {
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error instanceof Error ? error.message : "Unknown error" 
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error'
       }),
       {
         status: 500,
         headers: {
           ...corsHeaders,
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-      },
+      }
     );
   }
-});
+}
