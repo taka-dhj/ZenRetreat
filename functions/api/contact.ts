@@ -55,7 +55,7 @@ export async function onRequestPost(context: { request: Request; env: Env }) {
       },
       body: JSON.stringify({
         from: 'Discovery Hidden Japan <noreply@discoveryhiddenjapan.com>',
-        to: 'tkaa@discoveryhiddenjapan.com',
+        to: 'taka@discoveryhiddenjapan.com',
         subject: `【お問い合わせ】${name}様より`,
         html: emailHtml,
         reply_to: email,
