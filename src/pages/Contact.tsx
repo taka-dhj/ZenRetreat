@@ -15,6 +15,7 @@ const Contact: React.FC = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,25 +31,29 @@ const Contact: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      const result = await response.json();
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const text = await response.text();
+      const result = text ? JSON.parse(text) : { success: true };
 
       if (result.success) {
         setSubmitStatus('success');
+        setShowSuccessMessage(true);
         setFormData({
           name: '',
           email: '',
           retreat: '',
           message: ''
         });
-        alert(language === 'ja' ? 'お問い合わせを送信しました。' : 'Your inquiry has been sent.');
+        setTimeout(() => setShowSuccessMessage(false), 5000);
       } else {
         setSubmitStatus('error');
-        alert(language === 'ja' ? '送信に失敗しました。もう一度お試しください。' : 'Failed to send. Please try again.');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
-      alert(language === 'ja' ? '送信に失敗しました。もう一度お試しください。' : 'Failed to send. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -107,6 +112,48 @@ const Contact: React.FC = () => {
                 {language === 'ja' ? 'お問い合わせフォーム' : 'Contact Form'}
               </h2>
               
+              {showSuccessMessage && (
+                <div className="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 flex items-start space-x-3">
+                  <div className="flex-shrink-0">
+                    <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm font-medium text-green-800">
+                      {language === 'ja' ? '送信完了' : 'Sent Successfully'}
+                    </h3>
+                    <p className="mt-1 text-sm text-green-700">
+                      {language === 'ja'
+                        ? 'お問い合わせありがとうございます。確認メールをお送りしましたので、ご確認ください。2営業日以内にご返信いたします。'
+                        : 'Thank you for your inquiry. We have sent you a confirmation email. We will respond within 2 business days.'
+                      }
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-start space-x-3">
+                  <div className="flex-shrink-0">
+                    <svg className="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm font-medium text-red-800">
+                      {language === 'ja' ? '送信エラー' : 'Sending Error'}
+                    </h3>
+                    <p className="mt-1 text-sm text-red-700">
+                      {language === 'ja'
+                        ? '送信に失敗しました。もう一度お試しいただくか、メールで直接お問い合わせください。'
+                        : 'Failed to send. Please try again or contact us directly via email.'
+                      }
+                    </p>
+                  </div>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
