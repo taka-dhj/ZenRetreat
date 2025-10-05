@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MapPin, Clock, Users, Calendar, Check, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreat } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
 import CTASection from '../components/CTASection';
+import ContactFormModal from '../components/ContactFormModal';
 
 const RetreatDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { language, t } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const { retreat, loading, error } = useRetreat(id);
 
@@ -177,12 +179,12 @@ const RetreatDetail: React.FC = () => {
                 </div>
 
                 {/* CTA Button */}
-                <Link
-                  to={`${baseUrl}/contact`}
+                <button
+                  onClick={() => setIsContactModalOpen(true)}
                   className="block w-full bg-green-600 text-white text-center py-4 rounded-xl hover:bg-green-700 transition-colors duration-200 font-medium"
                 >
                   {language === 'ja' ? 'お問い合わせ' : 'Contact Us'}
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -190,6 +192,7 @@ const RetreatDetail: React.FC = () => {
       </section>
 
       <CTASection />
+      <ContactFormModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </div>
   );
 };

@@ -60,7 +60,7 @@ Deno.serve(async (req: Request) => {
       },
       body: JSON.stringify({
         from: "Discovery Hidden Japan <noreply@discoveryhiddenjapan.com>",
-        to: "taka@discoveryhiddenjapan.com",
+        to: "tkaa@discoveryhiddenjapan.com",
         subject: `【お問い合わせ】${name}様より`,
         html: emailHtml,
         reply_to: email,

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Calendar, User, ArrowLeft } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Mail, Globe, MessageCircle, Sparkles } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { supabase } from '../lib/supabase';
 import CTASection from '../components/CTASection';
+import ContactFormModal from '../components/ContactFormModal';
 
 interface BlogPost {
   id: string;
@@ -25,6 +26,7 @@ const BlogPost: React.FC = () => {
   const { language } = useLanguage();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -86,103 +88,220 @@ const BlogPost: React.FC = () => {
 
   const renderContent = () => {
     const lines = content.split('\n');
-    return lines.map((line, index) => {
-      if (line.startsWith('## ')) {
-        const headingText = line.replace('## ', '');
-        return (
-          <div key={index} className="relative my-12">
-            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t-2 border-gradient-to-r from-green-200 via-green-400 to-green-200"></div>
+    let ctaMode = false;
+    let ctaTitle = '';
+    let ctaSubtitle = '';
+    let ctaDescription = '';
+    let ctaContact = '';
+    let ctaWebsite = '';
+    let ctaNote = '';
+    const elements: JSX.Element[] = [];
+
+    for (let index = 0; index < lines.length; index++) {
+      const line = lines[index];
+      const trimmedLine = line.trim();
+
+      // CTAセクションの検出（日本語・英語対応）
+      if ((trimmedLine.includes('あなただけの') && trimmedLine.includes('創造しませんか')) ||
+          (trimmedLine.includes('Create Your') && trimmedLine.includes('Retreat'))) {
+        ctaMode = true;
+        ctaTitle = trimmedLine;
+        continue;
+      }
+
+      if (ctaMode) {
+        if (trimmedLine.startsWith('Zen Retreat ASIA')) {
+          ctaSubtitle = trimmedLine;
+          continue;
+        }
+        if (trimmedLine.includes('お問い合わせ：') || trimmedLine.includes('Contact:')) {
+          const separator = trimmedLine.includes('：') ? '：' : ':';
+          ctaContact = trimmedLine.split(separator)[1]?.trim() || '';
+          continue;
+        }
+        if (trimmedLine.includes('ウェブサイト：') || trimmedLine.includes('Website:')) {
+          const separator = trimmedLine.includes('：') ? '：' : ':';
+          ctaWebsite = trimmedLine.split(separator)[1]?.trim() || '';
+          continue;
+        }
+        if (trimmedLine.includes('日本語・英語対応') || trimmedLine.includes('Japanese and English')) {
+          ctaNote = trimmedLine;
+          // CTAカードを作成
+          elements.push(
+            <div key={`cta-${index}`} className="my-12 bg-white rounded-3xl shadow-2xl border border-gray-200 overflow-hidden">
+              {/* タイトルボックス（色付き） */}
+              <div className="bg-gradient-to-r from-green-600 to-blue-600 px-8 py-5">
+                <div className="flex items-center space-x-3">
+                  <Sparkles className="text-yellow-300 flex-shrink-0" size={24} />
+                  <h3 className="text-xl md:text-2xl font-bold text-white">
+                    {ctaSubtitle}
+                  </h3>
+                </div>
+              </div>
+
+              {/* 本文エリア */}
+              <div className="p-8 md:p-10">
+                <p className="text-gray-700 text-lg leading-relaxed mb-8">
+                  {ctaDescription}
+                </p>
+
+                {/* 連絡先情報カード */}
+                <div className="space-y-4 mb-8">
+                  {ctaContact && (
+                    <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-xl border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                      <Mail className="text-green-600 mt-1 flex-shrink-0" size={24} />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-600 mb-1">
+                          {language === 'ja' ? 'お問い合わせ' : 'Contact'}
+                        </p>
+                        <a href={`mailto:${ctaContact}`} className="text-blue-600 hover:text-blue-700 font-medium text-lg underline break-all">
+                          {ctaContact}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
+                  {ctaWebsite && (
+                    <div className="flex items-start space-x-4 p-4 bg-gray-50 rounded-xl border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                      <Globe className="text-green-600 mt-1 flex-shrink-0" size={24} />
+                      <div>
+                        <p className="text-sm font-semibold text-gray-600 mb-1">
+                          {language === 'ja' ? 'ウェブサイト' : 'Website'}
+                        </p>
+                        <a href={ctaWebsite} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 font-medium text-lg underline break-all">
+                          {ctaWebsite}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* 備考欄 */}
+                {ctaNote && (
+                  <div className="flex items-center space-x-3 p-4 bg-green-50 rounded-xl border-l-4 border-green-600 mb-6">
+                    <MessageCircle className="text-green-600 flex-shrink-0" size={20} />
+                    <p className="text-gray-800 font-medium">{ctaNote}</p>
+                  </div>
+                )}
+
+                {/* お問い合わせボタン */}
+                <div className="text-center">
+                  <button
+                    onClick={() => setIsContactModalOpen(true)}
+                    className="inline-flex items-center space-x-3 px-10 py-4 bg-gradient-to-r from-green-600 to-blue-600 text-white font-bold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 text-lg"
+                  >
+                    <Mail size={24} />
+                    <span>{language === 'ja' ? '今すぐお問い合わせ' : 'Contact Us Now'}</span>
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="relative flex justify-center">
-              <h2 className="bg-white px-6 text-2xl md:text-3xl font-semibold text-gray-800 inline-block">
-                {headingText}
-              </h2>
-            </div>
+          );
+          ctaMode = false;
+          ctaTitle = '';
+          ctaSubtitle = '';
+          ctaDescription = '';
+          ctaContact = '';
+          ctaWebsite = '';
+          ctaNote = '';
+          continue;
+        }
+        if (trimmedLine.length > 0 && !trimmedLine.includes('Zen Retreat ASIA')) {
+          ctaDescription += (ctaDescription ? ' ' : '') + trimmedLine;
+          continue;
+        }
+      }
+
+      // 見出し候補の検出（h2用）
+      const isH2Heading = trimmedLine.length > 0 &&
+                       trimmedLine.length <= 80 &&
+                       !trimmedLine.endsWith('。') &&
+                       !trimmedLine.endsWith('.') &&
+                       !trimmedLine.includes('：') &&
+                       !trimmedLine.includes(':') &&
+                       !trimmedLine.startsWith('出典') &&
+                       !trimmedLine.startsWith('Source') &&
+                       (trimmedLine.includes('市場') ||
+                        trimmedLine.includes('価値') ||
+                        trimmedLine.includes('影響') ||
+                        trimmedLine.includes('現状') ||
+                        trimmedLine.includes('歴史') ||
+                        trimmedLine.includes('Market') ||
+                        trimmedLine.includes('Value') ||
+                        trimmedLine.includes('Impact') ||
+                        trimmedLine.includes('Status') ||
+                        trimmedLine.includes('History'));
+
+      // h3見出しの検出（より具体的なトピック - コロン含む見出しを優先）
+      const isH3Heading = trimmedLine.length > 0 &&
+                       trimmedLine.length <= 120 &&
+                       !trimmedLine.endsWith('。') &&
+                       !trimmedLine.endsWith('.') &&
+                       !trimmedLine.startsWith('出典') &&
+                       !trimmedLine.startsWith('Source') &&
+                       !trimmedLine.startsWith('お問い合わせ') &&
+                       !trimmedLine.startsWith('ウェブサイト') &&
+                       !trimmedLine.startsWith('日本語・英語') &&
+                       (trimmedLine.includes('禅瞑想と寺院宿坊：') ||
+                        trimmedLine.includes('禅瞑想とヨガの相乗効果：') ||
+                        trimmedLine.includes('座禅体験とアーサナの融合：') ||
+                        trimmedLine.includes('現代科学が解明する') ||
+                        trimmedLine.includes('マインドフルネスと和の心：') ||
+                        trimmedLine.includes('富士山：') ||
+                        trimmedLine.includes('高野山：') ||
+                        trimmedLine.includes('屋久島：') ||
+                        trimmedLine.includes('伊勢神宮：') ||
+                        trimmedLine.includes('科学的に実証された') ||
+                        trimmedLine.includes('温泉とヨガ') ||
+                        trimmedLine.includes('森林浴（森林セラピー）') ||
+                        trimmedLine.includes('Hot Springs and Yoga') ||
+                        trimmedLine.includes('Zen Meditation and Temple') ||
+                        trimmedLine.includes('Forest Bathing') ||
+                        trimmedLine.includes('Mindfulness and Wa'));
+
+      if (isH3Heading && index > 0) {
+        elements.push(
+          <h3 key={index} className="text-xl md:text-2xl font-bold text-green-700 mt-10 mb-5 pb-2 border-b border-green-300 flex items-center space-x-2">
+            <span className="w-1 h-6 bg-green-600 rounded"></span>
+            <span>{trimmedLine}</span>
+          </h3>
+        );
+        continue;
+      }
+
+      if (isH2Heading && index > 0) {
+        elements.push(
+          <h2 key={index} className="text-2xl md:text-3xl font-bold text-gray-900 mt-12 mb-6 pb-3 border-b-2 border-green-500">
+            {trimmedLine}
+          </h2>
+        );
+        continue;
+      }
+
+      if (line.includes('出典:') || line.includes('Source:') || line.includes('出 典')) {
+        elements.push(
+          <div key={index} className="my-6 pl-4 border-l-2 border-gray-300">
+            <p className="text-xs text-gray-500 italic">
+              {line}
+            </p>
           </div>
         );
-      }
-
-      if (line.startsWith('**出典:**') || line.startsWith('**Source:**')) {
-        return (
-          <div key={index} className="my-6 p-4 bg-gradient-to-r from-blue-50 to-green-50 border-l-4 border-green-600 rounded-r-lg">
-            <p className="text-sm text-gray-700 italic font-medium">
-              {line.replace('**出典:**', '').replace('**Source:**', '')}
-            </p>
-          </div>
-        );
-      }
-
-      if (line.startsWith('**') && line.includes('Zen Retreat ASIA')) {
-        return (
-          <div key={index} className="my-8 p-6 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl border-2 border-green-200">
-            <h3 className="text-xl font-bold text-green-700 mb-4">
-              {line.replace(/\*\*/g, '')}
-            </h3>
-          </div>
-        );
-      }
-
-      if (line.includes('お問い合わせ：') || line.includes('Contact:')) {
-        const parts = line.split('：');
-        if (parts.length > 1) {
-          return (
-            <p key={index} className="text-gray-800 leading-relaxed mb-3">
-              <span className="font-semibold text-green-700">{parts[0]}：</span>
-              <a href={`mailto:${parts[1].trim()}`} className="text-blue-600 hover:text-blue-700 underline">
-                {parts[1].trim()}
-              </a>
-            </p>
-          );
-        }
-        const contactParts = line.split(': ');
-        if (contactParts.length > 1) {
-          return (
-            <p key={index} className="text-gray-800 leading-relaxed mb-3">
-              <span className="font-semibold text-green-700">{contactParts[0]}: </span>
-              <a href={`mailto:${contactParts[1].trim()}`} className="text-blue-600 hover:text-blue-700 underline">
-                {contactParts[1].trim()}
-              </a>
-            </p>
-          );
-        }
-      }
-
-      if (line.includes('ウェブサイト：') || line.includes('Website:')) {
-        const parts = line.split('：');
-        if (parts.length > 1) {
-          return (
-            <p key={index} className="text-gray-800 leading-relaxed mb-3">
-              <span className="font-semibold text-green-700">{parts[0]}：</span>
-              <a href={parts[1].trim()} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 underline">
-                {parts[1].trim()}
-              </a>
-            </p>
-          );
-        }
-        const websiteParts = line.split(': ');
-        if (websiteParts.length > 1) {
-          return (
-            <p key={index} className="text-gray-800 leading-relaxed mb-3">
-              <span className="font-semibold text-green-700">{websiteParts[0]}: </span>
-              <a href={websiteParts[1].trim()} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 underline">
-                {websiteParts[1].trim()}
-              </a>
-            </p>
-          );
-        }
+        continue;
       }
 
       if (line.trim() === '') {
-        return <div key={index} className="h-2"></div>;
+        elements.push(<div key={index} className="h-2"></div>);
+        continue;
       }
 
-      return (
+      elements.push(
         <p key={index} className="text-gray-700 leading-relaxed mb-4 text-lg">
           {line}
         </p>
       );
-    });
+    }
+
+    return elements;
   };
 
   return (
@@ -272,6 +391,7 @@ const BlogPost: React.FC = () => {
       </section>
 
       <CTASection />
+      <ContactFormModal isOpen={isContactModalOpen} onClose={() => setIsContactModalOpen(false)} />
     </div>
   );
 };
