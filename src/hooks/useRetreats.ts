@@ -35,15 +35,19 @@ export function useRetreats() {
   async function fetchRetreats() {
     try {
       setLoading(true);
+      console.log('Fetching retreats from Supabase...');
       const { data, error } = await supabase
         .from('retreats')
         .select('*')
         .order('display_order');
 
+      console.log('Supabase response:', { data, error });
+
       if (error) throw error;
 
       setRetreats(data || []);
     } catch (err) {
+      console.error('Error fetching retreats:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch retreats');
     } finally {
       setLoading(false);
