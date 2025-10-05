@@ -27,6 +27,7 @@ export const useBlogPosts = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true);
+        const timestamp = new Date().getTime();
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
@@ -37,6 +38,7 @@ export const useBlogPosts = () => {
         }
 
         setPosts(data || []);
+        console.log(`Blog posts fetched at ${timestamp}:`, data?.length || 0, 'posts');
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
         console.error('Error fetching blog posts:', err);
