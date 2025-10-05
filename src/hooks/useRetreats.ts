@@ -38,7 +38,8 @@ export function useRetreats() {
       const { data, error } = await supabase
         .from('retreats')
         .select('*')
-        .order('display_order');
+        .order('type', { ascending: true })
+        .order('display_order', { ascending: true });
 
       if (error) throw error;
 
