@@ -1,3 +1,8 @@
+const imageMap: Record<string, string> = {
+  '/cebu2.jpg': 'https://images.pexels.com/photos/457882/pexels-photo-457882.jpeg?auto=compress&cs=tinysrgb&w=1200',
+  '/cebu-mountain.jpg': 'https://images.pexels.com/photos/3225531/pexels-photo-3225531.jpeg?auto=compress&cs=tinysrgb&w=1200',
+};
+
 export const getImageUrl = (imagePath: string | undefined | null): string => {
   const fallbackImage = 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg';
 
@@ -7,13 +12,12 @@ export const getImageUrl = (imagePath: string | undefined | null): string => {
     return imagePath;
   }
 
-  return imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+  const fullPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+  return imageMap[fullPath] || fullPath;
 };
 
 export const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>): void => {
   const target = e.target as HTMLImageElement;
-  if (target.onerror) {
-    target.onerror = null;
-    target.src = 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg';
-  }
+  target.onerror = null;
+  target.src = 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg';
 };
