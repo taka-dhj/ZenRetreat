@@ -59,8 +59,8 @@ Deno.serve(async (req: Request) => {
         "Authorization": `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
-        from: "Discovery Hidden Japan <onboarding@resend.dev>",
-        to: "info@discoveryhiddenjapan.com",
+        from: "Discovery Hidden Japan <noreply@discoveryhiddenjapan.com>",
+        to: "taka@discoveryhiddenjapan.com",
         subject: `【お問い合わせ】${name}様より`,
         html: emailHtml,
         reply_to: email,

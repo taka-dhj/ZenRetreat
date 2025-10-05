@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBlogPosts } from '../hooks/useBlogPosts';
+import { getImageUrl, handleImageError } from '../lib/imageUtils';
 import CTASection from '../components/CTASection';
 
 const Blog: React.FC = () => {
   const { language } = useLanguage();
+  const baseUrl = language === 'en' ? '/en' : '';
   const { posts, loading } = useBlogPosts();
 
   const formatDate = (dateString: string) => {
@@ -61,9 +63,10 @@ const Blog: React.FC = () => {
               <article key={post.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={post.image}
+                    src={getImageUrl(post.image)}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    onError={handleImageError}
                     loading="lazy"
                     decoding="async"
                   />
@@ -91,7 +94,7 @@ const Blog: React.FC = () => {
                   </div>
                   
                   <Link
-                    to={`/blog/${post.id}`}
+                    to={`${baseUrl}/blog/${post.id}`}
                     className="flex items-center space-x-2 text-green-600 hover:text-green-700 transition-colors duration-200 text-sm font-medium"
                   >
                     <span>{language === 'ja' ? '続きを読む' : 'Read More'}</span>
@@ -102,31 +105,6 @@ const Blog: React.FC = () => {
               ))}
             </div>
           )}
-        </div>
-      </section>
-
-      {/* Newsletter Signup */}
-      <section className="py-16 bg-gradient-to-r from-green-600 to-blue-600 text-white">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-light mb-6">
-            {language === 'ja' ? 'ニュースレター購読' : 'Subscribe to Newsletter'}
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            {language === 'ja' 
-              ? '最新のリトリート情報やヨガのヒントを定期的にお届けします'
-              : 'Get regular updates on the latest retreat information and yoga tips'
-            }
-          </p>
-          <div className="flex flex-col sm:flex-row max-w-md mx-auto space-y-3 sm:space-y-0 sm:space-x-3">
-            <input
-              type="email"
-              placeholder={language === 'ja' ? 'メールアドレス' : 'Email address'}
-              className="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:ring-2 focus:ring-white/20 focus:outline-none"
-            />
-            <button className="bg-white text-green-600 px-6 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-200 font-medium">
-              {language === 'ja' ? '購読' : 'Subscribe'}
-            </button>
-          </div>
         </div>
       </section>
 
