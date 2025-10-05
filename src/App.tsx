@@ -14,6 +14,8 @@ import FAQ from './pages/FAQ';
 import CancellationPolicy from './pages/CancellationPolicy';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import Blog from './pages/Blog';
+import BlogArticle from './pages/BlogArticle';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -46,6 +48,10 @@ function App() {
               <Route path="/en/international" element={<International />} />
               <Route path="/instructors" element={<Instructors />} />
               <Route path="/en/instructors" element={<Instructors />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/en/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogArticle />} />
+              <Route path="/en/blog/:slug" element={<BlogArticle />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/en/contact" element={<Contact />} />
               <Route path="/faq" element={<FAQ />} />
