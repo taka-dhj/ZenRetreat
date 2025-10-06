@@ -12,10 +12,10 @@ const Instructors: React.FC = () => {
       name: 'Maiko（舞子）',
       specialty: language === 'ja' ? 'ヨガ・瞑想・身体表現' : 'Yoga, Meditation, Physical Expression',
       qualifications: language === 'ja' ? 'RYT200、現代舞踊、演劇' : 'RYT200, Modern Dance, Theater',
-      image: 'https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=600',
+      image: '/instructor/maiko.jpeg',
       biography: language === 'ja'
-        ? '幼少期より現代舞踊に携わり、2013年にノダマップ舞台で演劇活動を開始。現在はモデル、ヨガインストラクターとして身体表現活動を行っています。身体と心の調和を重視し、参加者一人一人の内なる美しさを引き出すことを大切にしています。'
-        : 'Involved in modern dance since childhood, began acting career in 2013 with Noda Map Theater. Currently engaged in physical expression activities as a model and yoga instructor. Values harmony of body and mind, and cherishes bringing out the inner beauty of each participant.',
+        ? '幼少期より現代舞踊に携わり、2013年に演劇活動を開始。現在はモデル、ヨガインストラクターとして身体表現活動を行っています。身体と心の調和を重視し、参加者一人一人の内なる美しさを引き出すことを大切にしています。'
+        : 'Involved in modern dance since childhood, began acting career in 2013. Currently engaged in physical expression activities as a model and yoga instructor. Values harmony of body and mind, and cherishes bringing out the inner beauty of each participant.',
       experience: 8,
       rating: 4.9
     },
@@ -24,8 +24,8 @@ const Instructors: React.FC = () => {
       name: 'Hiroshi（寛）',
       specialty: language === 'ja' ? '禅瞑想・マインドフルネス・寺院文化' : 'Zen Meditation, Mindfulness, Temple Culture',
       qualifications: language === 'ja' ? '臨済宗僧侶、瞑想指導者' : 'Rinzai Zen Monk, Meditation Teacher',
-      image: 'https://images.pexels.com/photos/3775603/pexels-photo-3775603.jpeg?auto=compress&cs=tinysrgb&w=600',
-      biography: language === 'ja' 
+      image: '/instructor/hiroshi.jpeg',
+      biography: language === 'ja'
         ? '京都の名刹で20年間修行を積み、現在は寺院での瞑想指導を専門としています。禅の教えを現代人にも親しみやすい形で伝えることを使命とし、初心者でも深い瞑想体験ができるよう丁寧に指導します。茶道や書道にも精通し、日本の精神文化を総合的に学べるプログラムを提供しています。'
         : 'Practiced for 20 years at famous temples in Kyoto, now specializes in meditation instruction at temples. Has a mission to convey Zen teachings in a form accessible to modern people, providing careful guidance so even beginners can have deep meditation experiences. Also versed in tea ceremony and calligraphy, offering comprehensive programs to learn Japanese spiritual culture.',
       experience: 20,
@@ -36,8 +36,8 @@ const Instructors: React.FC = () => {
       name: 'Ayaka（彩香）',
       specialty: language === 'ja' ? 'アシュタンガヨガ・プラナヤマ・アーユルヴェーダ' : 'Ashtanga Yoga, Pranayama, Ayurveda',
       qualifications: language === 'ja' ? 'RYT500、アーユルヴェーダアドバイザー' : 'RYT500, Ayurveda Advisor',
-      image: 'https://images.pexels.com/photos/3823185/pexels-photo-3823185.jpeg?auto=compress&cs=tinysrgb&w=600',
-      biography: language === 'ja' 
+      image: '/instructor/ayaka.jpeg',
+      biography: language === 'ja'
         ? 'インドで5年間ヨガとアーユルヴェーダを学び、現在は国内外でワークショップを開催しています。伝統的なアシュタンガヨガの練習を通じて、心身の変化を実感してもらうことを目指しています。個人の体質に合わせたアーユルヴェーダ的アプローチで、持続可能なウェルネスライフスタイルをサポートします。'
         : 'Studied yoga and Ayurveda in India for 5 years, currently holds workshops both domestically and internationally. Aims to help participants experience mind-body changes through traditional Ashtanga yoga practice. Supports sustainable wellness lifestyles with Ayurvedic approaches tailored to individual constitution.',
       experience: 10,
@@ -48,8 +48,8 @@ const Instructors: React.FC = () => {
       name: 'Kenji（健二）',
       specialty: language === 'ja' ? '森林セラピー・自然瞑想・ブリージングワーク' : 'Forest Therapy, Nature Meditation, Breathing Work',
       qualifications: language === 'ja' ? '森林セラピスト、呼吸法指導者' : 'Forest Therapist, Breathing Technique Instructor',
-      image: 'https://images.pexels.com/photos/3775593/pexels-photo-3775593.jpeg?auto=compress&cs=tinysrgb&w=600',
-      biography: language === 'ja' 
+      image: '/instructor/kenji.jpeg',
+      biography: language === 'ja'
         ? '自然環境での癒しを専門とし、森林の持つ治癒力を活用したプログラムを開発しています。山梨の富士山麓をベースに、四季を通じて自然との調和を体験できるリトリートを提供。呼吸法と自然音を組み合わせた独自のセラピー手法で、都市生活で疲れた心身を根本から癒します。'
         : 'Specializes in healing in natural environments, developing programs that utilize the healing power of forests. Based at the foot of Mt. Fuji in Yamanashi, provides retreats where you can experience harmony with nature throughout the seasons. Uses unique therapy methods combining breathing techniques and natural sounds to fundamentally heal minds and bodies tired from urban life.',
       experience: 12,
