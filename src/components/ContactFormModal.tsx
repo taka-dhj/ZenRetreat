@@ -16,6 +16,11 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorModal, setErrorModal] = useState<{ show: boolean; message: string; details?: string }>({
+    show: false,
+    message: '',
+    details: undefined
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,6 +38,28 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
         body: JSON.stringify(formData),
       });
 
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorDetails = `HTTP ${response.status}: ${response.statusText}`;
+        try {
+          const errorJson = JSON.parse(errorText);
+          if (errorJson.error) {
+            errorDetails = errorJson.error;
+          }
+        } catch {
+          if (errorText) {
+            errorDetails = errorText;
+          }
+        }
+
+        setErrorModal({
+          show: true,
+          message: language === 'ja' ? 'メール送信に失敗しました' : 'Failed to send email',
+          details: errorDetails
+        });
+        return;
+      }
+
       const result = await response.json();
 
       if (result.success) {
@@ -45,11 +72,20 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
         alert(language === 'ja' ? 'お問い合わせを送信しました。' : 'Your inquiry has been sent.');
         onClose();
       } else {
-        alert(language === 'ja' ? '送信に失敗しました。もう一度お試しください。' : 'Failed to send. Please try again.');
+        setErrorModal({
+          show: true,
+          message: language === 'ja' ? 'メール送信に失敗しました' : 'Failed to send email',
+          details: result.error || (language === 'ja' ? '不明なエラーが発生しました' : 'Unknown error occurred')
+        });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(language === 'ja' ? '送信に失敗しました。もう一度お試しください。' : 'Failed to send. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      setErrorModal({
+        show: true,
+        message: language === 'ja' ? 'メール送信に失敗しました' : 'Failed to send email',
+        details: errorMessage
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -85,7 +121,56 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
+    <>
+      {/* Error Modal */}
+      {errorModal.show && (
+        <div className="fixed inset-0 z-[60] overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+            <div
+              className="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75"
+              onClick={() => setErrorModal({ show: false, message: '', details: undefined })}
+            />
+
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
+
+            <div className="inline-block align-bottom bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-md sm:w-full">
+              <div className="bg-red-600 px-6 py-4">
+                <h3 className="text-xl font-medium text-white">
+                  {language === 'ja' ? 'エラー' : 'Error'}
+                </h3>
+              </div>
+
+              <div className="px-6 py-6">
+                <p className="text-gray-800 mb-4 font-medium">
+                  {errorModal.message}
+                </p>
+                {errorModal.details && (
+                  <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                    <p className="text-sm text-gray-600 mb-2 font-medium">
+                      {language === 'ja' ? 'エラー詳細:' : 'Error details:'}
+                    </p>
+                    <p className="text-sm text-gray-700 font-mono break-all">
+                      {errorModal.details}
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-gray-50 px-6 py-4">
+                <button
+                  onClick={() => setErrorModal({ show: false, message: '', details: undefined })}
+                  className="w-full bg-gray-600 text-white py-3 rounded-lg hover:bg-gray-700 transition-colors duration-200 font-medium"
+                >
+                  {language === 'ja' ? '閉じる' : 'Close'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Contact Form Modal */}
+      <div className="fixed inset-0 z-50 overflow-y-auto">
       <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
         <div
           className="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75"
@@ -203,6 +288,7 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
         </div>
       </div>
     </div>
+    </>
   );
 };
 
