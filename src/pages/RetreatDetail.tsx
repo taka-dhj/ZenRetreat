@@ -153,14 +153,6 @@ const RetreatDetail: React.FC = () => {
                     <MapPin className="w-5 h-5 text-green-600 flex-shrink-0" />
                     <span>{location}</span>
                   </div>
-                  <div className="flex items-center space-x-3 text-gray-700">
-                    <Calendar className="w-5 h-5 text-green-600 flex-shrink-0" />
-                    <span>{retreat.duration}{language === 'ja' ? '日間' : ' days'}</span>
-                  </div>
-                  <div className="flex items-center space-x-3 text-gray-700">
-                    <Users className="w-5 h-5 text-green-600 flex-shrink-0" />
-                    <span>{language === 'ja' ? `最大 ${retreat.capacity}名` : `Max ${retreat.capacity} people`}</span>
-                  </div>
                 </div>
 
                 {/* What's Included */}

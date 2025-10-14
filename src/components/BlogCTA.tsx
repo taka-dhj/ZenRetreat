@@ -40,10 +40,10 @@ const BlogCTA: React.FC = () => {
                   {language === 'ja' ? 'お問い合わせ' : 'Contact'}
                 </div>
                 <a
-                  href="mailto:info@discoveryhiddenjapan.com"
+                  href="mailto:info@zentreat.com"
                   className="text-green-700 hover:text-green-800 font-medium transition-colors duration-200 break-all"
                 >
-                  info@discoveryhiddenjapan.com
+                  info@zentreat.com
                 </a>
               </div>
 

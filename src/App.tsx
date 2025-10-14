@@ -8,10 +8,8 @@ import Retreats from './pages/Retreats';
 import RetreatDetail from './pages/RetreatDetail';
 import Domestic from './pages/Domestic';
 import International from './pages/International';
-import Instructors from './pages/Instructors';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
-import CancellationPolicy from './pages/CancellationPolicy';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import Blog from './pages/Blog';
@@ -46,8 +44,6 @@ function App() {
               <Route path="/en/domestic" element={<Domestic />} />
               <Route path="/international" element={<International />} />
               <Route path="/en/international" element={<International />} />
-              <Route path="/instructors" element={<Instructors />} />
-              <Route path="/en/instructors" element={<Instructors />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/en/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogArticle />} />
@@ -56,8 +52,6 @@ function App() {
               <Route path="/en/contact" element={<Contact />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/en/faq" element={<FAQ />} />
-              <Route path="/cancellation-policy" element={<CancellationPolicy />} />
-              <Route path="/en/cancellation-policy" element={<CancellationPolicy />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/en/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />

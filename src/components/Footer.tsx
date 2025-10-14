@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Footer: React.FC = () => {
@@ -35,19 +35,10 @@ const Footer: React.FC = () => {
               {language === 'ja' ? 'お問い合わせ' : 'Contact'}
             </h3>
             <div className="space-y-4 text-gray-300">
-              <div className="flex items-start space-x-3">
-                <MapPin size={18} className="mt-1 flex-shrink-0" />
-                <span>
-                  {language === 'ja'
-                    ? '〒108-0074 東京都港区高輪2丁目11番9号'
-                    : '2-11-9 Takanawa, Minato-ku, Tokyo 108-0074, Japan'
-                  }
-                </span>
-              </div>
               <div className="flex items-center space-x-3">
                 <Mail size={18} className="flex-shrink-0" />
-                <a href="mailto:info@discoveryhiddenjapan.com" className="hover:text-green-400 transition-colors duration-200">
-                  info@discoveryhiddenjapan.com
+                <a href="mailto:info@zentreat.com" className="hover:text-green-400 transition-colors duration-200">
+                  info@zentreat.com
                 </a>
               </div>
             </div>
@@ -62,11 +53,6 @@ const Footer: React.FC = () => {
               <li>
                 <Link to={`${baseUrl}/faq`} className="hover:text-green-400 transition-colors duration-200">
                   {language === 'ja' ? 'よくある質問' : 'FAQ'}
-                </Link>
-              </li>
-              <li>
-                <Link to={`${baseUrl}/cancellation-policy`} className="hover:text-green-400 transition-colors duration-200">
-                  {language === 'ja' ? 'キャンセルポリシー' : 'Cancellation Policy'}
                 </Link>
               </li>
               <li>

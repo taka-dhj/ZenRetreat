@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { MapPin, Clock, Users, Filter, Search } from 'lucide-react';
+import { MapPin, Filter, Search } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
@@ -152,22 +152,9 @@ const Retreats: React.FC = () => {
                     </h3>
                     <p className="text-gray-600 mb-4 line-clamp-3">{description}</p>
 
-                    <div className="flex items-center justify-between text-sm text-gray-500 mb-4">
-                      <div className="flex items-center space-x-1">
-                        <MapPin size={14} />
-                        <span>{location}</span>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Clock size={14} />
-                        <span>{retreat.duration}{t('common.days')}</span>
-                      </div>
-                    </div>
-
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-1 text-sm text-gray-500">
-                        <Users size={14} />
-                        <span>{t('common.capacity')} {retreat.capacity}{t('common.people')}</span>
-                      </div>
+                    <div className="flex items-center text-sm text-gray-500 mb-4">
+                      <MapPin size={14} />
+                      <span className="ml-1">{location}</span>
                     </div>
 
                     <Link

@@ -93,8 +93,7 @@ const PrivacyPolicy: React.FC = () => {
                   <h2 className="text-2xl font-medium text-gray-800 mb-4">お問い合わせ窓口</h2>
                   <p className="text-gray-600 mb-2">個人情報に関するお問い合わせ：</p>
                   <ul className="space-y-1 text-gray-600">
-                    <li>住所：〒108-0074 東京都港区高輪2丁目11番9号</li>
-                    <li>メール：info@discoveryhiddenjapan.com</li>
+                    <li>メール：info@zentreat.com</li>
                   </ul>
                   <p className="text-gray-600 mt-4">最終更新日：2025年10月1日</p>
                 </div>
@@ -172,8 +171,7 @@ const PrivacyPolicy: React.FC = () => {
                   <h2 className="text-2xl font-medium text-gray-800 mb-4">Contact Information</h2>
                   <p className="text-gray-600 mb-2">For personal information inquiries:</p>
                   <ul className="space-y-1 text-gray-600">
-                    <li>Address: 2-11-9 Takanawa, Minato-ku, Tokyo 108-0074, Japan</li>
-                    <li>Email: info@discoveryhiddenjapan.com</li>
+                    <li>Email: info@zentreat.com</li>
                   </ul>
                   <p className="text-gray-600 mt-4">Last updated: October 1, 2025</p>
                 </div>

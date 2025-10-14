@@ -39,7 +39,7 @@ const FAQ: React.FC = () => {
           questions: [
             {
               q: '部屋は個室ですか？',
-              a: '智積院会館では個室（洋室・和洋室）をご用意しております。相部屋をご希望の場合は事前にご相談ください。'
+              a: 'ツアー内容によって異なります。事前にご相談ください。'
             },
             {
               q: '食事制限に対応していますか？',
@@ -47,7 +47,7 @@ const FAQ: React.FC = () => {
             },
             {
               q: 'お酒は飲めますか？',
-              a: '宿坊内での飲酒はご遠慮いただいております。リトリート期間中は心身の浄化に集中していただくため、ご理解ください。'
+              a: '原則、施設内での飲酒はご遠慮いただいております。リトリート期間中は心身の浄化に集中していただくため、ご理解ください。'
             }
           ]
         },
@@ -60,7 +60,7 @@ const FAQ: React.FC = () => {
             },
             {
               q: '雨天時のプログラムはどうなりますか？',
-              a: '屋外での活動は屋内に変更いたします。智積院会館内でのヨガや瞑想など、天候に関係なく充実したプログラムを提供いたします。'
+              a: 'ツアーごとに異なりますが、天候に関係なく充実したプログラムを提供できるようご提案をいたします。'
             },
             {
               q: '写真撮影は可能ですか？',
@@ -73,15 +73,7 @@ const FAQ: React.FC = () => {
           questions: [
             {
               q: '持参すべきものはありますか？',
-              a: '動きやすい服装、防寒具、筆記用具、個人用品をお持ちください。ヨガマットはレンタル可能です。'
-            },
-            {
-              q: 'Wi-Fiは利用できますか？',
-              a: '智積院会館では無料Wi-Fiをご利用いただけます。ただし、デジタルデトックスの観点から、必要最小限のご利用をお勧めしています。'
-            },
-            {
-              q: '最寄り駅からのアクセスは？',
-              a: '京阪電車「七条駅」から徒歩約10分、JR「京都駅」からタクシーで約10分です。詳細なアクセス情報は予約確定後にお送りいたします。'
+              a: '動きやすい服装、防寒具、筆記用具、個人用品をお持ちください。その他必要な物は、ツアーごとにご案内いたします。'
             }
           ]
         }
@@ -120,7 +112,7 @@ const FAQ: React.FC = () => {
           questions: [
             {
               q: 'Are the rooms private?',
-              a: 'Chishakuin Kaikan provides private rooms (Western-style and Japanese-Western style rooms). If you prefer to share a room, please let us know in advance.'
+              a: 'It depends on the tour. Please consult with us in advance.'
             },
             {
               q: 'Do you accommodate dietary restrictions?',
@@ -128,7 +120,7 @@ const FAQ: React.FC = () => {
             },
             {
               q: 'Can I drink alcohol?',
-              a: 'Alcohol consumption is not permitted within the temple lodging. We ask for your understanding as we focus on purification of mind and body during the retreat.'
+              a: 'In principle, alcohol consumption is not permitted within the facility. We ask for your understanding as we focus on purification of mind and body during the retreat.'
             }
           ]
         },
@@ -141,7 +133,7 @@ const FAQ: React.FC = () => {
             },
             {
               q: 'What happens to outdoor programs in case of rain?',
-              a: 'Outdoor activities will be moved indoors. We provide fulfilling programs including yoga and meditation within Chishakuin Kaikan regardless of weather.'
+              a: 'It varies by tour, but we will propose alternative programs to ensure a fulfilling experience regardless of weather conditions.'
             },
             {
               q: 'Is photography allowed?',
@@ -154,15 +146,7 @@ const FAQ: React.FC = () => {
           questions: [
             {
               q: 'What should I bring?',
-              a: 'Please bring comfortable clothing, warm clothes, writing materials, and personal items. Yoga mats are available for rental.'
-            },
-            {
-              q: 'Is Wi-Fi available?',
-              a: 'Free Wi-Fi is available at Chishakuin Kaikan. However, we recommend minimal use for digital detox purposes.'
-            },
-            {
-              q: 'How do I get there from the nearest station?',
-              a: 'About 10 minutes walk from Keihan "Shichijo Station" or about 10 minutes by taxi from JR "Kyoto Station." Detailed access information will be sent after booking confirmation.'
+              a: 'Please bring comfortable clothing, warm clothes, writing materials, and personal items. Other necessary items will be informed for each tour.'
             }
           ]
         }
@@ -195,10 +179,10 @@ const FAQ: React.FC = () => {
                 {section.questions.map((item, index) => (
                   <div key={index} className="bg-white rounded-lg shadow-sm p-6">
                     <h3 className="text-lg font-medium text-gray-800 mb-3">
-                      Q{sectionIndex * 10 + index + 1}. {item.q}
+                      {item.q}
                     </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      A. {item.a}
+                      {item.a}
                     </p>
                   </div>
                 ))}

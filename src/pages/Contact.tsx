@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Phone, Mail, Send } from 'lucide-react';
+import { Mail, Send } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import CTASection from '../components/CTASection';
 
@@ -249,23 +249,6 @@ const Contact: React.FC = () => {
                 
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <MapPin className="text-green-600" size={20} />
-                    </div>
-                    <div>
-                      <h3 className="font-medium text-gray-800 mb-1">
-                        {language === 'ja' ? '所在地' : 'Address'}
-                      </h3>
-                      <p className="text-gray-600">
-                        {language === 'ja' 
-                          ? '〒108-0074 東京都港区高輪2丁目11番9号'
-                          : '2-11-9 Takanawa, Minato-ku, Tokyo 108-0074, Japan'
-                        }
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
                     <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
                       <Mail className="text-purple-600" size={20} />
                     </div>
@@ -273,9 +256,9 @@ const Contact: React.FC = () => {
                       <h3 className="font-medium text-gray-800 mb-1">
                         {language === 'ja' ? 'メールアドレス' : 'Email'}
                       </h3>
-                      <p className="text-gray-600">info@discoveryhiddenjapan.com</p>
+                      <p className="text-gray-600">info@zentreat.com</p>
                       <p className="text-sm text-gray-500">
-                        {language === 'ja' 
+                        {language === 'ja'
                           ? '24時間受付（返信は営業時間内）'
                           : '24/7 reception (replies during business hours)'
                         }
