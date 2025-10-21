@@ -145,36 +145,40 @@ const Blog: React.FC = () => {
           </div>
         </div>
 
-        {/* タグフィルター */}
-        <div className="mb-8">
-          <h3 className="text-sm font-semibold text-gray-700 mb-3 text-center">
-            {language === 'ja' ? 'タグ' : 'Tags'}
-          </h3>
-          <div className="flex flex-wrap gap-2 justify-center max-w-4xl mx-auto">
-            <button
-              onClick={() => handleTagChange(null)}
-              className={`px-4 py-1.5 rounded-full text-sm transition-all duration-300 ${
-                !selectedTag
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'bg-white text-gray-600 hover:bg-blue-50 border border-gray-200'
-              }`}
+        {/* タグフィルター（ドロップダウン） */}
+        <div className="mb-8 max-w-md mx-auto">
+          <label className="block text-sm font-semibold text-gray-700 mb-2 text-center">
+            {language === 'ja' ? 'タグで絞り込む' : 'Filter by Tag'}
+          </label>
+          <div className="relative">
+            <select
+              value={selectedTag || ''}
+              onChange={(e) => handleTagChange(e.target.value || null)}
+              className="w-full px-4 py-3 pr-10 rounded-lg border border-gray-300 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none cursor-pointer"
             >
-              {language === 'ja' ? 'すべて' : 'All'}
-            </button>
-            {allTags.map(tag => (
-              <button
-                key={tag}
-                onClick={() => handleTagChange(tag)}
-                className={`px-4 py-1.5 rounded-full text-sm transition-all duration-300 ${
-                  selectedTag === tag
-                    ? 'bg-blue-600 text-white shadow-md'
-                    : 'bg-white text-gray-600 hover:bg-blue-50 border border-gray-200'
-                }`}
-              >
-                {tag}
-              </button>
-            ))}
+              <option value="">
+                {language === 'ja' ? 'すべてのタグ' : 'All Tags'}
+              </option>
+              {allTags.map(tag => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
+              ))}
+            </select>
+            <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none">
+              <Tag size={18} className="text-gray-400" />
+            </div>
           </div>
+          {selectedTag && (
+            <div className="mt-2 text-center">
+              <button
+                onClick={() => handleTagChange(null)}
+                className="text-sm text-blue-600 hover:text-blue-800 underline"
+              >
+                {language === 'ja' ? 'タグをクリア' : 'Clear tag'}
+              </button>
+            </div>
+          )}
         </div>
 
         {/* 検索結果の件数表示 */}
