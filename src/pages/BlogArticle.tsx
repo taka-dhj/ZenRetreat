@@ -125,6 +125,7 @@ const BlogArticle: React.FC = () => {
         <img
           src={article.featuredImage}
           alt={title}
+          loading="lazy"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 flex items-end">
