@@ -9,20 +9,52 @@ interface Env {
   RESEND_API_KEY: string;
 }
 
-export async function onRequestPost(context: { request: Request; env: Env }) {
+type PagesFunction<Env = unknown> = (context: {
+  request: Request;
+  env: Env;
+  params: Record<string, string>;
+  waitUntil: (promise: Promise<unknown>) => void;
+  next: () => Promise<Response>;
+  data: Record<string, unknown>;
+}) => Response | Promise<Response>;
+
+// Handle OPTIONS request for CORS
+export const onRequestOptions: PagesFunction = async () => {
+  return new Response(null, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
+};
+
+export const onRequestPost: PagesFunction<Env> = async (context) => {
   const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
   };
 
-  if (context.request.method === 'OPTIONS') {
-    return new Response(null, {
-      headers: corsHeaders,
-    });
-  }
-
   try {
+    // Check if RESEND_API_KEY is available
+    if (!context.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not set in environment variables');
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'Server configuration error: RESEND_API_KEY not set'
+        }),
+        {
+          status: 500,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
     const { name, email, retreat, message }: ContactFormData = await context.request.json();
 
     const retreatLabels: { [key: string]: string } = {
@@ -325,10 +357,12 @@ export async function onRequestPost(context: { request: Request; env: Env }) {
       }
     );
   } catch (error) {
+    console.error('Error in contact form handler:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
+        details: error instanceof Error ? error.stack : String(error)
       }),
       {
         status: 500,
