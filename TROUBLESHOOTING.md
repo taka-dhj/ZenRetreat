@@ -46,7 +46,7 @@ Resend API: Domain not verified
 
 **解決方法:**
 1. [Resend Dashboard](https://resend.com/domains) でドメインを追加
-2. `discoveryhiddenjapan.com` のDNS設定でSPF/DKIMレコードを追加
+2. `zen-retreat-asia.com` のDNS設定でSPF/DKIMレコードを追加
 3. ドメイン認証が完了するまで待つ（通常数分～数時間）
 
 または、開発環境では `onboarding@resend.dev` を送信元として使用できます：
@@ -54,7 +54,7 @@ Resend API: Domain not verified
 `functions/api/contact.ts` の以下を変更：
 ```typescript
 from: 'onboarding@resend.dev',  // 開発用
-// from: 'ZEN RETREAT <noreply@discoveryhiddenjapan.com>',  // 本番用
+// from: 'ZEN RETREAT <info@zen-retreat-asia.com>',  // 本番用
 ```
 
 ## フロントエンドでエラー詳細を確認する方法

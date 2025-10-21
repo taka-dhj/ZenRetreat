@@ -77,7 +77,7 @@ const CancellationPolicy: React.FC = () => {
                   <h2 className="text-2xl font-medium text-gray-800 mb-4">お問い合わせ</h2>
                   <p className="text-gray-600 mb-2">キャンセル・変更に関するお問い合わせ</p>
                   <ul className="space-y-1 text-gray-600">
-                    <li>メール：info@discoveryhiddenjapan.com</li>
+                    <li>メール：info@zen-retreat-asia.com</li>
                   </ul>
                 </div>
               </div>
@@ -138,7 +138,7 @@ const CancellationPolicy: React.FC = () => {
                   <h2 className="text-2xl font-medium text-gray-800 mb-4">Contact Information</h2>
                   <p className="text-gray-600 mb-2">For cancellation and change inquiries:</p>
                   <ul className="space-y-1 text-gray-600">
-                    <li>Email: info@discoveryhiddenjapan.com</li>
+                    <li>Email: info@zen-retreat-asia.com</li>
                   </ul>
                 </div>
               </div>

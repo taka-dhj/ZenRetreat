@@ -302,7 +302,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
           <div class="footer">
             <p><strong>ZEN RETREAT</strong></p>
-            <p>Email: <a href="mailto:info@discoveryhiddenjapan.com">info@discoveryhiddenjapan.com</a></p>
+            <p>Email: <a href="mailto:info@zen-retreat-asia.com">info@zen-retreat-asia.com</a></p>
             <p><a href="https://zenretreat.pages.dev">zenretreat.pages.dev</a></p>
           </div>
         </div>
@@ -311,8 +311,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     `;
 
     const adminEmailPayload = {
-      from: 'ZEN RETREAT <noreply@discoveryhiddenjapan.com>',
-      to: 'taka@discoveryhiddenjapan.com',
+      from: 'ZEN RETREAT <info@zen-retreat-asia.com>',
+      to: 'info@zen-retreat-asia.com',
       subject: `【お問い合わせ】${name}様より`,
       html: emailHtml,
       reply_to: email,
@@ -363,7 +363,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         'Authorization': `Bearer ${context.env.RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'ZEN RETREAT <noreply@discoveryhiddenjapan.com>',
+        from: 'ZEN RETREAT <info@zen-retreat-asia.com>',
         to: email,
         subject: '【ZEN RETREAT】お問い合わせありがとうございます',
         html: customerEmailHtml,
