@@ -310,26 +310,52 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       </html>
     `;
 
+    const adminEmailPayload = {
+      from: 'ZEN RETREAT <noreply@discoveryhiddenjapan.com>',
+      to: 'taka@discoveryhiddenjapan.com',
+      subject: `【お問い合わせ】${name}様より`,
+      html: emailHtml,
+      reply_to: email,
+    };
+
+    console.log('Sending admin email to Resend API...');
+    
     const adminEmailRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${context.env.RESEND_API_KEY}`,
       },
-      body: JSON.stringify({
-        from: 'ZEN RETREAT <noreply@discoveryhiddenjapan.com>',
-        to: 'taka@discoveryhiddenjapan.com',
-        subject: `【お問い合わせ】${name}様より`,
-        html: emailHtml,
-        reply_to: email,
-      }),
+      body: JSON.stringify(adminEmailPayload),
     });
 
+    const adminResponseText = await adminEmailRes.text();
+    console.log('Resend API response status:', adminEmailRes.status);
+    console.log('Resend API response:', adminResponseText);
+
     if (!adminEmailRes.ok) {
-      const error = await adminEmailRes.text();
-      throw new Error(`Resend API error: ${error}`);
+      let errorMessage = `Resend API error (${adminEmailRes.status}): ${adminResponseText}`;
+      try {
+        const errorJson = JSON.parse(adminResponseText);
+        if (errorJson.message) {
+          errorMessage = `Resend API: ${errorJson.message}`;
+        }
+      } catch (e) {
+        // Response is not JSON
+      }
+      throw new Error(errorMessage);
     }
 
+    let adminData;
+    try {
+      adminData = JSON.parse(adminResponseText);
+    } catch (e) {
+      console.error('Failed to parse admin email response:', adminResponseText);
+      throw new Error('Invalid response from Resend API');
+    }
+
+    console.log('Sending customer confirmation email...');
+    
     const customerEmailRes = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -344,10 +370,18 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       }),
     });
 
-    const data = await adminEmailRes.json();
+    const customerResponseText = await customerEmailRes.text();
+    console.log('Customer email response status:', customerEmailRes.status);
+    
+    if (!customerEmailRes.ok) {
+      console.warn('Failed to send customer confirmation email:', customerResponseText);
+      // Don't fail the whole request if customer email fails
+    }
 
+    console.log('Email sent successfully');
+    
     return new Response(
-      JSON.stringify({ success: true, data }),
+      JSON.stringify({ success: true, data: adminData }),
       {
         status: 200,
         headers: {

@@ -16,6 +16,7 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [errorDetails, setErrorDetails] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,16 +32,27 @@ const Contact: React.FC = () => {
         body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const text = await response.text();
+      let result;
+      try {
+        result = text ? JSON.parse(text) : { success: true };
+      } catch (parseError) {
+        console.error('Failed to parse response:', text);
+        throw new Error(`Invalid JSON response: ${text.substring(0, 100)}`);
       }
 
-      const text = await response.text();
-      const result = text ? JSON.parse(text) : { success: true };
+      if (!response.ok) {
+        const errorMsg = result.error || `HTTP error! status: ${response.status}`;
+        const details = result.details || '';
+        setErrorDetails(`${errorMsg}\n${details}`);
+        console.error('API Error:', result);
+        throw new Error(errorMsg);
+      }
 
       if (result.success) {
         setSubmitStatus('success');
         setShowSuccessMessage(true);
+        setErrorDetails('');
         setFormData({
           name: '',
           email: '',
@@ -49,11 +61,17 @@ const Contact: React.FC = () => {
         });
         setTimeout(() => setShowSuccessMessage(false), 5000);
       } else {
-        setSubmitStatus('error');
+        const errorMsg = result.error || 'Unknown error';
+        setErrorDetails(result.details || '');
+        console.error('Form submission failed:', result);
+        throw new Error(errorMsg);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
+      if (error instanceof Error && !errorDetails) {
+        setErrorDetails(error.message);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -150,6 +168,16 @@ const Contact: React.FC = () => {
                         : 'Failed to send. Please try again or contact us directly via email.'
                       }
                     </p>
+                    {errorDetails && (
+                      <details className="mt-2">
+                        <summary className="text-xs text-red-600 cursor-pointer hover:text-red-800">
+                          {language === 'ja' ? 'エラー詳細を表示' : 'Show error details'}
+                        </summary>
+                        <pre className="mt-2 text-xs bg-red-100 p-2 rounded overflow-auto max-h-40 text-red-900 whitespace-pre-wrap">
+                          {errorDetails}
+                        </pre>
+                      </details>
+                    )}
                   </div>
                 </div>
               )}

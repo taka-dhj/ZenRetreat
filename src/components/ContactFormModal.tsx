@@ -37,20 +37,30 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
         body: JSON.stringify(formData),
       });
 
+      const errorText = await response.text();
+      let result;
+      try {
+        result = errorText ? JSON.parse(errorText) : {};
+      } catch (parseError) {
+        console.error('Failed to parse response:', errorText);
+        setErrorModal({
+          show: true,
+          message: language === 'ja' ? 'サーバーエラー' : 'Server Error',
+          details: `Invalid JSON response: ${errorText.substring(0, 200)}`
+        });
+        return;
+      }
+
       if (!response.ok) {
-        const errorText = await response.text();
         let errorDetails = `HTTP ${response.status}: ${response.statusText}`;
-        try {
-          const errorJson = JSON.parse(errorText);
-          if (errorJson.error) {
-            errorDetails = errorJson.error;
-          }
-        } catch {
-          if (errorText) {
-            errorDetails = errorText;
+        if (result.error) {
+          errorDetails = result.error;
+          if (result.details) {
+            errorDetails += `\n\n詳細:\n${result.details}`;
           }
         }
 
+        console.error('API Error:', result);
         setErrorModal({
           show: true,
           message: language === 'ja' ? 'メール送信に失敗しました' : 'Failed to send email',
@@ -58,8 +68,6 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
         });
         return;
       }
-
-      const result = await response.json();
 
       if (result.success) {
         setFormData({
