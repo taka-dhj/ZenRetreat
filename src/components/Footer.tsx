@@ -37,8 +37,8 @@ const Footer: React.FC = () => {
             <div className="space-y-4 text-gray-300">
               <div className="flex items-center space-x-3">
                 <Mail size={18} className="flex-shrink-0" />
-                <a href="mailto:info@zentreat.com" className="hover:text-green-400 transition-colors duration-200">
-                  info@zentreat.com
+                <a href="mailto:info@zen-retreat-asia.com" className="hover:text-green-400 transition-colors duration-200">
+                  info@zen-retreat-asia.com
                 </a>
               </div>
             </div>

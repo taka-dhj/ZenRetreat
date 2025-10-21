@@ -117,7 +117,7 @@ Deno.serve(async (req: Request) => {
       <body>
         <div class="container">
           <div class="header">
-            <h1>ZEN RETREAT</h1>
+            <h1>ZEN RETREAT ASIA</h1>
             <p style="color: rgba(255, 255, 255, 0.9); margin: 8px 0 0 0; font-size: 14px;">新しいお問い合わせ</p>
           </div>
 
@@ -144,7 +144,7 @@ Deno.serve(async (req: Request) => {
           </div>
 
           <div class="footer">
-            <p>このメールは ZEN RETREAT のお問い合わせフォームから送信されました。</p>
+            <p>このメールは ZEN RETREAT ASIA のお問い合わせフォームから送信されました。</p>
             <p><a href="https://zenretreat.pages.dev">zenretreat.pages.dev</a></p>
           </div>
         </div>
@@ -234,7 +234,7 @@ Deno.serve(async (req: Request) => {
       <body>
         <div class="container">
           <div class="header">
-            <h1>ZEN RETREAT</h1>
+            <h1>ZEN RETREAT ASIA</h1>
           </div>
 
           <div class="content">
@@ -243,7 +243,7 @@ Deno.serve(async (req: Request) => {
             </p>
 
             <p class="message">
-              この度は ZEN RETREAT へお問い合わせいただき、誠にありがとうございます。
+              この度は ZEN RETREAT ASIA へお問い合わせいただき、誠にありがとうございます。
             </p>
 
             <p class="message">
@@ -270,8 +270,8 @@ Deno.serve(async (req: Request) => {
           </div>
 
           <div class="footer">
-            <p><strong>ZEN RETREAT</strong></p>
-            <p>Email: <a href="mailto:info@discoveryhiddenjapan.com">info@discoveryhiddenjapan.com</a></p>
+            <p><strong>ZEN RETREAT ASIA</strong></p>
+            <p>Email: <a href="mailto:info@zen-retreat-asia.com">info@zen-retreat-asia.com</a></p>
             <p><a href="https://zenretreat.pages.dev">zenretreat.pages.dev</a></p>
           </div>
         </div>
@@ -309,8 +309,8 @@ Deno.serve(async (req: Request) => {
         "Authorization": `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
-        from: "ZEN RETREAT <noreply@discoveryhiddenjapan.com>",
-        to: "taka@discoveryhiddenjapan.com",
+        from: "ZEN RETREAT ASIA <info@zen-retreat-asia.com>",
+        to: "info@zen-retreat-asia.com",
         subject: `【お問い合わせ】${name}様より`,
         html: emailHtml,
         reply_to: email,
@@ -329,9 +329,9 @@ Deno.serve(async (req: Request) => {
         "Authorization": `Bearer ${resendApiKey}`,
       },
       body: JSON.stringify({
-        from: "ZEN RETREAT <noreply@discoveryhiddenjapan.com>",
+        from: "ZEN RETREAT ASIA <info@zen-retreat-asia.com>",
         to: email,
-        subject: "【ZEN RETREAT】お問い合わせありがとうございます",
+        subject: "【ZEN RETREAT ASIA】お問い合わせありがとうございます",
         html: customerEmailHtml,
       }),
     });

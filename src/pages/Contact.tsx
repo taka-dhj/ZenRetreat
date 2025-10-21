@@ -256,7 +256,7 @@ const Contact: React.FC = () => {
                       <h3 className="font-medium text-gray-800 mb-1">
                         {language === 'ja' ? 'メールアドレス' : 'Email'}
                       </h3>
-                      <p className="text-gray-600">info@zentreat.com</p>
+                      <p className="text-gray-600">info@zen-retreat-asia.com</p>
                       <p className="text-sm text-gray-500">
                         {language === 'ja'
                           ? '24時間受付（返信は営業時間内）'
