@@ -176,7 +176,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
           <div class="footer">
             <p>このメールは ZEN RETREAT のお問い合わせフォームから送信されました。</p>
-            <p><a href="https://zenretreat.pages.dev">zenretreat.pages.dev</a></p>
+            <p><a href="https://zen-retreat-asia.com">zen-retreat-asia.com</a></p>
           </div>
         </div>
       </body>
@@ -294,7 +294,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
             </p>
 
             <center>
-              <a href="https://zenretreat.pages.dev" class="cta-button">
+              <a href="https://zen-retreat-asia.com" class="cta-button">
                 ウェブサイトを見る
               </a>
             </center>
@@ -303,7 +303,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           <div class="footer">
             <p><strong>ZEN RETREAT</strong></p>
             <p>Email: <a href="mailto:info@zen-retreat-asia.com">info@zen-retreat-asia.com</a></p>
-            <p><a href="https://zenretreat.pages.dev">zenretreat.pages.dev</a></p>
+            <p><a href="https://zen-retreat-asia.com">zen-retreat-asia.com</a></p>
           </div>
         </div>
       </body>

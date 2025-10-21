@@ -57,10 +57,12 @@ export const blogArticles: BlogArticle[] = [
 
 **施設タイプ別予約ガイド**
 
-- **寺院宿坊**: テラハク、直接電話 / 60-90日前 / 日本語での対応が基本
-- **温泉旅館**: 楽天トラベル、じゃらん / 30-60日前 / キャンセル規定の確認
-- **ウェルネスリゾート**: 公式サイト、国際予約サイト / 90-120日前 / 英語対応の確認
-- **専門リトリート**: 専門予約サイト、エージェント / 120-180日前 / プログラム内容の詳細確認
+| 施設タイプ | 推奨予約方法 | 予約タイミング | 注意点 |
+|---|---|---|---|
+| 寺院宿坊 | テラハク、直接電話 | 60-90日前 | 日本語での対応が基本 |
+| 温泉旅館 | 楽天トラベル、じゃらん | 30-60日前 | キャンセル規定の確認 |
+| ウェルネスリゾート | 公式サイト、国際予約サイト | 90-120日前 | 英語対応の確認 |
+| 専門リトリート | 専門予約サイト、エージェント | 120-180日前 | プログラム内容の詳細確認 |
 
 **予約成功の秘訣**:
 
@@ -177,10 +179,12 @@ export const blogArticles: BlogArticle[] = [
 
 **実践別継続ガイド**
 
-- **座禅・瞑想**: 瞑想アプリ、タイマー、座布団 / 毎日15-20分 / 集中力、ストレスレベル測定
-- **ヨガ実践**: オンラインクラス、ヨガマット / 週3-4回 / 柔軟性、体力、心の安定測定
-- **精進料理**: レシピ本、調理器具 / 週1-2回 / 消化、エネルギーレベル測定
-- **写経・書道**: 筆、硯、半紙 / 週1回 / 集中力、心の平静測定
+| 実践内容 | 継続ツール | 頻度 | 効果測定 |
+|---|---|---|---|
+| 座禅・瞑想 | 瞑想アプリ、タイマー、座布団 | 毎日15-20分 | 集中力、ストレスレベル |
+| ヨガ実践 | オンラインクラス、ヨガマット | 週3-4回 | 柔軟性、体力、心の安定 |
+| 精進料理 | レシピ本、調理器具 | 週1-2回 | 消化、エネルギーレベル |
+| 写経・書道 | 筆、硯、半紙 | 週1回 | 集中力、心の平静 |
 
 **継続の障害と対策**:
 
@@ -284,10 +288,12 @@ Japanese retreat facilities vary significantly in booking methods depending on t
 
 **Facility Type Booking Guide**
 
-- **Temple Lodging**: Terahaku, Direct phone / 60-90 days prior / Japanese language response standard
-- **Hot Spring Inns**: Rakuten Travel, Jalan / 30-60 days prior / Check cancellation policies
-- **Wellness Resorts**: Official sites, International booking sites / 90-120 days prior / Confirm English support
-- **Specialized Retreats**: Specialized booking sites, Agents / 120-180 days prior / Detailed program content confirmation
+| Facility Type | Recommended Booking Method | Booking Timing | Important Notes |
+|---|---|---|---|
+| Temple Lodging | Terahaku, Direct phone | 60-90 days prior | Japanese language response standard |
+| Hot Spring Inns | Rakuten Travel, Jalan | 30-60 days prior | Check cancellation policies |
+| Wellness Resorts | Official sites, International booking sites | 90-120 days prior | Confirm English support |
+| Specialized Retreats | Specialized booking sites, Agents | 120-180 days prior | Detailed program content confirmation |
 
 **Booking Success Tips**:
 
@@ -404,10 +410,12 @@ Research shows that establishing new habits requires an average of 66 days. Here
 
 **Practice-by-Practice Continuation Guide**
 
-- **Zazen/Meditation**: Meditation app, Timer, Cushion / Daily 15-20 minutes / Concentration, Stress level
-- **Yoga Practice**: Online classes, Yoga mat / 3-4 times weekly / Flexibility, Physical strength, Mental stability
-- **Shojin Ryori**: Recipe books, Cooking utensils / 1-2 times weekly / Digestion, Energy level
-- **Shakyo/Calligraphy**: Brush, Inkstone, Paper / Once weekly / Concentration, Mental calm
+| Practice Content | Continuation Tools | Frequency | Effect Measurement |
+|---|---|---|---|
+| Zazen/Meditation | Meditation app, Timer, Cushion | Daily 15-20 minutes | Concentration, Stress level |
+| Yoga Practice | Online classes, Yoga mat | 3-4 times weekly | Flexibility, Physical strength, Mental stability |
+| Shojin Ryori | Recipe books, Cooking utensils | 1-2 times weekly | Digestion, Energy level |
+| Shakyo/Calligraphy | Brush, Inkstone, Paper | Once weekly | Concentration, Mental calm |
 
 **Obstacles to Continuation and Solutions**:
 
@@ -498,10 +506,12 @@ Your Japanese yoga and wellness retreat experience that will bring profound chan
 
 **宿泊施設タイプ別料金表**
 
-- **寺院宿坊**: 5,000円〜15,000円/泊（朝の勤行、精進料理付き）
-- **温泉旅館（標準）**: 15,000円〜30,000円/泊（温泉入浴、会席料理付き）
-- **温泉旅館（高級）**: 30,000円〜50,000円/泊（特別料理、個室露天風呂付き）
-- **ウェルネスリゾート**: 20,000円〜80,000円/泊（ヨガプログラム、スパ付き）
+| 宿泊施設タイプ | 1泊料金（1人） | 含まれるサービス | 特徴 |
+|---|---|---|---|
+| 寺院宿坊 | 5,000円〜15,000円 | 朝の勤行、精進料理 | 座禅体験、写経 |
+| 温泉旅館（標準） | 15,000円〜30,000円 | 温泉入浴、会席料理 | 温泉療法効果 |
+| 温泉旅館（高級） | 30,000円〜50,000円 | 特別料理、個室露天風呂 | 最高級のおもてなし |
+| ウェルネスリゾート | 20,000円〜80,000円 | ヨガプログラム、スパトリートメント | 総合的ウェルネス体験 |
 
 **季節変動の影響**:
 
@@ -688,10 +698,12 @@ Japanese wellness accommodations vary significantly in price depending on their 
 
 **Accommodation Type Pricing**
 
-- **Temple Lodging (Shukubo)**: ¥5,000-¥15,000/night (Morning prayers, vegetarian meals)
-- **Hot Spring Inn (Standard)**: ¥15,000-¥30,000/night (Hot spring baths, kaiseki cuisine)
-- **Hot Spring Inn (Luxury)**: ¥30,000-¥50,000/night (Special cuisine, private outdoor baths)
-- **Wellness Resort**: ¥20,000-¥80,000/night (Yoga programs, spa treatments)
+| Accommodation Type | Per Night (Per Person) | Included Services | Features |
+|---|---|---|---|
+| Temple Lodging (Shukubo) | ¥5,000-¥15,000 | Morning prayers, vegetarian meals | Zen meditation, sutra copying |
+| Hot Spring Inn (Standard) | ¥15,000-¥30,000 | Hot spring baths, kaiseki cuisine | Therapeutic hot spring effects |
+| Hot Spring Inn (Luxury) | ¥30,000-¥50,000 | Special cuisine, private outdoor baths | Highest level of hospitality |
+| Wellness Resort | ¥20,000-¥80,000 | Yoga programs, spa treatments | Comprehensive wellness experience |
 
 **Impact of Seasonal Variations**:
 

@@ -33,6 +33,11 @@ const BlogArticle: React.FC = () => {
   const title = language === 'ja' ? article.title.ja : article.title.en;
   const content = language === 'ja' ? article.content.ja : article.content.en;
 
+  // Helper function to process bold text
+  const processBold = (text: string) => {
+    return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  };
+
   const renderMarkdown = (markdown: string) => {
     const lines = markdown.split('\n');
     const elements: JSX.Element[] = [];
@@ -42,22 +47,19 @@ const BlogArticle: React.FC = () => {
       const line = lines[i];
 
       if (line.startsWith('# ')) {
+        const processedText = processBold(line.substring(2));
         elements.push(
-          <h1 key={key++} className="text-4xl md:text-5xl font-light text-gray-900 mb-6 mt-10 leading-tight">
-            {line.substring(2)}
-          </h1>
+          <h1 key={key++} className="text-4xl md:text-5xl font-light text-gray-900 mb-6 mt-10 leading-tight" dangerouslySetInnerHTML={{ __html: processedText }} />
         );
       } else if (line.startsWith('## ')) {
+        const processedText = processBold(line.substring(3));
         elements.push(
-          <h2 key={key++} className="relative text-3xl md:text-4xl font-light text-gray-900 mb-8 mt-14 pb-5 pl-6 leading-tight border-b border-gray-200 before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-gradient-to-b before:from-green-700 before:via-green-600 before:to-green-700 before:rounded-full after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-24 after:h-[2px] after:bg-green-700">
-            {line.substring(3)}
-          </h2>
+          <h2 key={key++} className="relative text-3xl md:text-4xl font-light text-gray-900 mb-8 mt-14 pb-5 pl-6 leading-tight border-b border-gray-200 before:content-[''] before:absolute before:left-0 before:top-0 before:bottom-0 before:w-1 before:bg-gradient-to-b before:from-green-700 before:via-green-600 before:to-green-700 before:rounded-full after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-24 after:h-[2px] after:bg-green-700" dangerouslySetInnerHTML={{ __html: processedText }} />
         );
       } else if (line.startsWith('### ')) {
+        const processedText = processBold(line.substring(4));
         elements.push(
-          <h3 key={key++} className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 mt-8 leading-snug">
-            {line.substring(4)}
-          </h3>
+          <h3 key={key++} className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 mt-8 leading-snug" dangerouslySetInnerHTML={{ __html: processedText }} />
         );
       } else if (line.startsWith('> ')) {
         const quoteLines = [line.substring(2)];
@@ -86,9 +88,10 @@ const BlogArticle: React.FC = () => {
         }
         elements.push(
           <ul key={key++} className="list-disc list-inside space-y-3 mb-6 text-gray-700 ml-4 marker:text-green-600">
-            {listItems.map((item, idx) => (
-              <li key={idx} className="leading-relaxed pl-2">{item.substring(2)}</li>
-            ))}
+            {listItems.map((item, idx) => {
+              const processedText = processBold(item.substring(2));
+              return <li key={idx} className="leading-relaxed pl-2" dangerouslySetInnerHTML={{ __html: processedText }} />;
+            })}
           </ul>
         );
       } else if (/^\d+\.\s/.test(line)) {
@@ -99,11 +102,57 @@ const BlogArticle: React.FC = () => {
         }
         elements.push(
           <ol key={key++} className="list-decimal list-inside space-y-3 mb-6 text-gray-700 ml-4 marker:text-green-600">
-            {listItems.map((item, idx) => (
-              <li key={idx} className="leading-relaxed pl-2">{item.replace(/^\d+\.\s/, '')}</li>
-            ))}
+            {listItems.map((item, idx) => {
+              const processedText = processBold(item.replace(/^\d+\.\s/, ''));
+              return <li key={idx} className="leading-relaxed pl-2" dangerouslySetInnerHTML={{ __html: processedText }} />;
+            })}
           </ol>
         );
+      } else if (line.includes('|') && (line.trim().startsWith('|') || line.split('|').length >= 3)) {
+        // Table detection
+        const tableRows = [line];
+        while (i + 1 < lines.length && lines[i + 1].includes('|')) {
+          i++;
+          tableRows.push(lines[i]);
+        }
+        
+        // Parse table
+        const parsedRows = tableRows.map(row => 
+          row.split('|').map(cell => cell.trim()).filter(cell => cell !== '')
+        );
+        
+        // Skip separator row (contains only -, :, and spaces)
+        const dataRows = parsedRows.filter(row => 
+          !row.every(cell => /^[\s\-:]+$/.test(cell))
+        );
+        
+        if (dataRows.length > 0) {
+          const headers = dataRows[0];
+          const bodyRows = dataRows.slice(1);
+          
+          elements.push(
+            <div key={key++} className="overflow-x-auto mb-8 my-6">
+              <table className="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                <thead className="bg-gradient-to-r from-green-600 to-blue-600 text-white">
+                  <tr>
+                    {headers.map((header, idx) => (
+                      <th key={idx} className="px-4 py-3 text-left font-semibold text-sm" dangerouslySetInnerHTML={{ __html: processBold(header) }} />
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {bodyRows.map((row, rowIdx) => (
+                    <tr key={rowIdx} className="hover:bg-green-50 transition-colors duration-200">
+                      {row.map((cell, cellIdx) => (
+                        <td key={cellIdx} className="px-4 py-3 text-gray-700 text-sm" dangerouslySetInnerHTML={{ __html: processBold(cell) }} />
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          );
+        }
       } else if (line.trim() === '') {
         elements.push(<div key={key++} className="h-4" />);
       } else {
