@@ -52,12 +52,12 @@ const BlogCTA: React.FC = () => {
                   {language === 'ja' ? 'ウェブサイト' : 'Website'}
                 </div>
                 <a
-                  href="https://zenretreatasia.com/"
+                  href="https://zen-retreat-asia.com/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-700 hover:text-blue-800 font-medium transition-colors duration-200 break-all"
                 >
-                  zenretreatasia.com
+                  zen-retreat-asia.com
                 </a>
               </div>
             </div>

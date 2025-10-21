@@ -107,10 +107,10 @@ const BlogArticle: React.FC = () => {
       } else if (line.trim() === '') {
         elements.push(<div key={key++} className="h-4" />);
       } else {
+        // Process bold text (**text**)
+        const processedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         elements.push(
-          <p key={key++} className="text-gray-700 leading-relaxed text-lg mb-6">
-            {line}
-          </p>
+          <p key={key++} className="text-gray-700 leading-relaxed text-lg mb-6" dangerouslySetInnerHTML={{ __html: processedLine }} />
         );
       }
     }
