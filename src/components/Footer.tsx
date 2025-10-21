@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
+import ContactFormModal from './ContactFormModal';
 
 const Footer: React.FC = () => {
   const { language } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <footer className="bg-gray-800 text-gray-300">
@@ -37,9 +39,12 @@ const Footer: React.FC = () => {
             <div className="space-y-4 text-gray-300">
               <div className="flex items-center space-x-3">
                 <Mail size={18} className="flex-shrink-0" />
-                <a href="mailto:info@zen-retreat-asia.com" className="hover:text-green-400 transition-colors duration-200">
+                <button 
+                  onClick={() => setIsModalOpen(true)}
+                  className="hover:text-green-400 transition-colors duration-200 text-left"
+                >
                   info@zen-retreat-asia.com
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -73,6 +78,8 @@ const Footer: React.FC = () => {
           <p>© 2025 ZEN RETREAT ASIA. All rights reserved.</p>
         </div>
       </div>
+
+      <ContactFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </footer>
   );
 };
