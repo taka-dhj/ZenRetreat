@@ -17,44 +17,49 @@ const Contact: React.FC = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [errorDetails, setErrorDetails] = useState<string>('');
+  const [validationErrors, setValidationErrors] = useState<{ [key: string]: string }>({});
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // バリデーションエラーをクリア
+    setValidationErrors({});
+    
+    const errors: { [key: string]: string } = {};
+    
     // バリデーション: 必須フィールドのチェック
-    if (!formData.name.trim() || !formData.email.trim()) {
-      alert(language === 'ja' 
-        ? '名前とメールアドレスは必須項目です。' 
-        : 'Name and email are required fields.'
-      );
-      return;
+    if (!formData.name.trim()) {
+      errors.name = language === 'ja' ? '名前は必須項目です。' : 'Name is required.';
+    }
+    
+    if (!formData.email.trim()) {
+      errors.email = language === 'ja' ? 'メールアドレスは必須項目です。' : 'Email is required.';
     }
 
     // バリデーション: メールアドレスの形式チェック
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email.trim())) {
-      alert(language === 'ja' 
+    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      errors.email = language === 'ja' 
         ? '正しいメールアドレスを入力してください。' 
-        : 'Please enter a valid email address.'
-      );
-      return;
+        : 'Please enter a valid email address.';
     }
 
     // バリデーション: メッセージが空でないかチェック（迷惑メール対策）
     if (!formData.message.trim()) {
-      alert(language === 'ja' 
+      errors.message = language === 'ja' 
         ? 'メッセージを入力してください。' 
-        : 'Please enter a message.'
-      );
-      return;
+        : 'Please enter a message.';
     }
 
     // バリデーション: メッセージの最小文字数チェック
-    if (formData.message.trim().length < 10) {
-      alert(language === 'ja' 
+    if (formData.message.trim() && formData.message.trim().length < 10) {
+      errors.message = language === 'ja' 
         ? 'メッセージは10文字以上で入力してください。' 
-        : 'Please enter at least 10 characters in your message.'
-      );
+        : 'Please enter at least 10 characters in your message.';
+    }
+
+    // エラーがある場合は表示して処理を停止
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
       return;
     }
 
@@ -120,6 +125,14 @@ const Contact: React.FC = () => {
       ...formData,
       [e.target.name]: e.target.value
     });
+    
+    // フィールドが変更されたらエラーをクリア
+    if (validationErrors[e.target.name]) {
+      setValidationErrors({
+        ...validationErrors,
+        [e.target.name]: ''
+      });
+    }
   };
 
   const retreatOptions = language === 'ja' ? [
@@ -232,9 +245,19 @@ const Contact: React.FC = () => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 ${
+                      validationErrors.name ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    }`}
                     placeholder={language === 'ja' ? '田中太郎' : 'John Smith'}
                   />
+                  {validationErrors.name && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {validationErrors.name}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -248,9 +271,19 @@ const Contact: React.FC = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 ${
+                      validationErrors.email ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    }`}
                     placeholder="example@email.com"
                   />
+                  {validationErrors.email && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {validationErrors.email}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -282,12 +315,22 @@ const Contact: React.FC = () => {
                     rows={6}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200"
+                    className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-colors duration-200 ${
+                      validationErrors.message ? 'border-red-500 bg-red-50' : 'border-gray-300'
+                    }`}
                     placeholder={language === 'ja' 
                       ? 'ご質問やご要望をお聞かせください...'
                       : 'Please let us know your questions or requests...'
                     }
                   />
+                  {validationErrors.message && (
+                    <p className="mt-1 text-sm text-red-600 flex items-center">
+                      <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                      </svg>
+                      {validationErrors.message}
+                    </p>
+                  )}
                 </div>
 
                 <button
