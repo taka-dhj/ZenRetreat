@@ -57,6 +57,96 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
     const { name, email, retreat, message }: ContactFormData = await context.request.json();
 
+    // サーバーサイドバリデーション: 必須フィールドのチェック
+    if (!name || !email || !message) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '必須フィールドが不足しています。名前、メールアドレス、メッセージは必須です。'
+        }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
+    // サーバーサイドバリデーション: 文字列のトリムと長さチェック
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedMessage = message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedMessage) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '空のフィールドは送信できません。'
+        }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
+    // サーバーサイドバリデーション: メールアドレスの形式チェック
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: '正しいメールアドレスを入力してください。'
+        }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
+    // サーバーサイドバリデーション: メッセージの最小文字数チェック（迷惑メール対策）
+    if (trimmedMessage.length < 10) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'メッセージは10文字以上で入力してください。'
+        }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
+    // サーバーサイドバリデーション: メッセージの最大文字数チェック（スパム対策）
+    if (trimmedMessage.length > 2000) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: 'メッセージは2000文字以内で入力してください。'
+        }),
+        {
+          status: 400,
+          headers: {
+            ...corsHeaders,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+    }
+
     const retreatLabels: { [key: string]: string } = {
       'kyoto': '京都・智積院寺院ヨガリトリート',
       'yamanashi': '山梨・森林セラピー＆ヨガリトリート',
@@ -155,12 +245,12 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
           <div class="content">
             <div class="info-row">
               <div class="label">お名前</div>
-              <div class="value">${name}</div>
+              <div class="value">${trimmedName}</div>
             </div>
 
             <div class="info-row">
               <div class="label">メールアドレス</div>
-              <div class="value"><a href="mailto:${email}" style="color: #10b981; text-decoration: none;">${email}</a></div>
+              <div class="value"><a href="mailto:${trimmedEmail}" style="color: #10b981; text-decoration: none;">${trimmedEmail}</a></div>
             </div>
 
             <div class="info-row">
@@ -170,7 +260,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
             <div class="info-row">
               <div class="label">メッセージ</div>
-              <div class="message-box">${message.replace(/\n/g, '<br>')}</div>
+              <div class="message-box">${trimmedMessage.replace(/\n/g, '<br>')}</div>
             </div>
           </div>
 
@@ -270,7 +360,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
           <div class="content">
             <p class="message">
-              ${name} 様
+              ${trimmedName} 様
             </p>
 
             <p class="message">
@@ -286,7 +376,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
               <h3>📩 お問い合わせ内容</h3>
               <p><strong>リトリート:</strong> ${retreatLabel}</p>
               <p><strong>メッセージ:</strong></p>
-              <p>${message.replace(/\n/g, '<br>')}</p>
+              <p>${trimmedMessage.replace(/\n/g, '<br>')}</p>
             </div>
 
             <p class="message">
@@ -313,9 +403,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const adminEmailPayload = {
       from: 'ZEN RETREAT <info@zen-retreat-asia.com>',
       to: 'info@zen-retreat-asia.com',
-      subject: `【お問い合わせ】${name}様より`,
+      subject: `【お問い合わせ】${trimmedName}様より`,
       html: emailHtml,
-      reply_to: email,
+      reply_to: trimmedEmail,
     };
 
     console.log('Sending admin email to Resend API...');
@@ -364,7 +454,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       },
       body: JSON.stringify({
         from: 'ZEN RETREAT <info@zen-retreat-asia.com>',
-        to: email,
+        to: trimmedEmail,
         subject: '【ZEN RETREAT】お問い合わせありがとうございます',
         html: customerEmailHtml,
       }),

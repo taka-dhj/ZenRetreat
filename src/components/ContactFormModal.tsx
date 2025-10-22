@@ -24,6 +24,44 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // バリデーション: 必須フィールドのチェック
+    if (!formData.name.trim() || !formData.email.trim()) {
+      alert(language === 'ja' 
+        ? '名前とメールアドレスは必須項目です。' 
+        : 'Name and email are required fields.'
+      );
+      return;
+    }
+
+    // バリデーション: メールアドレスの形式チェック
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email.trim())) {
+      alert(language === 'ja' 
+        ? '正しいメールアドレスを入力してください。' 
+        : 'Please enter a valid email address.'
+      );
+      return;
+    }
+
+    // バリデーション: メッセージが空でないかチェック（迷惑メール対策）
+    if (!formData.message.trim()) {
+      alert(language === 'ja' 
+        ? 'メッセージを入力してください。' 
+        : 'Please enter a message.'
+      );
+      return;
+    }
+
+    // バリデーション: メッセージの最小文字数チェック
+    if (formData.message.trim().length < 10) {
+      alert(language === 'ja' 
+        ? 'メッセージは10文字以上で入力してください。' 
+        : 'Please enter at least 10 characters in your message.'
+      );
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {

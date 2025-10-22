@@ -174,3 +174,4 @@ Server configuration error: RESEND_API_KEY not set
 - [ ] `/api/test` で環境変数が確認できる
 - [ ] フォーム送信でメールが届く
 
+
