@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Calendar, Tag, User, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -10,6 +10,20 @@ const BlogArticle: React.FC = () => {
   const { language } = useLanguage();
 
   const article = blogArticles.find(a => a.slug === slug);
+  
+  // Google Analytics 4: ブログ記事閲覧イベント
+  useEffect(() => {
+    if (article && typeof window.gtag === 'function') {
+      const title = language === 'ja' ? article.title.ja : article.title.en;
+      window.gtag('event', 'blog_article_view', {
+        event_category: 'Blog',
+        event_label: title,
+        article_slug: slug,
+        article_category: article.category,
+        value: 1,
+      });
+    }
+  }, [article, slug, language]);
 
   if (!article) {
     return (

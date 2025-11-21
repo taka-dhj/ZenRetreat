@@ -113,6 +113,15 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
       }
 
       if (result.success) {
+        // Google Analytics 4: お問い合わせフォーム送信イベント
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'contact_form_submit', {
+            event_category: 'Contact',
+            event_label: 'Modal Form',
+            value: 1,
+          });
+        }
+        
         setFormData({
           name: '',
           email: '',
