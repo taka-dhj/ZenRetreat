@@ -114,7 +114,11 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
 
       if (result.success) {
         // Google Analytics 4: お問い合わせフォーム送信イベント（コンバージョン）
+        console.log('Form submission successful, sending GA4 event...');
+        console.log('window.gtag exists:', typeof window.gtag === 'function');
+        
         if (typeof window.gtag === 'function') {
+          console.log('Sending form_submission event to GA4');
           window.gtag('event', 'form_submission', {
             event_category: 'Contact',
             event_label: 'Contact Form Modal',
@@ -123,6 +127,9 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
             retreat_interest: formData.retreat || 'none',
             value: 1,
           });
+          console.log('GA4 event sent successfully');
+        } else {
+          console.error('window.gtag is not a function. GA4 tracking code may not be loaded.');
         }
         
         setFormData({
