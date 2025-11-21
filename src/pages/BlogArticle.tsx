@@ -11,7 +11,7 @@ const BlogArticle: React.FC = () => {
 
   const article = blogArticles.find(a => a.slug === slug);
   
-  // Google Analytics 4: ブログ記事閲覧イベント
+  // Google Analytics 4: ブログ記事閲覧イベント（カスタムレポート用）
   useEffect(() => {
     if (article && typeof window.gtag === 'function') {
       const title = language === 'ja' ? article.title.ja : article.title.en;
@@ -19,7 +19,13 @@ const BlogArticle: React.FC = () => {
         event_category: 'Blog',
         event_label: title,
         article_slug: slug,
+        article_id: article.id,
+        article_title: title,
         article_category: article.category,
+        article_tags: article.tags.join(','),
+        article_published_date: article.publishedAt,
+        article_author: article.author,
+        language: language,
         value: 1,
       });
     }

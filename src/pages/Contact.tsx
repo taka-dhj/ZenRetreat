@@ -93,11 +93,14 @@ const Contact: React.FC = () => {
       }
 
       if (result.success) {
-        // Google Analytics 4: お問い合わせフォーム送信イベント
+        // Google Analytics 4: お問い合わせフォーム送信イベント（コンバージョン）
         if (typeof window.gtag === 'function') {
-          window.gtag('event', 'contact_form_submit', {
+          window.gtag('event', 'form_submission', {
             event_category: 'Contact',
-            event_label: 'Contact Page',
+            event_label: 'Contact Form Page',
+            form_type: 'contact',
+            form_location: 'page',
+            retreat_interest: formData.retreat || 'none',
             value: 1,
           });
         }
