@@ -13,6 +13,14 @@ export interface BlogArticle {
     ja: string;
     en: string;
   };
+  metaTitle?: {
+    ja: string;
+    en: string;
+  };
+  metaDescription?: {
+    ja: string;
+    en: string;
+  };
   featuredImage: string;
   category: string;
   tags: string[];

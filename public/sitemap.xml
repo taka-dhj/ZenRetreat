@@ -71,6 +71,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://zen-retreat-asia.com/blog/tea-ceremony-zen-meditation-practice-exclusive-master-classes</loc>
+    <lastmod>2025-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://zen-retreat-asia.com/blog/bespoke-wellness-journeys-japan-onsen-forest-bathing-traditional-healing</loc>
     <lastmod>2025-10-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -139,6 +145,12 @@
   <url>
     <loc>https://zen-retreat-asia.com/blog/yoga-retreat-japan-wellness</loc>
     <lastmod>2025-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zen-retreat-asia.com/en/blog/tea-ceremony-zen-meditation-practice-exclusive-master-classes</loc>
+    <lastmod>2025-10-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
