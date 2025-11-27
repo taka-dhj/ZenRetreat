@@ -81,6 +81,30 @@ const BlogArticle: React.FC = () => {
         elements.push(
           <h3 key={key++} className="text-xl md:text-2xl font-semibold text-gray-800 mb-4 mt-8 leading-snug" dangerouslySetInnerHTML={{ __html: processedText }} />
         );
+      } else if (/^!\[.*?\]\(.*?\)$/.test(line.trim())) {
+        // Markdown image: ![alt text](url)
+        const imageMatch = line.match(/^!\[(.*?)\]\((.*?)\)$/);
+        if (imageMatch) {
+          const altText = imageMatch[1];
+          const imageUrl = imageMatch[2];
+          elements.push(
+            <div key={key++} className="my-8">
+              <img 
+                src={imageUrl} 
+                alt={altText} 
+                className="w-full h-auto rounded-lg shadow-lg object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
+              {altText && (
+                <p className="text-sm text-gray-500 italic mt-2 text-center">{altText}</p>
+              )}
+            </div>
+          );
+        }
       } else if (line.startsWith('> ')) {
         const quoteLines = [line.substring(2)];
         while (i + 1 < lines.length && lines[i + 1].startsWith('> ')) {

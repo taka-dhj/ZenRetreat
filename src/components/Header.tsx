@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, Instagram } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const Header: React.FC = () => {
@@ -49,8 +49,19 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {/* Language Switcher */}
+          {/* Language Switcher & Social */}
           <div className="flex items-center space-x-4">
+            {/* Instagram Link */}
+            <a
+              href="https://www.instagram.com/zenretreatasia/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-pink-600 transition-colors duration-200"
+              aria-label="Instagram"
+            >
+              <Instagram size={20} />
+            </a>
+            
             <div className="hidden md:flex items-center space-x-2 text-sm">
               <button
                 onClick={() => handleLanguageSwitch('en')}
@@ -124,6 +135,20 @@ const Header: React.FC = () => {
               >
                 {t('nav.contact')}
               </Link>
+              
+              {/* Mobile Instagram Link */}
+              <div className="px-2 py-2 border-t border-gray-100 mt-2 pt-4">
+                <a
+                  href="https://www.instagram.com/zenretreatasia/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-pink-600 transition-colors duration-200"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Instagram size={18} />
+                  <span>Instagram</span>
+                </a>
+              </div>
               
               {/* Mobile Language Switcher */}
               <div className="flex items-center space-x-4 px-2 py-2 border-t border-gray-100 mt-2 pt-4">

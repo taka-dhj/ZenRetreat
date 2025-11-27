@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail } from 'lucide-react';
+import { Mail, Instagram } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import ContactFormModal from './ContactFormModal';
 
@@ -45,6 +45,17 @@ const Footer: React.FC = () => {
                 >
                   info@zen-retreat-asia.com
                 </button>
+              </div>
+              <div className="flex items-center space-x-3 pt-2">
+                <Instagram size={18} className="flex-shrink-0" />
+                <a
+                  href="https://www.instagram.com/zenretreatasia/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-pink-400 transition-colors duration-200"
+                >
+                  @zenretreatasia
+                </a>
               </div>
             </div>
           </div>
