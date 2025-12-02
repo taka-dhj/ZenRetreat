@@ -120,9 +120,13 @@ const RetreatDetail: React.FC = () => {
                 <h2 className="text-2xl font-medium text-gray-800 mb-6">
                   {t('retreat.overview')}
                 </h2>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  {longDescription}
-                </p>
+                <div className="text-gray-600 leading-relaxed text-lg whitespace-pre-line space-y-4">
+                  {longDescription.split('\n\n').map((paragraph, index) => (
+                    <p key={index} className="mb-4 last:mb-0">
+                      {paragraph.trim()}
+                    </p>
+                  ))}
+                </div>
               </div>
 
               {/* Daily Schedule */}
