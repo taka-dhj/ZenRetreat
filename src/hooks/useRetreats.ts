@@ -18,8 +18,8 @@ export interface Retreat {
   long_description_en: string;
   includes_ja: string[];
   includes_en: string[];
-  schedule_ja: { time: string; activity: string }[];
-  schedule_en: { time: string; activity: string }[];
+  schedule_ja: { time: string; activity: string; image?: string }[];
+  schedule_en: { time: string; activity: string; image?: string }[];
   display_order: number;
 }
 

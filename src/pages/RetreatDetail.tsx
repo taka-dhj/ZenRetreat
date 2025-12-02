@@ -130,14 +130,29 @@ const RetreatDetail: React.FC = () => {
                 <h2 className="text-2xl font-medium text-gray-800 mb-6">
                   {t('retreat.schedule')}
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-6">
                   {schedule.map((item: any, index: number) => (
-                    <div key={index} className="flex items-start space-x-4 border-l-2 border-green-500 pl-4 py-2">
-                      <Clock className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
-                      <div className="flex-1">
-                        <div className="font-medium text-gray-800">{item.time}</div>
-                        <div className="text-gray-600">{item.activity}</div>
+                    <div key={index} className="border-l-2 border-green-500 pl-4">
+                      <div className="flex items-start space-x-4 py-2">
+                        <Clock className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" />
+                        <div className="flex-1">
+                          <div className="font-medium text-gray-800">{item.time}</div>
+                          <div className="text-gray-600">{item.activity}</div>
+                        </div>
                       </div>
+                      {item.image && (
+                        <div className="mt-3 mb-2">
+                          <img
+                            src={item.image}
+                            alt={item.activity}
+                            className="w-full max-w-md rounded-lg shadow-sm object-cover"
+                            loading="lazy"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).style.display = 'none';
+                            }}
+                          />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
