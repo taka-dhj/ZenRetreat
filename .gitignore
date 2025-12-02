@@ -33,3 +33,6 @@ dist-ssr
 wrangler.toml.backup
 
 
+UPDATE_CEBU_DESCRIPTION_FORMATTED.sql
+UPDATE_CEBU_COMPLETE.sql
+*.sql
