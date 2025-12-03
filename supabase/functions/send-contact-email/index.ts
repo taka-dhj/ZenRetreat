@@ -27,13 +27,10 @@ Deno.serve(async (req: Request) => {
     const { name, email, retreat, message }: ContactFormData = await req.json();
 
     const retreatLabels: { [key: string]: string } = {
-      'kyoto': '京都・智積院寺院ヨガリトリート',
-      'yamanashi': '山梨・森林セラピー＆ヨガリトリート',
-      'hokkaido': '北海道・温泉＆雪見ヨガリトリート',
-      'okinawa': '沖縄・ビーチヨガ＆島時間リトリート',
-      'cebu-beach': 'セブ島・ビーチヨガ＆瞑想リトリート',
-      'cebu-mountain': 'セブ島・マウンテンリトリート＆スパ',
-      'other': 'その他・相談したい',
+      'general': '一般的なお問い合わせ',
+      'Japan': '日本ツアー',
+      'Cebu': 'セブツアー',
+      'other': 'その他',
       '': '指定なし'
     };
 

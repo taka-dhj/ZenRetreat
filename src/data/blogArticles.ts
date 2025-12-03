@@ -113,8 +113,8 @@ Our dedicated concierge awaits your contact, ready to guarantee unparalleled pea
       en: 'For top-tier wellness retreats, absolute peace of mind and strict information security are essential. Learn how direct booking ensures unparalleled security and service quality.'
     },
     featuredImage: 'https://images.pexels.com/photos/8371715/pexels-photo-8371715.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
-    tags: ['privacy', 'security', 'direct-booking', 'confidentiality', 'exclusive', 'trust', 'nda', 'data-protection'],
+    category: 'Tips',
+    tags: ['privacy', 'security', 'direct-booking', 'confidentiality', 'exclusive', 'trust', 'nda', 'data-protection', 'japan', 'cebu'],
     publishedAt: '2025-11-03',
     author: 'Zen Retreat ASIA'
   },
@@ -242,8 +242,8 @@ Contact us today to learn more about our team of specialists or to request sessi
       en: 'The true value of a high-end wellness retreat lies in the encounter with experts. Meet our internationally recognized yoga instructors and Zen specialists.'
     },
     featuredImage: 'https://images.pexels.com/photos/5890298/pexels-photo-5890298.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
-    tags: ['masters', 'experts', 'yoga-instructor', 'zen', 'wellness', 'specialists', 'retreat-guides', 'international-certification'],
+    category: 'Culture',
+    tags: ['masters', 'experts', 'yoga-instructor', 'zen', 'wellness', 'specialists', 'retreat-guides', 'japan', 'cebu'],
     publishedAt: '2025-11-02',
     author: 'Zen Retreat ASIA'
   },
@@ -371,7 +371,7 @@ Contact us today to discuss your vision for the ideal retreat.`
       en: 'True luxury lies in experiencing a "narrative woven exclusively for you." Discover the value and concept of our bespoke retreats designed just for you.'
     },
     featuredImage: 'https://images.pexels.com/photos/8527314/pexels-photo-8527314.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
+    category: 'Wellness',
     tags: ['bespoke', 'custom-retreat', 'luxury', 'wellness', 'japan', 'cebu', 'travel-design', 'exclusive'],
     publishedAt: '2025-11-01',
     author: 'Zen Retreat ASIA'
@@ -484,8 +484,8 @@ Contact us today for details on travel logistics and special transfer requests.`
       en: 'We provide top-tier travel logistics that combine absolute privacy with fluid seamlessness—from your arrival in Japan or Cebu, through the transfer to your retreat sanctuary, and until your final departure.'
     },
     featuredImage: 'https://images.pexels.com/photos/34875291/pexels-photo-34875291.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
-    tags: ['vip', 'logistics', 'transportation', 'airport-transfer', 'private-transfer', 'concierge', 'travel', 'luxury'],
+    category: 'Planning',
+    tags: ['vip', 'logistics', 'transportation', 'airport-transfer', 'private-transfer', 'concierge', 'japan', 'cebu'],
     publishedAt: '2025-10-28',
     author: 'Zen Retreat ASIA'
   },
@@ -625,7 +625,7 @@ Contact us today for personalized proposals on the retreat destination that best
       en: 'Compare Asia\'s two premier wellness hubs: Japan and Cebu. A comprehensive guide to help you choose the perfect retreat destination for your needs.'
     },
     featuredImage: 'https://images.pexels.com/photos/11001515/pexels-photo-11001515.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
+    category: 'Tips',
     tags: ['japan', 'cebu', 'comparison', 'zen', 'yoga-retreat', 'wellness', 'travel-guide', 'spa'],
     publishedAt: '2025-10-25',
     author: 'Zen Retreat ASIA'
@@ -738,8 +738,8 @@ Contact us today for details on the ultimate wellness program in Cebu designed f
       en: 'Experience a high-end wellness program in Cebu that combines digital detox with thorough physical detoxification. Reset your mind and body in the pristine nature of the Philippines.'
     },
     featuredImage: 'https://images.pexels.com/photos/2403531/pexels-photo-2403531.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'International',
-    tags: ['cebu', 'digital-detox', 'detox', 'wellness', 'spa', 'mindfulness', 'meditation', 'international'],
+    category: 'Wellness',
+    tags: ['cebu', 'digital-detox', 'detox', 'wellness', 'spa', 'mindfulness', 'meditation'],
     publishedAt: '2025-10-21',
     author: 'Zen Retreat ASIA'
   },
@@ -851,8 +851,8 @@ Contact us today to learn more about the pinnacle of private yoga retreats offer
       en: 'Discover the most exclusive yoga retreats in Cebu. Experience ultimate wellness through private ocean-view villas integrated with world-class spa services.'
     },
     featuredImage: 'https://images.pexels.com/photos/2524366/pexels-photo-2524366.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'International',
-    tags: ['cebu', 'yoga-retreat', 'ocean-view', 'private-villa', 'spa', 'wellness', 'luxury', 'international'],
+    category: 'Wellness',
+    tags: ['cebu', 'yoga-retreat', 'ocean-view', 'private-villa', 'spa', 'wellness', 'luxury'],
     publishedAt: '2025-10-18',
     author: 'Zen Retreat ASIA'
   },
@@ -968,7 +968,7 @@ Inquire with us today for details on the exclusive master class that offers pers
       en: 'The Tea Ceremony stands as the deepest and most refined art form, a distillation of Zen philosophy. Discover exclusive master classes that deepen your understanding of Tea Ceremony and spirituality.'
     },
     featuredImage: 'https://images.pexels.com/photos/23224447/pexels-photo-23224447.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
+    category: 'Culture',
     tags: ['tea-ceremony', 'zen', 'meditation', 'master-class', 'cultural-experience', 'spirituality', 'mindfulness', 'japan'],
     publishedAt: '2025-10-15',
     author: 'Zen Retreat ASIA'
@@ -1101,7 +1101,7 @@ Are you ready to design your exclusive wellness journey woven from the nature an
       en: 'Bespoke wellness journeys combining Onsen, Forest Bathing, and traditional healing practices. Discover Japan\'s unique healing experiences for mind and body regeneration and optimization.'
     },
     featuredImage: 'https://images.pexels.com/photos/34769304/pexels-photo-34769304.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
+    category: 'Wellness',
     tags: ['wellness', 'onsen', 'forest-bathing', 'traditional-healing', 'bespoke', 'customization', 'regeneration', 'japan'],
     publishedAt: '2025-10-10',
     author: 'Zen Retreat ASIA'
@@ -1258,8 +1258,8 @@ Contact us today to inquire about the exclusive wellness experience in Kyoto tha
       en: 'Discover the ultimate private Zen retreats in Kyoto. Explore luxury experiences for affluent travelers seeking true wealth and silence through exquisite Shojin Ryori and exclusive temple stays.'
     },
     featuredImage: 'https://images.pexels.com/photos/1822605/pexels-photo-1822605.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Domestic',
-    tags: ['zen', 'kyoto', 'private-retreat', 'shojin-ryori', 'luxury', 'temple-stay', 'meditation', 'wellness'],
+    category: 'Wellness',
+    tags: ['zen', 'kyoto', 'private-retreat', 'shojin-ryori', 'luxury', 'temple-stay', 'meditation', 'japan'],
     publishedAt: '2025-10-06',
     author: 'Zen Retreat ASIA'
   },
@@ -1739,8 +1739,8 @@ Your Japanese yoga and wellness retreat experience that will bring profound chan
 *References: Habit Formation Research (PMC, 2024), Japan Tourism Statistics (JNTO, 2024), Wellness Travel Trends Report (Global Wellness Institute, 2024)*`
     },
     featuredImage: 'https://images.pexels.com/photos/3769138/pexels-photo-3769138.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Action Guide',
-    tags: ['action plan', 'booking guide', 'habit formation', 'post-retreat', 'continuation', '90-day plan', 'realization'],
+    category: 'Planning',
+    tags: ['action-plan', 'booking-guide', 'habit-formation', 'post-retreat', 'continuation', 'japan'],
     publishedAt: '2025-10-05',
     author: 'Zen Retreat ASIA'
   },
@@ -2143,7 +2143,7 @@ If you would like more detailed information about the planning methods introduce
     },
     featuredImage: 'https://images.pexels.com/photos/2339009/pexels-photo-2339009.jpeg?auto=compress&cs=tinysrgb&w=1200',
     category: 'Planning',
-    tags: ['retreat planning', 'budget guide', 'JR pass', 'accommodation', 'cultural preparation', 'travel tips', 'japan travel'],
+    tags: ['retreat-planning', 'budget-guide', 'accommodation', 'cultural-preparation', 'travel-tips', 'japan'],
     publishedAt: '2025-10-03',
     author: 'Zen Retreat ASIA'
   },
@@ -2995,8 +2995,8 @@ Ready to experience these practices firsthand? Our specialists can connect you w
 *References: Zen Mountain Monastery Meditation Instructions, SOTOZEN.COM Official Zazen Guide, Japanese Temple Cuisine Research (Visit Tokyo, 2020), PMC Shakyo Cognitive Benefits Study (2021), Japan National Tourism Organization Onsen Guide, Ministry of Environment Hot Spring Regulations, PMC Hot Spring Bathing Research (2023)*`
     },
     featuredImage: 'https://images.pexels.com/photos/34385387/pexels-photo-34385387.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Practices',
-    tags: ['zazen', 'meditation', 'shojin ryori', 'temple food', 'shakyo', 'calligraphy', 'onsen', 'hot springs'],
+    category: 'Culture',
+    tags: ['zazen', 'meditation', 'shojin-ryori', 'temple-food', 'shakyo', 'calligraphy', 'onsen', 'japan'],
     publishedAt: '2025-10-01',
     author: 'Zen Retreat ASIA'
   },
@@ -3492,8 +3492,8 @@ Ready to determine the perfect timing for your Japanese wellness journey? Our se
 *References: Japan Meteorological Agency Climate Statistics, IMARC Group Japan Wellness Tourism Market Report 2024, Buddhist Calendar Research Institute, Travel & Leisure Japan Seasonal Pricing Analysis, Climate Data Organization Japan Weather Statistics*`
     },
     featuredImage: 'https://images.pexels.com/photos/402028/pexels-photo-402028.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Seasonal',
-    tags: ['seasonal planning', 'climate data', 'budget optimization', 'buddhist calendar', 'retreat timing', 'japanese seasons', 'wellness tourism'],
+    category: 'Planning',
+    tags: ['seasonal-planning', 'climate', 'budget', 'retreat-timing', 'japanese-seasons', 'japan'],
     publishedAt: '2025-09-28',
     author: 'Zen Retreat ASIA'
   },
@@ -3734,7 +3734,7 @@ Ready to explore how these practices can benefit your specific wellness goals? O
     },
     featuredImage: 'https://images.pexels.com/photos/34387704/pexels-photo-34387704.jpeg?auto=compress&cs=tinysrgb&w=1200',
     category: 'Wellness',
-    tags: ['science', 'research', 'meditation', 'forest bathing', 'onsen', 'wellness tourism', 'evidence-based'],
+    tags: ['science', 'research', 'meditation', 'forest-bathing', 'onsen', 'evidence-based', 'japan'],
     publishedAt: '2025-09-24',
     author: 'Zen Retreat ASIA'
   },
@@ -3907,7 +3907,7 @@ For sustainable practice, partially recreating hot spring yoga benefits at home 
     },
     featuredImage: 'https://images.pexels.com/photos/347137/pexels-photo-347137.jpeg?auto=compress&cs=tinysrgb&w=1200',
     category: 'Wellness',
-    tags: ['hot springs', 'onsen', 'wellness', 'spa yoga', 'thermal therapy', 'luxury retreats', 'japanese bathing'],
+    tags: ['hot-springs', 'onsen', 'wellness', 'spa-yoga', 'thermal-therapy', 'luxury-retreats', 'japan'],
     publishedAt: '2025-09-22',
     author: 'Zen Retreat ASIA'
   },
@@ -4029,8 +4029,8 @@ Japan's year-round seasonal yoga retreat experiences are designed not as one-tim
 Spring's openness, summer's vitality, autumn's gratitude, winter's introspection - each season's theme deeply resonates with human spiritual growth processes. Through this cyclical learning, participants understand not linear progress but spiral growth patterns, acquiring flexibility and wisdom to accept all life stages.`
     },
     featuredImage: 'https://images.pexels.com/photos/2099737/pexels-photo-2099737.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Seasonal',
-    tags: ['four seasons', 'cherry blossoms', 'autumn foliage', 'hot springs', 'seasonal yoga', 'nature retreat', 'hanami'],
+    category: 'Culture',
+    tags: ['four-seasons', 'cherry-blossoms', 'autumn-foliage', 'seasonal-yoga', 'nature-retreat', 'hanami', 'japan'],
     publishedAt: '2025-09-15',
     author: 'Zen Retreat ASIA'
   },
@@ -4142,8 +4142,8 @@ Japan's seasonal awareness system "nijushi-sekki" (24 seasonal divisions) reflec
 Source: Japanese Cultural Studies, Zen Arts Research, Traditional Japanese Aesthetics`
     },
     featuredImage: 'https://images.pexels.com/photos/810775/pexels-photo-810775.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Meditation',
-    tags: ['zen', 'meditation', 'mindfulness', 'zazen', 'yoga fusion', 'japanese culture', 'spiritual practice'],
+    category: 'Culture',
+    tags: ['zen', 'meditation', 'mindfulness', 'zazen', 'yoga-fusion', 'japanese-culture', 'japan'],
     publishedAt: '2025-09-12',
     author: 'Zen Retreat ASIA'
   },
@@ -4273,7 +4273,7 @@ Deep communion with pristine forests, sacred mountains, and pure water flows rec
 Encountering Japanese spiritual culture, Buddhist philosophy, and Shinto worldviews enriches personal spirituality through different civilization wisdom. This represents experiential understanding beyond mere knowledge acquisition.`
     },
     featuredImage: 'https://images.pexels.com/photos/161401/fushimi-inari-taisha-shrine-kyoto-japan-temple-161401.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    category: 'Spiritual',
+    category: 'Culture',
     tags: ['sacred sites', 'mount fuji', 'koyasan', 'yakushima', 'spiritual yoga', 'temple stay', 'shukubo'],
     publishedAt: '2025-09-07',
     author: 'Zen Retreat ASIA'

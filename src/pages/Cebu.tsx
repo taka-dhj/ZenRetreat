@@ -6,14 +6,14 @@ import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
 import CTASection from '../components/CTASection';
 
-const International: React.FC = () => {
+const Cebu: React.FC = () => {
   const { language, t } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
   const { retreats } = useRetreats();
 
-  const internationalRetreats = useMemo(() => {
+  const cebuRetreats = useMemo(() => {
     return retreats
-      .filter(r => r.type === 'international')
+      .filter(r => r.type === 'Cebu')
       .map(retreat => ({
         id: retreat.id,
         title: language === 'ja' ? retreat.title_ja : retreat.title_en,
@@ -32,7 +32,7 @@ const International: React.FC = () => {
       <section className="bg-gradient-to-r from-blue-50 to-blue-100 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-light text-gray-800 mb-6">
-            {t('nav.international')}
+            {t('nav.cebu')}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             {language === 'ja' 
@@ -47,7 +47,7 @@ const International: React.FC = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {internationalRetreats.map((retreat) => (
+            {cebuRetreats.map((retreat) => (
               <div key={retreat.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
                 <div className="relative h-64 overflow-hidden">
                   <img
@@ -59,7 +59,7 @@ const International: React.FC = () => {
                     decoding="async"
                   />
                   <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white bg-blue-500">
-                    {language === 'ja' ? '海外' : 'International'}
+                    {language === 'ja' ? 'セブ' : 'Cebu'}
                   </div>
                 </div>
                 <div className="p-6">
@@ -86,11 +86,11 @@ const International: React.FC = () => {
         </div>
       </section>
 
-      {/* Why Choose International */}
+      {/* Why Choose Cebu */}
       <section className="py-16 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-light text-gray-800 mb-12 text-center">
-            {language === 'ja' ? '海外リトリートの魅力' : 'Why Choose International Retreats'}
+            {language === 'ja' ? 'セブリトリートの魅力' : 'Why Choose Cebu Retreats'}
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -147,4 +147,4 @@ const International: React.FC = () => {
   );
 };
 
-export default International;
+export default Cebu;

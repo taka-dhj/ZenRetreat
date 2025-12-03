@@ -142,11 +142,11 @@ const Home: React.FC = () => {
                     decoding="async"
                   />
                   <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white ${
-                    retreat.type === 'domestic' ? 'bg-green-500' : 'bg-blue-500'
+                    retreat.type === 'Japan' ? 'bg-green-500' : 'bg-blue-500'
                   }`}>
-                    {retreat.type === 'domestic' ? 
-                      (language === 'ja' ? '国内' : 'Domestic') : 
-                      (language === 'ja' ? '海外' : 'International')
+                    {retreat.type === 'Japan' ? 
+                      (language === 'ja' ? '日本' : 'Japan') : 
+                      (language === 'ja' ? 'セブ' : 'Cebu')
                     }
                   </div>
                 </div>

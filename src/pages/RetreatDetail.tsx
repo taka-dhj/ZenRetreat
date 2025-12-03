@@ -83,11 +83,11 @@ const RetreatDetail: React.FC = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white max-w-4xl mx-auto px-4">
             <div className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 ${
-              retreat.type === 'domestic' ? 'bg-green-500' : 'bg-blue-500'
+              retreat.type === 'Japan' ? 'bg-green-500' : 'bg-blue-500'
             }`}>
-              {retreat.type === 'domestic' ?
-                (language === 'ja' ? '国内リトリート' : 'Domestic Retreat') :
-                (language === 'ja' ? '海外リトリート' : 'International Retreat')
+              {retreat.type === 'Japan' ?
+                (language === 'ja' ? '日本リトリート' : 'Japan Retreat') :
+                (language === 'ja' ? 'セブリトリート' : 'Cebu Retreat')
               }
             </div>
             <h1 className="text-3xl md:text-5xl font-light mb-4">{title}</h1>

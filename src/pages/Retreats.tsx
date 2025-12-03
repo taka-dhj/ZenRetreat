@@ -84,24 +84,24 @@ const Retreats: React.FC = () => {
                 {language === 'ja' ? 'すべて' : 'All'}
               </button>
               <button
-                onClick={() => setSelectedType('domestic')}
+                onClick={() => setSelectedType('Japan')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                  selectedType === 'domestic'
+                  selectedType === 'Japan'
                     ? 'bg-green-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                {t('retreats.domestic')}
+                {t('retreats.japan')}
               </button>
               <button
-                onClick={() => setSelectedType('international')}
+                onClick={() => setSelectedType('Cebu')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                  selectedType === 'international'
+                  selectedType === 'Cebu'
                     ? 'bg-blue-600 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
-                {t('retreats.international')}
+                {t('retreats.cebu')}
               </button>
             </div>
 
@@ -138,11 +138,11 @@ const Retreats: React.FC = () => {
                       onError={handleImageError}
                     />
                     <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white ${
-                      retreat.type === 'domestic' ? 'bg-green-500' : 'bg-blue-500'
+                      retreat.type === 'Japan' ? 'bg-green-500' : 'bg-blue-500'
                     }`}>
-                      {retreat.type === 'domestic' ?
-                        (language === 'ja' ? '国内' : 'Domestic') :
-                        (language === 'ja' ? '海外' : 'International')
+                      {retreat.type === 'Japan' ?
+                        (language === 'ja' ? '日本' : 'Japan') :
+                        (language === 'ja' ? 'セブ' : 'Cebu')
                       }
                     </div>
                   </div>

@@ -35,11 +35,11 @@ const Header: React.FC = () => {
             <Link to={`${baseUrl}/retreats`} className="text-gray-700 hover:text-green-600 transition-colors duration-200">
               {t('nav.retreats')}
             </Link>
-            <Link to={`${baseUrl}/domestic`} className="text-gray-700 hover:text-green-600 transition-colors duration-200">
-              {t('nav.domestic')}
+            <Link to={`${baseUrl}/japan`} className="text-gray-700 hover:text-green-600 transition-colors duration-200">
+              {t('nav.japan')}
             </Link>
-            <Link to={`${baseUrl}/international`} className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
-              {t('nav.international')}
+            <Link to={`${baseUrl}/cebu`} className="text-gray-700 hover:text-blue-600 transition-colors duration-200">
+              {t('nav.cebu')}
             </Link>
             <Link to={`${baseUrl}/blog`} className="text-gray-700 hover:text-green-600 transition-colors duration-200">
               {t('nav.blog')}
@@ -108,18 +108,18 @@ const Header: React.FC = () => {
                 {t('nav.retreats')}
               </Link>
               <Link
-                to={`${baseUrl}/domestic`}
+                to={`${baseUrl}/japan`}
                 className="text-gray-700 hover:text-green-600 transition-colors duration-200 px-2 py-1"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t('nav.domestic')}
+                {t('nav.japan')}
               </Link>
               <Link
-                to={`${baseUrl}/international`}
+                to={`${baseUrl}/cebu`}
                 className="text-gray-700 hover:text-blue-600 transition-colors duration-200 px-2 py-1"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {t('nav.international')}
+                {t('nav.cebu')}
               </Link>
               <Link
                 to={`${baseUrl}/blog`}

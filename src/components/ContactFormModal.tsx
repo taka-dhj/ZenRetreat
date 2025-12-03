@@ -177,22 +177,16 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
 
   const retreatOptions = language === 'ja' ? [
     { value: '', label: '選択してください' },
-    { value: 'kyoto', label: '京都・智積院寺院ヨガリトリート' },
-    { value: 'yamanashi', label: '山梨・森林セラピー＆ヨガリトリート' },
-    { value: 'hokkaido', label: '北海道・温泉＆雪見ヨガリトリート' },
-    { value: 'okinawa', label: '沖縄・ビーチヨガ＆島時間リトリート' },
-    { value: 'cebu-beach', label: 'セブ島・ビーチヨガ＆瞑想リトリート' },
-    { value: 'cebu-mountain', label: 'セブ島・マウンテンリトリート＆スパ' },
-    { value: 'other', label: 'その他・相談したい' }
+    { value: 'general', label: '一般的なお問い合わせ' },
+    { value: 'Japan', label: '日本ツアー' },
+    { value: 'Cebu', label: 'セブツアー' },
+    { value: 'other', label: 'その他' }
   ] : [
     { value: '', label: 'Please select' },
-    { value: 'kyoto', label: 'Kyoto Chishakuin Temple Yoga Retreat' },
-    { value: 'yamanashi', label: 'Yamanashi Forest Therapy & Yoga Retreat' },
-    { value: 'hokkaido', label: 'Hokkaido Hot Springs & Snow Yoga Retreat' },
-    { value: 'okinawa', label: 'Okinawa Beach Yoga & Island Time Retreat' },
-    { value: 'cebu-beach', label: 'Cebu Island Beach Yoga & Meditation Retreat' },
-    { value: 'cebu-mountain', label: 'Cebu Island Mountain Retreat & Spa' },
-    { value: 'other', label: 'Other / Consultation' }
+    { value: 'general', label: 'General Inquiry' },
+    { value: 'Japan', label: 'Japan Tours' },
+    { value: 'Cebu', label: 'Cebu Tours' },
+    { value: 'other', label: 'Other' }
   ];
 
   if (!isOpen) return null;

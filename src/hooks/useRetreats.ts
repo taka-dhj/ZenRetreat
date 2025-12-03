@@ -10,7 +10,7 @@ export interface Retreat {
   duration: number;
   price: number;
   capacity: number;
-  type: 'domestic' | 'international';
+  type: 'Japan' | 'Cebu';
   image: string;
   description_ja: string;
   description_en: string;

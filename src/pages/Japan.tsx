@@ -6,14 +6,14 @@ import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
 import CTASection from '../components/CTASection';
 
-const Domestic: React.FC = () => {
+const Japan: React.FC = () => {
   const { language, t } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
   const { retreats } = useRetreats();
 
-  const domesticRetreats = useMemo(() => {
+  const japanRetreats = useMemo(() => {
     return retreats
-      .filter(r => r.type === 'domestic')
+      .filter(r => r.type === 'Japan')
       .map(retreat => ({
         id: retreat.id,
         title: language === 'ja' ? retreat.title_ja : retreat.title_en,
@@ -32,7 +32,7 @@ const Domestic: React.FC = () => {
       <section className="bg-gradient-to-r from-green-50 to-green-100 py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-light text-gray-800 mb-6">
-            {t('nav.domestic')}
+            {t('nav.japan')}
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             {language === 'ja'
@@ -47,7 +47,7 @@ const Domestic: React.FC = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {domesticRetreats.map((retreat) => (
+            {japanRetreats.map((retreat) => (
               <div key={retreat.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
                 <div className="relative h-64 overflow-hidden">
                   <img
@@ -59,7 +59,7 @@ const Domestic: React.FC = () => {
                     decoding="async"
                   />
                   <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white bg-green-500">
-                    {language === 'ja' ? '国内' : 'Domestic'}
+                    {language === 'ja' ? '日本' : 'Japan'}
                   </div>
                 </div>
                 <div className="p-6">
@@ -91,4 +91,4 @@ const Domestic: React.FC = () => {
   );
 };
 
-export default Domestic;
+export default Japan;

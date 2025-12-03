@@ -6,8 +6,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Retreats from './pages/Retreats';
 import RetreatDetail from './pages/RetreatDetail';
-import Domestic from './pages/Domestic';
-import International from './pages/International';
+import Japan from './pages/Japan';
+import Cebu from './pages/Cebu';
 import Contact from './pages/Contact';
 import FAQ from './pages/FAQ';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -60,10 +60,10 @@ function App() {
               <Route path="/en/retreats" element={<Retreats />} />
               <Route path="/retreat/:id" element={<RetreatDetail />} />
               <Route path="/en/retreat/:id" element={<RetreatDetail />} />
-              <Route path="/domestic" element={<Domestic />} />
-              <Route path="/en/domestic" element={<Domestic />} />
-              <Route path="/international" element={<International />} />
-              <Route path="/en/international" element={<International />} />
+              <Route path="/japan" element={<Japan />} />
+              <Route path="/en/japan" element={<Japan />} />
+              <Route path="/cebu" element={<Cebu />} />
+              <Route path="/en/cebu" element={<Cebu />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/en/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogArticle />} />
