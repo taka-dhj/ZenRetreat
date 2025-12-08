@@ -16,9 +16,7 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center space-x-2 mb-6">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold">Z</span>
-              </div>
+              <img src="/logo.png" alt="Zen Retreat Asia" className="w-10 h-10 object-contain" />
               <span className="font-light text-2xl text-white tracking-wide">
                 ZEN RETREAT ASIA
               </span>

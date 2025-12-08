@@ -22,9 +22,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to={baseUrl || '/'} className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">Z</span>
-            </div>
+            <img src="/logo.png" alt="Zen Retreat Asia" className="w-8 h-8 object-contain" />
             <span className="font-light text-xl text-gray-800 tracking-wide">
               ZEN RETREAT ASIA
             </span>
