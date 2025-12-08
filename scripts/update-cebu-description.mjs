@@ -63,3 +63,4 @@ WHERE id = 'cebu-climaco-beach-retreat';
 updateDescription();
 
 
+
