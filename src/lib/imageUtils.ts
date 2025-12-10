@@ -6,6 +6,7 @@ const imageMap: Record<string, string> = {
   '/Kiyosumiteiein.jpg': '/Kiyosumiteiein.jpg',
   '/Reiganji.jpg': '/Reiganji.jpg',
   '/Kintsugi sample.jpg': '/Kintsugi sample.jpg',
+  '/Izakaya sample.jpg': '/Izakaya sample.jpg',
 };
 
 export const getImageUrl = (imagePath: string | undefined | null): string => {
