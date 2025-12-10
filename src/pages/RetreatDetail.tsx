@@ -147,13 +147,11 @@ const RetreatDetail: React.FC = () => {
                       {item.image && (
                         <div className="mt-3 mb-2">
                           <img
-                            src={item.image}
+                            src={getImageUrl(item.image)}
                             alt={item.activity}
                             className="w-full max-w-md rounded-lg shadow-sm object-cover"
                             loading="lazy"
-                            onError={(e) => {
-                              (e.target as HTMLImageElement).style.display = 'none';
-                            }}
+                            onError={handleImageError}
                           />
                         </div>
                       )}
