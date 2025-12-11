@@ -100,6 +100,31 @@ const Japan: React.FC = () => {
     return title;
   };
 
+  // 場所から都道府県を削除する関数
+  const removePrefectureFromLocation = (location: string, locationJa: string): string => {
+    // 日本語のlocationのみ処理
+    if (language !== 'ja') return location;
+    
+    for (const [prefJa] of Object.entries(prefectureMap)) {
+      if (locationJa.includes(prefJa)) {
+        // 「都道府県・」または「都道府県・」のパターンを削除
+        const patterns = [
+          new RegExp(`^${prefJa}[・・]`, 'g'),
+          new RegExp(`^${prefJa}\\s*[・・]`, 'g'),
+        ];
+        
+        let cleanedLocation = location;
+        for (const pattern of patterns) {
+          cleanedLocation = cleanedLocation.replace(pattern, '');
+        }
+        
+        return cleanedLocation.trim() || location;
+      }
+    }
+    
+    return location;
+  };
+
   const japanRetreats = useMemo(() => {
     return retreats
       .filter(r => r.type === 'Japan')
@@ -107,12 +132,13 @@ const Japan: React.FC = () => {
         const location = language === 'ja' ? retreat.location_ja : retreat.location_en;
         const originalTitle = language === 'ja' ? retreat.title_ja : retreat.title_en;
         const cleanedTitle = removePrefectureFromTitle(originalTitle, retreat.location_ja);
+        const cleanedLocation = removePrefectureFromLocation(location, retreat.location_ja);
         const prefecture = extractPrefecture(retreat.location_ja, retreat.location_en);
         
         return {
           id: retreat.id,
           title: cleanedTitle,
-          location: location,
+          location: cleanedLocation,
           prefecture: prefecture,
           price: retreat.price,
           image: retreat.image,
@@ -194,10 +220,12 @@ const Japan: React.FC = () => {
 
                   {/* コンテンツセクション */}
                   <div className="p-8 flex flex-col flex-grow">
-                    {/* タイトル */}
-                    <h3 className="text-2xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2 group-hover:text-green-700 transition-colors duration-300">
-                      {retreat.title}
-                    </h3>
+                    {/* タイトル - 常に2行分の高さを確保し、1行の場合は中央配置 */}
+                    <div className="h-[4.5rem] flex items-center mb-3">
+                      <h3 className="text-2xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-green-700 transition-colors duration-300">
+                        {retreat.title}
+                      </h3>
+                    </div>
 
                     {/* 説明文 */}
                     <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 text-sm">
