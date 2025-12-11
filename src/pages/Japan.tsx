@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Clock, Users } from 'lucide-react';
+import { MapPin, Sparkles } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
@@ -18,11 +18,10 @@ const Japan: React.FC = () => {
         id: retreat.id,
         title: language === 'ja' ? retreat.title_ja : retreat.title_en,
         location: language === 'ja' ? retreat.location_ja : retreat.location_en,
-        duration: retreat.duration,
         price: retreat.price,
-        capacity: retreat.capacity,
         image: retreat.image,
-        description: language === 'ja' ? retreat.description_ja : retreat.description_en
+        description: language === 'ja' ? retreat.description_ja : retreat.description_en,
+        includes: language === 'ja' ? retreat.includes_ja : retreat.includes_en
       }));
   }, [retreats, language]);
 
@@ -59,15 +58,18 @@ const Japan: React.FC = () => {
                 return `¥${price.toLocaleString('en-US')}`;
               };
 
-              // 期間フォーマット関数
-              const formatDuration = (duration: number | undefined | null) => {
-                if (duration == null || isNaN(duration)) {
-                  return language === 'ja' ? '要確認' : 'TBD';
+              // 特別なポイントを取得（includesの最初の要素、またはdescriptionから抽出）
+              const getSpecialPoint = () => {
+                if (retreat.includes && Array.isArray(retreat.includes) && retreat.includes.length > 0) {
+                  // includes配列の最初の要素を使用
+                  return retreat.includes[0];
                 }
-                if (language === 'ja') {
-                  return `${duration}${t('common.days')}`;
+                // includesが空の場合は、descriptionから最初の文を抽出
+                if (retreat.description) {
+                  const firstSentence = retreat.description.split(/[。\.]/)[0];
+                  return firstSentence || (language === 'ja' ? '特別な体験' : 'Special Experience');
                 }
-                return `${duration} ${duration === 1 ? 'day' : 'days'}`;
+                return language === 'ja' ? '特別な体験' : 'Special Experience';
               };
 
               return (
@@ -113,19 +115,11 @@ const Japan: React.FC = () => {
                         <span className="truncate max-w-[120px]">{retreat.location}</span>
                       </div>
 
-                      {/* 期間 */}
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
-                        <Clock size={14} className="text-green-600" />
-                        <span>{formatDuration(retreat.duration)}</span>
+                      {/* 特別なポイント */}
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 rounded-lg text-xs font-semibold text-green-700 border border-green-200">
+                        <Sparkles size={14} className="text-green-600" />
+                        <span className="truncate max-w-[150px]">{getSpecialPoint()}</span>
                       </div>
-
-                      {/* 定員 */}
-                      {retreat.capacity != null && !isNaN(retreat.capacity) && (
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
-                          <Users size={14} className="text-green-600" />
-                          <span>{retreat.capacity}{t('common.people')}</span>
-                        </div>
-                      )}
                     </div>
 
                     {/* 価格表示 */}
