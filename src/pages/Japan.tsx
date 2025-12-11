@@ -49,7 +49,10 @@ const Japan: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {japanRetreats.map((retreat) => {
               // 価格フォーマット関数
-              const formatPrice = (price: number) => {
+              const formatPrice = (price: number | undefined | null) => {
+                if (price == null || isNaN(price)) {
+                  return language === 'ja' ? 'お問い合わせ' : 'Contact us';
+                }
                 if (language === 'ja') {
                   return `¥${price.toLocaleString('ja-JP')}`;
                 }
@@ -57,7 +60,10 @@ const Japan: React.FC = () => {
               };
 
               // 期間フォーマット関数
-              const formatDuration = (duration: number) => {
+              const formatDuration = (duration: number | undefined | null) => {
+                if (duration == null || isNaN(duration)) {
+                  return language === 'ja' ? '要確認' : 'TBD';
+                }
                 if (language === 'ja') {
                   return `${duration}${t('common.days')}`;
                 }
@@ -114,26 +120,30 @@ const Japan: React.FC = () => {
                       </div>
 
                       {/* 定員 */}
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
-                        <Users size={14} className="text-green-600" />
-                        <span>{retreat.capacity}{t('common.people')}</span>
-                      </div>
+                      {retreat.capacity != null && !isNaN(retreat.capacity) && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
+                          <Users size={14} className="text-green-600" />
+                          <span>{retreat.capacity}{t('common.people')}</span>
+                        </div>
+                      )}
                     </div>
 
                     {/* 価格表示 */}
-                    <div className="mb-6 pt-4 border-t border-gray-100">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-bold text-green-700">
-                          {formatPrice(retreat.price)}
-                        </span>
-                        {language === 'ja' && (
-                          <span className="text-sm text-gray-500">から</span>
-                        )}
-                        {language === 'en' && (
-                          <span className="text-sm text-gray-500">from</span>
-                        )}
+                    {retreat.price != null && !isNaN(retreat.price) && (
+                      <div className="mb-6 pt-4 border-t border-gray-100">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-2xl font-bold text-green-700">
+                            {formatPrice(retreat.price)}
+                          </span>
+                          {language === 'ja' && (
+                            <span className="text-sm text-gray-500">から</span>
+                          )}
+                          {language === 'en' && (
+                            <span className="text-sm text-gray-500">from</span>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* CTAボタン */}
                     <Link
