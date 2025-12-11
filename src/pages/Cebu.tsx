@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin } from 'lucide-react';
+import { MapPin, Sparkles } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
@@ -18,11 +18,10 @@ const Cebu: React.FC = () => {
         id: retreat.id,
         title: language === 'ja' ? retreat.title_ja : retreat.title_en,
         location: language === 'ja' ? retreat.location_ja : retreat.location_en,
-        duration: retreat.duration,
         price: retreat.price,
-        capacity: retreat.capacity,
         image: retreat.image,
-        description: language === 'ja' ? retreat.description_ja : retreat.description_en
+        description: language === 'ja' ? retreat.description_ja : retreat.description_en,
+        includes: language === 'ja' ? retreat.includes_ja : retreat.includes_en
       }));
   }, [retreats, language]);
 
@@ -44,44 +43,130 @@ const Cebu: React.FC = () => {
       </section>
 
       {/* Retreats */}
-      <section className="py-16">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {cebuRetreats.map((retreat) => (
-              <div key={retreat.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={getImageUrl(retreat.image)}
-                    alt={retreat.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={handleImageError}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white bg-blue-500">
-                    {language === 'ja' ? 'セブ' : 'Cebu'}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {cebuRetreats.map((retreat) => {
+              // 価格フォーマット関数
+              const formatPrice = (price: number | undefined | null) => {
+                if (price == null || isNaN(price)) {
+                  return language === 'ja' ? 'お問い合わせ' : 'Contact us';
+                }
+                if (language === 'ja') {
+                  return `¥${price.toLocaleString('ja-JP')}`;
+                }
+                return `¥${price.toLocaleString('en-US')}`;
+              };
+
+              // 特別なポイントを取得（includesの最初の要素、またはdescriptionから抽出）
+              // 日数情報（○泊）を削除
+              const getSpecialPoint = () => {
+                let specialPoint = '';
+                
+                if (retreat.includes && Array.isArray(retreat.includes) && retreat.includes.length > 0) {
+                  for (const item of retreat.includes) {
+                    let cleaned = item
+                      .replace(/[（(]\d+泊[）)]/g, '')
+                      .replace(/[（(]\d+日[）)]/g, '')
+                      .replace(/\d+泊/g, '')
+                      .replace(/\d+日/g, '')
+                      .replace(/\s*[（(].*?[）)]\s*/g, '')
+                      .trim();
+                    
+                    if (cleaned.endsWith('宿泊')) {
+                      cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned && cleaned.length > 0) {
+                      specialPoint = cleaned;
+                      break;
+                    }
+                  }
+                  if (!specialPoint && retreat.includes[0]) {
+                    let cleaned = retreat.includes[0]
+                      .replace(/[（(]\d+泊[）)]/g, '')
+                      .replace(/[（(]\d+日[）)]/g, '')
+                      .replace(/\d+泊/g, '')
+                      .replace(/\d+日/g, '')
+                      .replace(/\s*[（(].*?[）)]\s*/g, '')
+                      .trim();
+                    
+                    if (cleaned.endsWith('宿泊')) {
+                      cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    specialPoint = cleaned;
+                  }
+                }
+                
+                if (!specialPoint && retreat.description) {
+                  const firstSentence = retreat.description.split(/[。\.]/)[0];
+                  specialPoint = firstSentence || (language === 'ja' ? '特別な体験' : 'Special Experience');
+                }
+                
+                return specialPoint || (language === 'ja' ? '特別な体験' : 'Special Experience');
+              };
+
+              return (
+                <div key={retreat.id} className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group flex flex-col h-full">
+                  <div className="relative aspect-[5/4] overflow-hidden">
+                    <img
+                      src={getImageUrl(retreat.image)}
+                      alt={retreat.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      onError={handleImageError}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold text-white bg-blue-600 shadow-md backdrop-blur-sm">
+                      {language === 'ja' ? 'セブ' : 'Cebu'}
+                    </div>
+                  </div>
+                  <div className="p-8 flex flex-col flex-grow">
+                    <div className="h-[4.5rem] flex items-center mb-3">
+                      <h3 className="text-2xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-blue-700 transition-colors duration-300">
+                        {retreat.title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 text-sm">
+                      {retreat.description}
+                    </p>
+                    <div className="flex flex-wrap gap-3 mb-6">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
+                        <MapPin size={14} className="text-blue-600" />
+                        <span className="truncate max-w-[120px]">{retreat.location}</span>
+                      </div>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 rounded-lg text-xs font-semibold text-blue-700 border border-blue-200">
+                        <Sparkles size={14} className="text-blue-600" />
+                        <span className="truncate max-w-[150px]">{getSpecialPoint()}</span>
+                      </div>
+                    </div>
+                    {retreat.price != null && !isNaN(retreat.price) && (
+                      <div className="mb-6 pt-4 border-t border-gray-100">
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-2xl font-bold text-blue-700">
+                            {formatPrice(retreat.price)}
+                          </span>
+                          {language === 'ja' && (
+                            <span className="text-sm text-gray-500">から</span>
+                          )}
+                          {language === 'en' && (
+                            <span className="text-sm text-gray-500">from</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    <Link
+                      to={`${baseUrl}/retreat/${retreat.id}`}
+                      className="mt-auto block w-full text-center bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900 text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    >
+                      {t('common.learn-more')}
+                    </Link>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-medium text-gray-800 mb-2">
-                    {retreat.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{retreat.description}</p>
-                  
-                  <div className="flex items-center text-sm text-gray-500 mb-4">
-                    <MapPin size={14} />
-                    <span className="ml-1">{retreat.location}</span>
-                  </div>
-                  
-                  <Link
-                    to={`${baseUrl}/retreat/${retreat.id}`}
-                    className="block w-full text-center bg-blue-100 hover:bg-blue-200 text-blue-700 py-3 rounded-lg transition-colors duration-200 font-medium"
-                  >
-                    {t('common.learn-more')}
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
