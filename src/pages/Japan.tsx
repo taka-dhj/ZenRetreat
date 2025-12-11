@@ -182,17 +182,59 @@ const Japan: React.FC = () => {
               };
 
               // 特別なポイントを取得（includesの最初の要素、またはdescriptionから抽出）
+              // 日数情報（○泊）を削除
               const getSpecialPoint = () => {
+                let specialPoint = '';
+                
                 if (retreat.includes && Array.isArray(retreat.includes) && retreat.includes.length > 0) {
-                  // includes配列の最初の要素を使用
-                  return retreat.includes[0];
+                  // includes配列から日数情報を含まない要素を探す
+                  for (const item of retreat.includes) {
+                    // 「○泊」や「（○泊）」「（○日）」などのパターンを削除
+                    // 例：「宿坊での宿泊（5泊）」→「宿坊での宿泊」
+                    let cleaned = item
+                      .replace(/[（(]\d+泊[）)]/g, '')  // （5泊）を削除
+                      .replace(/[（(]\d+日[）)]/g, '')  // （5日）を削除
+                      .replace(/\d+泊/g, '')            // 5泊を削除
+                      .replace(/\d+日/g, '')            // 5日を削除
+                      .replace(/\s*[（(].*?[）)]\s*/g, '') // 残った括弧内のテキストを削除
+                      .trim();
+                    
+                    // 「宿泊」で終わる場合は、「での宿泊」「での宿泊」などを削除して簡潔に
+                    // 例：「宿坊での宿泊」→「宿坊」
+                    if (cleaned.endsWith('宿泊')) {
+                      cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned && cleaned.length > 0) {
+                      specialPoint = cleaned;
+                      break;
+                    }
+                  }
+                  // 日数情報を含まない要素が見つからない場合は、最初の要素から日数を削除
+                  if (!specialPoint && retreat.includes[0]) {
+                    let cleaned = retreat.includes[0]
+                      .replace(/[（(]\d+泊[）)]/g, '')
+                      .replace(/[（(]\d+日[）)]/g, '')
+                      .replace(/\d+泊/g, '')
+                      .replace(/\d+日/g, '')
+                      .replace(/\s*[（(].*?[）)]\s*/g, '')
+                      .trim();
+                    
+                    if (cleaned.endsWith('宿泊')) {
+                      cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    specialPoint = cleaned;
+                  }
                 }
-                // includesが空の場合は、descriptionから最初の文を抽出
-                if (retreat.description) {
+                
+                // includesが空または日数情報のみの場合は、descriptionから最初の文を抽出
+                if (!specialPoint && retreat.description) {
                   const firstSentence = retreat.description.split(/[。\.]/)[0];
-                  return firstSentence || (language === 'ja' ? '特別な体験' : 'Special Experience');
+                  specialPoint = firstSentence || (language === 'ja' ? '特別な体験' : 'Special Experience');
                 }
-                return language === 'ja' ? '特別な体験' : 'Special Experience';
+                
+                return specialPoint || (language === 'ja' ? '特別な体験' : 'Special Experience');
               };
 
               return (
