@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin } from 'lucide-react';
+import { MapPin, Clock, Users } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
@@ -44,44 +44,108 @@ const Japan: React.FC = () => {
       </section>
 
       {/* Retreats */}
-      <section className="py-16">
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {japanRetreats.map((retreat) => (
-              <div key={retreat.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={getImageUrl(retreat.image)}
-                    alt={retreat.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    onError={handleImageError}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium text-white bg-green-500">
-                    {language === 'ja' ? '日本' : 'Japan'}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {japanRetreats.map((retreat) => {
+              // 価格フォーマット関数
+              const formatPrice = (price: number) => {
+                if (language === 'ja') {
+                  return `¥${price.toLocaleString('ja-JP')}`;
+                }
+                return `¥${price.toLocaleString('en-US')}`;
+              };
+
+              // 期間フォーマット関数
+              const formatDuration = (duration: number) => {
+                if (language === 'ja') {
+                  return `${duration}${t('common.days')}`;
+                }
+                return `${duration} ${duration === 1 ? 'day' : 'days'}`;
+              };
+
+              return (
+                <div
+                  key={retreat.id}
+                  className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group flex flex-col"
+                >
+                  {/* 画像セクション */}
+                  <div className="relative aspect-[3/2] overflow-hidden">
+                    <img
+                      src={getImageUrl(retreat.image)}
+                      alt={retreat.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      onError={handleImageError}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {/* オーバーレイグラデーション */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* タグ */}
+                    <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold text-white bg-green-600 shadow-md backdrop-blur-sm">
+                      {language === 'ja' ? '日本' : 'Japan'}
+                    </div>
+                  </div>
+
+                  {/* コンテンツセクション */}
+                  <div className="p-8 flex flex-col flex-grow">
+                    {/* タイトル */}
+                    <h3 className="text-2xl font-bold text-gray-900 mb-3 leading-tight line-clamp-2 group-hover:text-green-700 transition-colors duration-300">
+                      {retreat.title}
+                    </h3>
+
+                    {/* 説明文 */}
+                    <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 text-sm">
+                      {retreat.description}
+                    </p>
+
+                    {/* メタ情報 - アイコン付きタグ形式 */}
+                    <div className="flex flex-wrap gap-3 mb-6">
+                      {/* 場所 */}
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
+                        <MapPin size={14} className="text-green-600" />
+                        <span className="truncate max-w-[120px]">{retreat.location}</span>
+                      </div>
+
+                      {/* 期間 */}
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
+                        <Clock size={14} className="text-green-600" />
+                        <span>{formatDuration(retreat.duration)}</span>
+                      </div>
+
+                      {/* 定員 */}
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
+                        <Users size={14} className="text-green-600" />
+                        <span>{retreat.capacity}{t('common.people')}</span>
+                      </div>
+                    </div>
+
+                    {/* 価格表示 */}
+                    <div className="mb-6 pt-4 border-t border-gray-100">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-2xl font-bold text-green-700">
+                          {formatPrice(retreat.price)}
+                        </span>
+                        {language === 'ja' && (
+                          <span className="text-sm text-gray-500">から</span>
+                        )}
+                        {language === 'en' && (
+                          <span className="text-sm text-gray-500">from</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* CTAボタン */}
+                    <Link
+                      to={`${baseUrl}/retreat/${retreat.id}`}
+                      className="mt-auto block w-full text-center bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                    >
+                      {t('common.learn-more')}
+                    </Link>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-medium text-gray-800 mb-2">
-                    {retreat.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{retreat.description}</p>
-
-                  <div className="flex items-center text-sm text-gray-500 mb-4">
-                    <MapPin size={14} />
-                    <span className="ml-1">{retreat.location}</span>
-                  </div>
-
-                  <Link
-                    to={`${baseUrl}/retreat/${retreat.id}`}
-                    className="block w-full text-center bg-green-100 hover:bg-green-200 text-green-700 py-3 rounded-lg transition-colors duration-200 font-medium"
-                  >
-                    {t('common.learn-more')}
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
