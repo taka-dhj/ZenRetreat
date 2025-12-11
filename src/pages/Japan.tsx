@@ -11,18 +11,115 @@ const Japan: React.FC = () => {
   const baseUrl = language === 'en' ? '/en' : '';
   const { retreats } = useRetreats();
 
+  // 都道府県リスト（日本語と英語のマッピング）
+  const prefectureMap: { [key: string]: { ja: string; en: string } } = {
+    '北海道': { ja: '北海道', en: 'Hokkaido' },
+    '青森': { ja: '青森', en: 'Aomori' },
+    '岩手': { ja: '岩手', en: 'Iwate' },
+    '宮城': { ja: '宮城', en: 'Miyagi' },
+    '秋田': { ja: '秋田', en: 'Akita' },
+    '山形': { ja: '山形', en: 'Yamagata' },
+    '福島': { ja: '福島', en: 'Fukushima' },
+    '茨城': { ja: '茨城', en: 'Ibaraki' },
+    '栃木': { ja: '栃木', en: 'Tochigi' },
+    '群馬': { ja: '群馬', en: 'Gunma' },
+    '埼玉': { ja: '埼玉', en: 'Saitama' },
+    '千葉': { ja: '千葉', en: 'Chiba' },
+    '東京': { ja: '東京', en: 'Tokyo' },
+    '神奈川': { ja: '神奈川', en: 'Kanagawa' },
+    '新潟': { ja: '新潟', en: 'Niigata' },
+    '富山': { ja: '富山', en: 'Toyama' },
+    '石川': { ja: '石川', en: 'Ishikawa' },
+    '福井': { ja: '福井', en: 'Fukui' },
+    '山梨': { ja: '山梨', en: 'Yamanashi' },
+    '長野': { ja: '長野', en: 'Nagano' },
+    '岐阜': { ja: '岐阜', en: 'Gifu' },
+    '静岡': { ja: '静岡', en: 'Shizuoka' },
+    '愛知': { ja: '愛知', en: 'Aichi' },
+    '三重': { ja: '三重', en: 'Mie' },
+    '滋賀': { ja: '滋賀', en: 'Shiga' },
+    '京都': { ja: '京都', en: 'Kyoto' },
+    '大阪': { ja: '大阪', en: 'Osaka' },
+    '兵庫': { ja: '兵庫', en: 'Hyogo' },
+    '奈良': { ja: '奈良', en: 'Nara' },
+    '和歌山': { ja: '和歌山', en: 'Wakayama' },
+    '鳥取': { ja: '鳥取', en: 'Tottori' },
+    '島根': { ja: '島根', en: 'Shimane' },
+    '岡山': { ja: '岡山', en: 'Okayama' },
+    '広島': { ja: '広島', en: 'Hiroshima' },
+    '山口': { ja: '山口', en: 'Yamaguchi' },
+    '徳島': { ja: '徳島', en: 'Tokushima' },
+    '香川': { ja: '香川', en: 'Kagawa' },
+    '愛媛': { ja: '愛媛', en: 'Ehime' },
+    '高知': { ja: '高知', en: 'Kochi' },
+    '福岡': { ja: '福岡', en: 'Fukuoka' },
+    '佐賀': { ja: '佐賀', en: 'Saga' },
+    '長崎': { ja: '長崎', en: 'Nagasaki' },
+    '熊本': { ja: '熊本', en: 'Kumamoto' },
+    '大分': { ja: '大分', en: 'Oita' },
+    '宮崎': { ja: '宮崎', en: 'Miyazaki' },
+    '鹿児島': { ja: '鹿児島', en: 'Kagoshima' },
+    '沖縄': { ja: '沖縄', en: 'Okinawa' },
+  };
+
+  // 都道府県を抽出する関数
+  const extractPrefecture = (locationJa: string, locationEn: string): string => {
+    // 日本語のlocationから都道府県を抽出
+    for (const [prefJa, prefData] of Object.entries(prefectureMap)) {
+      if (locationJa.includes(prefJa)) {
+        return language === 'ja' ? prefData.ja : prefData.en;
+      }
+    }
+    // 都道府県が見つからない場合は、最初の部分を返す
+    const fallback = locationJa.split(/[・・,、]/)[0] || locationJa;
+    return fallback;
+  };
+
+  // タイトルから都道府県を削除する関数
+  const removePrefectureFromTitle = (title: string, locationJa: string): string => {
+    // 日本語のタイトルのみ処理
+    if (language !== 'ja') return title;
+    
+    for (const [prefJa] of Object.entries(prefectureMap)) {
+      if (locationJa.includes(prefJa)) {
+        // 「都道府県・」または「都道府県・」のパターンを削除
+        const patterns = [
+          new RegExp(`^${prefJa}[・・]`, 'g'),
+          new RegExp(`^${prefJa}\\s*[・・]`, 'g'),
+        ];
+        
+        let cleanedTitle = title;
+        for (const pattern of patterns) {
+          cleanedTitle = cleanedTitle.replace(pattern, '');
+        }
+        
+        return cleanedTitle.trim() || title;
+      }
+    }
+    
+    return title;
+  };
+
   const japanRetreats = useMemo(() => {
     return retreats
       .filter(r => r.type === 'Japan')
-      .map(retreat => ({
-        id: retreat.id,
-        title: language === 'ja' ? retreat.title_ja : retreat.title_en,
-        location: language === 'ja' ? retreat.location_ja : retreat.location_en,
-        price: retreat.price,
-        image: retreat.image,
-        description: language === 'ja' ? retreat.description_ja : retreat.description_en,
-        includes: language === 'ja' ? retreat.includes_ja : retreat.includes_en
-      }));
+      .map(retreat => {
+        const location = language === 'ja' ? retreat.location_ja : retreat.location_en;
+        const originalTitle = language === 'ja' ? retreat.title_ja : retreat.title_en;
+        const cleanedTitle = removePrefectureFromTitle(originalTitle, retreat.location_ja);
+        const prefecture = extractPrefecture(retreat.location_ja, retreat.location_en);
+        
+        return {
+          id: retreat.id,
+          title: cleanedTitle,
+          location: location,
+          prefecture: prefecture,
+          price: retreat.price,
+          image: retreat.image,
+          description: language === 'ja' ? retreat.description_ja : retreat.description_en,
+          includes: language === 'ja' ? retreat.includes_ja : retreat.includes_en
+        };
+      });
   }, [retreats, language]);
 
   return (
@@ -75,10 +172,10 @@ const Japan: React.FC = () => {
               return (
                 <div
                   key={retreat.id}
-                  className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group flex flex-col"
+                  className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group flex flex-col h-full"
                 >
                   {/* 画像セクション */}
-                  <div className="relative aspect-[3/2] overflow-hidden">
+                  <div className="relative aspect-[5/4] overflow-hidden">
                     <img
                       src={getImageUrl(retreat.image)}
                       alt={retreat.title}
@@ -89,9 +186,9 @@ const Japan: React.FC = () => {
                     />
                     {/* オーバーレイグラデーション */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    {/* タグ */}
+                    {/* タグ - 都道府県表示 */}
                     <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold text-white bg-green-600 shadow-md backdrop-blur-sm">
-                      {language === 'ja' ? '日本' : 'Japan'}
+                      {retreat.prefecture}
                     </div>
                   </div>
 
@@ -142,7 +239,7 @@ const Japan: React.FC = () => {
                     {/* CTAボタン */}
                     <Link
                       to={`${baseUrl}/retreat/${retreat.id}`}
-                      className="mt-auto block w-full text-center bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                      className="mt-auto block w-full text-center bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02]"
                     >
                       {t('common.learn-more')}
                     </Link>
