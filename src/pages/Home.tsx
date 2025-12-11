@@ -94,20 +94,34 @@ const Home: React.FC = () => {
   // 場所から都道府県を削除する関数
   const removePrefectureFromLocation = (location: string, locationJa: string): string => {
     if (language !== 'ja') return location;
+    
+    let cleanedLocation = location;
+    
+    // 都道府県を前後から削除
     for (const [prefJa] of Object.entries(prefectureMap)) {
       if (locationJa.includes(prefJa)) {
-        const patterns = [
+        // 前から削除：「都道府県・」「都道府県・」
+        const frontPatterns = [
           new RegExp(`^${prefJa}[・・]`, 'g'),
           new RegExp(`^${prefJa}\\s*[・・]`, 'g'),
         ];
-        let cleanedLocation = location;
-        for (const pattern of patterns) {
+        for (const pattern of frontPatterns) {
           cleanedLocation = cleanedLocation.replace(pattern, '');
         }
-        return cleanedLocation.trim() || location;
+        
+        // 後ろから削除：「、都道府県」「・都道府県」
+        const backPatterns = [
+          new RegExp(`[、,]${prefJa}$`, 'g'),
+          new RegExp(`[・・]${prefJa}$`, 'g'),
+          new RegExp(`\\s+${prefJa}$`, 'g'),
+        ];
+        for (const pattern of backPatterns) {
+          cleanedLocation = cleanedLocation.replace(pattern, '');
+        }
       }
     }
-    return location;
+    
+    return cleanedLocation.trim() || location;
   };
 
   const featuredRetreats = useMemo(() => {
@@ -253,12 +267,29 @@ const Home: React.FC = () => {
               };
 
               // 特別なポイントを取得（includesの最初の要素、またはdescriptionから抽出）
-              // 日数情報（○泊）を削除
+              // 日数情報（○泊）を削除、一般的な内容を除外
               const getSpecialPoint = () => {
                 let specialPoint = '';
                 
+                // 除外する一般的な内容
+                const excludePatterns = [
+                  /空港送迎/i,
+                  /送迎/i,
+                  /移動/i,
+                  /交通/i,
+                  /食事/i,
+                  /朝食/i,
+                  /夕食/i,
+                  /ランチ/i,
+                ];
+                
                 if (retreat.includes && Array.isArray(retreat.includes) && retreat.includes.length > 0) {
                   for (const item of retreat.includes) {
+                    // 一般的な内容をスキップ
+                    if (excludePatterns.some(pattern => pattern.test(item))) {
+                      continue;
+                    }
+                    
                     let cleaned = item
                       .replace(/[（(]\d+泊[）)]/g, '')
                       .replace(/[（(]\d+日[）)]/g, '')
@@ -269,6 +300,10 @@ const Home: React.FC = () => {
                     
                     if (cleaned.endsWith('宿泊')) {
                       cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned.endsWith('で')) {
+                      cleaned = cleaned.replace(/で$/, '').trim();
                     }
                     
                     if (cleaned && cleaned.length > 0) {
@@ -287,6 +322,10 @@ const Home: React.FC = () => {
                     
                     if (cleaned.endsWith('宿泊')) {
                       cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned.endsWith('で')) {
+                      cleaned = cleaned.replace(/で$/, '').trim();
                     }
                     
                     specialPoint = cleaned;
@@ -329,13 +368,13 @@ const Home: React.FC = () => {
                       {retreat.description}
                     </p>
                     <div className="flex flex-wrap gap-3 mb-6">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
-                        <MapPin size={14} className="text-green-600" />
-                        <span className="truncate max-w-[120px]">{retreat.location}</span>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700 whitespace-nowrap">
+                        <MapPin size={14} className="text-green-600 flex-shrink-0" />
+                        <span>{retreat.location}</span>
                       </div>
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 rounded-lg text-xs font-semibold text-green-700 border border-green-200">
-                        <Sparkles size={14} className="text-green-600" />
-                        <span className="truncate max-w-[150px]">{getSpecialPoint()}</span>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 rounded-lg text-xs font-semibold text-green-700 border border-green-200 whitespace-nowrap">
+                        <Sparkles size={14} className="text-green-600 flex-shrink-0" />
+                        <span>{getSpecialPoint()}</span>
                       </div>
                     </div>
                     {retreat.price != null && !isNaN(retreat.price) && (

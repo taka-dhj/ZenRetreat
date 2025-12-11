@@ -11,18 +11,51 @@ const Cebu: React.FC = () => {
   const baseUrl = language === 'en' ? '/en' : '';
   const { retreats } = useRetreats();
 
+  // セブの場所タグを正規化する関数
+  const normalizeCebuLocation = (location: string): string => {
+    // 「フィリピン・セブ島」「セブ島、フィリピン」→「フィリピン・セブ」
+    let normalized = location;
+    
+    // 「セブ島」を「セブ」に変更
+    normalized = normalized.replace(/セブ島/g, 'セブ');
+    
+    // 「、」を「・」に統一
+    normalized = normalized.replace(/、/g, '・');
+    
+    // 「フィリピン」と「セブ」の順序を統一（「フィリピン・セブ」の形式に）
+    if (normalized.includes('フィリピン') && normalized.includes('セブ')) {
+      // 「セブ・フィリピン」や「セブ、フィリピン」のパターンを「フィリピン・セブ」に
+      if (normalized.match(/セブ[・,]\s*フィリピン/)) {
+        normalized = normalized.replace(/セブ[・,]\s*フィリピン/, 'フィリピン・セブ');
+      }
+      // 「フィリピン・セブ」の形式に統一（既に正しい形式の場合はそのまま）
+      else if (!normalized.includes('フィリピン・セブ')) {
+        // 「フィリピン」と「セブ」が別々にある場合、順序を統一
+        normalized = normalized.replace(/フィリピン[^セ]*セブ/, 'フィリピン・セブ');
+        normalized = normalized.replace(/セブ[^フ]*フィリピン/, 'フィリピン・セブ');
+      }
+    }
+    
+    return normalized.trim() || location;
+  };
+
   const cebuRetreats = useMemo(() => {
     return retreats
       .filter(r => r.type === 'Cebu')
-      .map(retreat => ({
-        id: retreat.id,
-        title: language === 'ja' ? retreat.title_ja : retreat.title_en,
-        location: language === 'ja' ? retreat.location_ja : retreat.location_en,
-        price: retreat.price,
-        image: retreat.image,
-        description: language === 'ja' ? retreat.description_ja : retreat.description_en,
-        includes: language === 'ja' ? retreat.includes_ja : retreat.includes_en
-      }));
+      .map(retreat => {
+        const location = language === 'ja' ? retreat.location_ja : retreat.location_en;
+        const normalizedLocation = language === 'ja' ? normalizeCebuLocation(location) : location;
+        
+        return {
+          id: retreat.id,
+          title: language === 'ja' ? retreat.title_ja : retreat.title_en,
+          location: normalizedLocation,
+          price: retreat.price,
+          image: retreat.image,
+          description: language === 'ja' ? retreat.description_ja : retreat.description_en,
+          includes: language === 'ja' ? retreat.includes_ja : retreat.includes_en
+        };
+      });
   }, [retreats, language]);
 
   return (
@@ -59,12 +92,29 @@ const Cebu: React.FC = () => {
               };
 
               // 特別なポイントを取得（includesの最初の要素、またはdescriptionから抽出）
-              // 日数情報（○泊）を削除
+              // 日数情報（○泊）を削除、一般的な内容を除外
               const getSpecialPoint = () => {
                 let specialPoint = '';
                 
+                // 除外する一般的な内容
+                const excludePatterns = [
+                  /空港送迎/i,
+                  /送迎/i,
+                  /移動/i,
+                  /交通/i,
+                  /食事/i,
+                  /朝食/i,
+                  /夕食/i,
+                  /ランチ/i,
+                ];
+                
                 if (retreat.includes && Array.isArray(retreat.includes) && retreat.includes.length > 0) {
                   for (const item of retreat.includes) {
+                    // 一般的な内容をスキップ
+                    if (excludePatterns.some(pattern => pattern.test(item))) {
+                      continue;
+                    }
+                    
                     let cleaned = item
                       .replace(/[（(]\d+泊[）)]/g, '')
                       .replace(/[（(]\d+日[）)]/g, '')
@@ -75,6 +125,10 @@ const Cebu: React.FC = () => {
                     
                     if (cleaned.endsWith('宿泊')) {
                       cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned.endsWith('で')) {
+                      cleaned = cleaned.replace(/で$/, '').trim();
                     }
                     
                     if (cleaned && cleaned.length > 0) {
@@ -93,6 +147,10 @@ const Cebu: React.FC = () => {
                     
                     if (cleaned.endsWith('宿泊')) {
                       cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned.endsWith('で')) {
+                      cleaned = cleaned.replace(/で$/, '').trim();
                     }
                     
                     specialPoint = cleaned;
@@ -133,13 +191,13 @@ const Cebu: React.FC = () => {
                       {retreat.description}
                     </p>
                     <div className="flex flex-wrap gap-3 mb-6">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700">
-                        <MapPin size={14} className="text-blue-600" />
-                        <span className="truncate max-w-[120px]">{retreat.location}</span>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700 whitespace-nowrap">
+                        <MapPin size={14} className="text-blue-600 flex-shrink-0" />
+                        <span>{retreat.location}</span>
                       </div>
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 rounded-lg text-xs font-semibold text-blue-700 border border-blue-200">
-                        <Sparkles size={14} className="text-blue-600" />
-                        <span className="truncate max-w-[150px]">{getSpecialPoint()}</span>
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 rounded-lg text-xs font-semibold text-blue-700 border border-blue-200 whitespace-nowrap">
+                        <Sparkles size={14} className="text-blue-600 flex-shrink-0" />
+                        <span>{getSpecialPoint()}</span>
                       </div>
                     </div>
                     {retreat.price != null && !isNaN(retreat.price) && (
