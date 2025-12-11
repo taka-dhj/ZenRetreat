@@ -363,7 +363,9 @@ const Retreats: React.FC = () => {
                   </div>
                   <div className="p-8 flex flex-col flex-grow">
                     <div className="h-[4.5rem] flex items-center mb-3">
-                      <h3 className="text-2xl font-bold text-gray-900 leading-tight line-clamp-2 group-hover:text-green-700 transition-colors duration-300">
+                      <h3 className={`text-2xl font-bold text-gray-900 leading-tight line-clamp-2 transition-colors duration-300 ${
+                        retreat.type === 'Japan' ? 'group-hover:text-green-700' : 'group-hover:text-blue-700'
+                      }`}>
                         {retreat.title}
                       </h3>
                     </div>
@@ -372,18 +374,22 @@ const Retreats: React.FC = () => {
                     </p>
                     <div className="flex flex-wrap gap-3 mb-6">
                       <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700 whitespace-nowrap">
-                        <MapPin size={14} className="text-green-600 flex-shrink-0" />
+                        <MapPin size={14} className={`flex-shrink-0 ${retreat.type === 'Japan' ? 'text-green-600' : 'text-blue-600'}`} />
                         <span>{retreat.location}</span>
                       </div>
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-green-50 rounded-lg text-xs font-semibold text-green-700 border border-green-200 whitespace-nowrap">
-                        <Sparkles size={14} className="text-green-600 flex-shrink-0" />
+                      <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border whitespace-nowrap ${
+                        retreat.type === 'Japan'
+                          ? 'bg-green-50 text-green-700 border-green-200'
+                          : 'bg-blue-50 text-blue-700 border-blue-200'
+                      }`}>
+                        <Sparkles size={14} className={`flex-shrink-0 ${retreat.type === 'Japan' ? 'text-green-600' : 'text-blue-600'}`} />
                         <span>{getSpecialPoint()}</span>
                       </div>
                     </div>
                     {retreat.price != null && !isNaN(retreat.price) && (
                       <div className="mb-6 pt-4 border-t border-gray-100">
                         <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-green-700">
+                          <span className={`text-2xl font-bold ${retreat.type === 'Japan' ? 'text-green-700' : 'text-blue-700'}`}>
                             {formatPrice(retreat.price)}
                           </span>
                           {language === 'ja' && (
@@ -397,7 +403,11 @@ const Retreats: React.FC = () => {
                     )}
                     <Link
                       to={`${baseUrl}/retreat/${retreat.id}`}
-                      className="mt-auto block w-full text-center bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900 text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                      className={`mt-auto block w-full text-center text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02] ${
+                        retreat.type === 'Japan'
+                          ? 'bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900'
+                          : 'bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900'
+                      }`}
                     >
                       {t('common.learn-more')}
                     </Link>
