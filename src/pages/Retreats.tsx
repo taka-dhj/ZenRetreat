@@ -122,15 +122,18 @@ const Retreats: React.FC = () => {
       {/* Retreats Grid */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {filteredRetreats.map((retreat) => {
               const title = language === 'ja' ? retreat.title_ja : retreat.title_en;
               const location = language === 'ja' ? retreat.location_ja : retreat.location_en;
               const description = language === 'ja' ? retreat.description_ja : retreat.description_en;
 
               return (
-                <div key={retreat.id} className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group">
-                  <div className="relative h-64 overflow-hidden">
+                <div
+                  key={retreat.id}
+                  className="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 overflow-hidden group flex flex-col"
+                >
+                  <div className="relative aspect-[16/9] overflow-hidden">
                     <img
                       src={getImageUrl(retreat.image)}
                       alt={title}
@@ -146,11 +149,13 @@ const Retreats: React.FC = () => {
                       }
                     </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-medium text-gray-800 mb-2 line-clamp-2">
+                  <div className="p-6 flex flex-col h-full">
+                    <h3 className="text-xl font-medium text-gray-800 mb-2 leading-snug line-clamp-2 min-h-[3.2rem]">
                       {title}
                     </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">{description}</p>
+                    <p className="text-gray-600 mb-4 leading-relaxed line-clamp-4 min-h-[5.6rem]">
+                      {description}
+                    </p>
 
                     <div className="flex items-center text-sm text-gray-500 mb-4">
                       <MapPin size={14} />
@@ -159,7 +164,7 @@ const Retreats: React.FC = () => {
 
                     <Link
                       to={`${baseUrl}/retreat/${retreat.id}`}
-                      className="block w-full text-center bg-gray-100 hover:bg-green-100 text-gray-800 hover:text-green-700 py-3 rounded-lg transition-colors duration-200 font-medium"
+                      className="mt-auto block w-full text-center bg-gray-100 hover:bg-green-100 text-gray-800 hover:text-green-700 py-3 rounded-lg transition-colors duration-200 font-medium"
                     >
                       {t('common.learn-more')}
                     </Link>
