@@ -60,7 +60,7 @@ const Header: React.FC = () => {
               <Instagram size={20} />
             </a>
             
-            <div className="hidden md:flex items-center space-x-2 text-sm">
+            <div className="flex items-center space-x-2 text-sm">
               <button
                 onClick={() => handleLanguageSwitch('en')}
                 className={`px-2 py-1 rounded transition-colors duration-200 ${
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
                     : 'text-gray-600 hover:text-green-600'
                 }`}
               >
-                English
+                EN
               </button>
               <span className="text-gray-300">|</span>
               <button
@@ -80,7 +80,7 @@ const Header: React.FC = () => {
                     : 'text-gray-600 hover:text-green-600'
                 }`}
               >
-                日本語
+                JA
               </button>
             </div>
 
@@ -146,31 +146,6 @@ const Header: React.FC = () => {
                   <Instagram size={18} />
                   <span>Instagram</span>
                 </a>
-              </div>
-              
-              {/* Mobile Language Switcher */}
-              <div className="flex items-center space-x-4 px-2 py-2 border-t border-gray-100 mt-2 pt-4">
-                <Globe size={16} className="text-gray-500" />
-                <button
-                  onClick={() => handleLanguageSwitch('en')}
-                  className={`px-3 py-1 rounded text-sm transition-colors duration-200 ${
-                    language === 'en' 
-                      ? 'text-green-600 bg-green-50 font-medium' 
-                      : 'text-gray-600 hover:text-green-600'
-                  }`}
-                >
-                  English
-                </button>
-                <button
-                  onClick={() => handleLanguageSwitch('ja')}
-                  className={`px-3 py-1 rounded text-sm transition-colors duration-200 ${
-                    language === 'ja' 
-                      ? 'text-green-600 bg-green-50 font-medium' 
-                      : 'text-gray-600 hover:text-green-600'
-                  }`}
-                >
-                  日本語
-                </button>
               </div>
             </div>
           </div>
