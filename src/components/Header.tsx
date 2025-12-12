@@ -21,9 +21,9 @@ const Header: React.FC = () => {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to={baseUrl || '/'} className="flex items-center space-x-2">
-            <img src="/logo.png" alt="Zen Retreat Asia" className="w-8 h-8 object-contain" />
-            <span className="font-light text-xl text-gray-800 tracking-wide">
+          <Link to={baseUrl || '/'} className="flex items-center space-x-2 min-w-0 flex-shrink">
+            <img src="/logo.png" alt="Zen Retreat Asia" className="w-8 h-8 object-contain flex-shrink-0" />
+            <span className="font-light text-sm sm:text-base md:text-xl text-gray-800 tracking-wide line-clamp-2 leading-tight">
               ZEN RETREAT ASIA
             </span>
           </Link>
