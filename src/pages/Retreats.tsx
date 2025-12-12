@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { MapPin, Filter, Search, Sparkles } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreats } from '../hooks/useRetreats';
@@ -10,12 +10,21 @@ const Retreats: React.FC = () => {
   const { language, t } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedType, setSelectedType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
+  // URLクエリパラメータから検索語を取得
+  useEffect(() => {
+    const querySearch = searchParams.get('search') || '';
+    if (querySearch) {
+      setSearchTerm(querySearch);
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     setSelectedType('all');
-    setSearchTerm('');
+    // pathnameが変わったときは検索語をクリアしない（クエリパラメータから取得するため）
   }, [location.pathname]);
 
   const { retreats, loading, error } = useRetreats();
@@ -238,7 +247,17 @@ const Retreats: React.FC = () => {
               </button>
             </div>
 
-            <div className="relative">
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchTerm.trim()) {
+                  setSearchParams({ search: searchTerm.trim() });
+                } else {
+                  setSearchParams({});
+                }
+              }}
+              className="relative"
+            >
               <Search size={18} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
@@ -247,7 +266,7 @@ const Retreats: React.FC = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
               />
-            </div>
+            </form>
           </div>
         </div>
       </section>

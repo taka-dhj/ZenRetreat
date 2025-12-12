@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, MapPin, Sparkles } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, MapPin, Sparkles, Search } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
@@ -9,6 +9,17 @@ const Home: React.FC = () => {
   const { language, t } = useLanguage();
   const baseUrl = language === 'en' ? '/en' : '';
   const { retreats } = useRetreats();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`${baseUrl}/retreats?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      navigate(`${baseUrl}/retreats`);
+    }
+  };
 
   // 都道府県リスト（日本語と英語のマッピング）
   const prefectureMap: { [key: string]: { ja: string; en: string } } = {
@@ -172,6 +183,29 @@ const Home: React.FC = () => {
           <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             {t('hero.subtitle')}
           </p>
+          
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-8">
+            <div className="relative flex items-center bg-white rounded-full shadow-xl border border-gray-200 overflow-hidden">
+              <div className="flex-1 flex items-center px-6 py-4">
+                <Search className="text-gray-400 mr-3 flex-shrink-0" size={20} />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder={language === 'ja' ? 'ツアーを検索...' : 'Search tours...'}
+                  className="flex-1 outline-none text-gray-800 placeholder-gray-400 text-base md:text-lg"
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-green-600 text-white px-6 md:px-8 py-4 hover:bg-green-700 transition-colors duration-200 font-medium text-base md:text-lg"
+              >
+                {language === 'ja' ? '検索' : 'Search'}
+              </button>
+            </div>
+          </form>
+
           <Link
             to={`${baseUrl}/retreats`}
             className="inline-flex items-center space-x-2 bg-green-600 text-white px-8 py-4 rounded-full hover:bg-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
