@@ -10,7 +10,7 @@ import ContactFormModal from '../components/ContactFormModal';
 const RetreatDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { language, t } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 
   const { retreat, loading, error } = useRetreat(id);

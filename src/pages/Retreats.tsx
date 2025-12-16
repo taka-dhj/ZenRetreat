@@ -8,7 +8,7 @@ import CTASection from '../components/CTASection';
 
 const Retreats: React.FC = () => {
   const { language, t } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedType, setSelectedType] = useState('all');

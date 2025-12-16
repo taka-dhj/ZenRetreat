@@ -7,7 +7,7 @@ import { getImageUrl, handleImageError } from '../lib/imageUtils';
 
 const Home: React.FC = () => {
   const { language, t } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const { retreats } = useRetreats();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');

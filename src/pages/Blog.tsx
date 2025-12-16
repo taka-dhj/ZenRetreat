@@ -73,7 +73,7 @@ const Blog: React.FC = () => {
     setCurrentPage(1);
   };
 
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-green-50">
