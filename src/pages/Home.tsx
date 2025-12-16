@@ -205,7 +205,7 @@ const Home: React.FC = () => {
           >
             {/* 光沢感を演出するオーバーレイ */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-            <span className={`font-medium text-lg tracking-wide relative z-10 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+            <span className="font-medium text-lg tracking-wide relative z-10">
               {t('hero.cta')}
             </span>
             <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
@@ -214,42 +214,48 @@ const Home: React.FC = () => {
       </section>
 
       {/* Search Section - Tab UI */}
-      <section className="py-20 bg-gradient-to-b from-white to-gray-50">
+      <section className="py-32 md:py-40 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-12 text-center ${
+          <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-16 text-center ${
             language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
           }`}>
             {language === 'ja' ? 'あなたに最適なリトリートを見つける' : 'Find Your Perfect Retreat'}
           </h2>
 
           {/* Tab Switcher */}
-          <div className="flex justify-center mb-12">
-            <div className="inline-flex bg-white rounded-full p-2 shadow-lg border border-gray-200">
+          <div className="flex justify-center mb-16">
+            <div className="inline-flex items-center space-x-8">
               <button
                 onClick={() => setActiveTab('purpose')}
-                className={`px-6 py-3 rounded-full transition-all duration-300 font-medium ${
+                className={`relative pb-3 transition-all duration-300 font-medium text-base ${
                   activeTab === 'purpose'
-                    ? 'bg-green-600 text-white shadow-md'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <span className="flex items-center space-x-2">
-                  <Sparkles size={18} />
+                  <Sparkles size={18} strokeWidth={1.5} />
                   <span>{language === 'ja' ? '目的・悩みから探す' : 'By Purpose'}</span>
                 </span>
+                {activeTab === 'purpose' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"></span>
+                )}
               </button>
               <button
                 onClick={() => setActiveTab('area')}
-                className={`px-6 py-3 rounded-full transition-all duration-300 font-medium ${
+                className={`relative pb-3 transition-all duration-300 font-medium text-base ${
                   activeTab === 'area'
-                    ? 'bg-green-600 text-white shadow-md'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
                 }`}
               >
                 <span className="flex items-center space-x-2">
-                  <MapPin size={18} />
+                  <MapPin size={18} strokeWidth={1.5} />
                   <span>{language === 'ja' ? '地域から探す' : 'By Area'}</span>
                 </span>
+                {activeTab === 'area' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"></span>
+                )}
               </button>
             </div>
           </div>
@@ -258,54 +264,54 @@ const Home: React.FC = () => {
           <div className="mt-8">
             {activeTab === 'purpose' ? (
               /* Purpose/Problem Tab Content */
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {language === 'ja' ? (
                   <>
                     {/* 脳疲労リセット */}
                     <Link
                       to={`${baseUrl}/retreats?search=瞑想`}
-                      className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-orange-50 mb-4 group-hover:bg-orange-100 transition-colors">
-                        <Waves className="w-8 h-8 text-orange-500" />
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Waves className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                       </div>
-                      <h3 className="text-xl font-medium text-gray-800 mb-2">脳疲労リセット</h3>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>脳疲労リセット</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">仕事のプレッシャーを忘れ、頭を空っぽにする。</p>
                     </Link>
 
                     {/* デジタルデトックス */}
                     <Link
                       to={`${baseUrl}/retreats?search=自然`}
-                      className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 mb-4 group-hover:bg-emerald-100 transition-colors">
-                        <Mountain className="w-8 h-8 text-emerald-500" />
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                       </div>
-                      <h3 className="text-xl font-medium text-gray-800 mb-2">デジタルデトックス</h3>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>デジタルデトックス</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">圏外の自然の中で、本来の感覚を取り戻す。</p>
                     </Link>
 
                     {/* 美肌・体質改善 */}
                     <Link
                       to={`${baseUrl}/retreats?search=食事`}
-                      className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-rose-50 mb-4 group-hover:bg-rose-100 transition-colors">
-                        <Heart className="w-8 h-8 text-rose-500" />
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Heart className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                       </div>
-                      <h3 className="text-xl font-medium text-gray-800 mb-2">美肌・体質改善</h3>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>美肌・体質改善</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">内側から浄化し、鏡を見るのが楽しみに。</p>
                     </Link>
 
                     {/* 睡眠改善 */}
                     <Link
                       to={`${baseUrl}/retreats?search=瞑想`}
-                      className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-indigo-50 mb-4 group-hover:bg-indigo-100 transition-colors">
-                        <Moon className="w-8 h-8 text-indigo-500" />
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Moon className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                       </div>
-                      <h3 className="text-xl font-medium text-gray-800 mb-2">睡眠改善</h3>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>睡眠改善</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">泥のように眠り、朝日で目覚める奇跡。</p>
                     </Link>
                   </>
@@ -314,36 +320,36 @@ const Home: React.FC = () => {
                     {/* Deepen Our Bond */}
                     <Link
                       to={`${baseUrl}/retreats?search=meditation`}
-                      className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-pink-50 mb-4 group-hover:bg-pink-100 transition-colors">
-                        <Users className="w-8 h-8 text-pink-500" />
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Users className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                       </div>
-                      <h3 className="text-xl font-medium text-gray-800 mb-2">Deepen Our Bond</h3>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Deepen Our Bond</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">Reconnect with your partner in shared silence.</p>
                     </Link>
 
                     {/* Authentic Culture */}
                     <Link
                       to={`${baseUrl}/retreats?search=culture`}
-                      className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-amber-50 mb-4 group-hover:bg-amber-100 transition-colors">
-                        <Building2 className="w-8 h-8 text-amber-500" />
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Building2 className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                       </div>
-                      <h3 className="text-xl font-medium text-gray-800 mb-2">Authentic Culture</h3>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Authentic Culture</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">Exclusive access to hidden Japanese traditions.</p>
                     </Link>
 
                     {/* Nature & Adventure */}
                     <Link
                       to={`${baseUrl}/retreats?search=nature`}
-                      className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-50 mb-4 group-hover:bg-green-100 transition-colors">
-                        <Mountain className="w-8 h-8 text-green-500" />
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                       </div>
-                      <h3 className="text-xl font-medium text-gray-800 mb-2">Nature & Adventure</h3>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Nature & Adventure</h3>
                       <p className="text-gray-600 text-sm leading-relaxed">Explore the untouched beauty of Japan together.</p>
                     </Link>
                   </>
@@ -351,15 +357,15 @@ const Home: React.FC = () => {
               </div>
             ) : (
               /* Area Tab Content */
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <Link
                   to={`${baseUrl}/cebu`}
-                  className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                 >
-                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 mb-4 group-hover:bg-blue-100 transition-colors">
-                    <Waves className="w-8 h-8 text-blue-500" />
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <Waves className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                   </div>
-                  <h3 className="text-xl font-medium text-gray-800 mb-2">
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
                     {language === 'ja' ? 'セブ島' : 'Cebu'}
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">
@@ -369,12 +375,12 @@ const Home: React.FC = () => {
 
                 <Link
                   to={`${baseUrl}/japan`}
-                  className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                 >
-                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-50 mb-4 group-hover:bg-green-100 transition-colors">
-                    <MapPin className="w-8 h-8 text-green-500" />
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <MapPin className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                   </div>
-                  <h3 className="text-xl font-medium text-gray-800 mb-2">
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
                     {language === 'ja' ? '京都' : 'Kyoto'}
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">
@@ -384,12 +390,12 @@ const Home: React.FC = () => {
 
                 <Link
                   to={`${baseUrl}/japan`}
-                  className="group bg-white rounded-xl p-6 shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                 >
-                  <div className="flex items-center justify-center w-16 h-16 rounded-full bg-emerald-50 mb-4 group-hover:bg-emerald-100 transition-colors">
-                    <Mountain className="w-8 h-8 text-emerald-500" />
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
                   </div>
-                  <h3 className="text-xl font-medium text-gray-800 mb-2">
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
                     {language === 'ja' ? '山梨' : 'Yamanashi'}
                   </h3>
                   <p className="text-gray-600 text-sm leading-relaxed">
@@ -403,10 +409,12 @@ const Home: React.FC = () => {
       </section>
 
       {/* About Section */}
-      <section className="py-24 bg-white">
+      <section className="py-36 md:py-48 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-light text-gray-800 mb-6">
+          <div className="text-center mb-20">
+            <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-6 ${
+              language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+            }`}>
               {t('about.title')}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -426,7 +434,9 @@ const Home: React.FC = () => {
                   decoding="async"
                 />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.expertise')}</h3>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.expertise')}</h3>
               <p className="text-gray-600">{t('home.why.expertise.desc')}</p>
             </div>
             <div className="text-center group">
@@ -439,7 +449,9 @@ const Home: React.FC = () => {
                   decoding="async"
                 />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.locations')}</h3>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.locations')}</h3>
               <p className="text-gray-600">{t('home.why.locations.desc')}</p>
             </div>
             <div className="text-center group">
@@ -452,7 +464,9 @@ const Home: React.FC = () => {
                   decoding="async"
                 />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.holistic')}</h3>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.holistic')}</h3>
               <p className="text-gray-600">{t('home.why.holistic.desc')}</p>
             </div>
           </div>
@@ -460,10 +474,12 @@ const Home: React.FC = () => {
       </section>
 
       {/* Featured Retreats */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-36 md:py-48 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-light text-gray-800 mb-6">
+          <div className="text-center mb-20">
+            <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-6 ${
+              language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+            }`}>
               {t('retreats.featured')}
             </h2>
           </div>
@@ -644,7 +660,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+      <section className="py-36 md:py-48 bg-gradient-to-r from-green-600 to-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-light mb-6">
             {language === 'ja' 
