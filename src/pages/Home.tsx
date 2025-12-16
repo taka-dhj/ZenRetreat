@@ -7,7 +7,7 @@ import { getImageUrl, handleImageError } from '../lib/imageUtils';
 
 const Home: React.FC = () => {
   const { language, t } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const { retreats } = useRetreats();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
@@ -210,7 +210,7 @@ const Home: React.FC = () => {
             </span>
             <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
           </Link>
-        </div>
+              </div>
       </section>
 
       {/* Search Section - Tab UI */}
@@ -388,7 +388,7 @@ const Home: React.FC = () => {
                   </p>
                 </Link>
 
-                <Link
+          <Link
                   to={`${baseUrl}/japan`}
                   className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                 >
@@ -401,7 +401,7 @@ const Home: React.FC = () => {
                   <p className="text-gray-600 text-sm leading-relaxed">
                     {language === 'ja' ? '自然に囲まれた静寂のひととき' : 'A moment of silence surrounded by nature'}
                   </p>
-                </Link>
+          </Link>
               </div>
             )}
           </div>

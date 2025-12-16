@@ -8,7 +8,7 @@ import CTASection from '../components/CTASection';
 
 const Japan: React.FC = () => {
   const { language, t } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const { retreats } = useRetreats();
 
   // 都道府県リスト（日本語と英語のマッピング）

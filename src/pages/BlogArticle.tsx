@@ -39,7 +39,7 @@ const BlogArticle: React.FC = () => {
             {language === 'ja' ? '記事が見つかりません' : 'Article Not Found'}
           </h1>
           <Link
-            to={language === 'en' ? '/en/blog' : '/blog'}
+            to={language === 'ja' ? '/ja/blog' : '/blog'}
             className="text-green-600 hover:text-green-700 underline"
           >
             {language === 'ja' ? 'ブログ一覧に戻る' : 'Back to Blog'}
@@ -49,7 +49,7 @@ const BlogArticle: React.FC = () => {
     );
   }
 
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const title = language === 'ja' ? article.title.ja : article.title.en;
   const content = language === 'ja' ? article.content.ja : article.content.en;
 

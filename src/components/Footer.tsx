@@ -6,7 +6,7 @@ import ContactFormModal from './ContactFormModal';
 
 const Footer: React.FC = () => {
   const { language } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (

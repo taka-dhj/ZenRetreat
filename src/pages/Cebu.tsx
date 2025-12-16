@@ -8,7 +8,7 @@ import CTASection from '../components/CTASection';
 
 const Cebu: React.FC = () => {
   const { language, t } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const { retreats } = useRetreats();
 
   // セブの場所タグを正規化する関数

@@ -106,10 +106,10 @@ const translations = {
 };
 
 const detectBrowserLanguage = (): Language => {
-  if (typeof window === 'undefined') return 'ja';
+  if (typeof window === 'undefined') return 'en';
   
   const path = window.location.pathname;
-  if (path.startsWith('/en')) return 'en';
+  if (path.startsWith('/ja')) return 'ja';
   
   const stored = localStorage.getItem('preferredLang') as Language;
   if (stored && ['ja', 'en'].includes(stored)) return stored;
@@ -119,7 +119,7 @@ const detectBrowserLanguage = (): Language => {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguage] = useState<Language>('ja');
+  const [language, setLanguage] = useState<Language>('en');
 
   useEffect(() => {
     setLanguage(detectBrowserLanguage());
@@ -132,10 +132,15 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const currentPath = window.location.pathname;
     let newPath: string;
     
-    if (lang === 'en') {
-      newPath = currentPath.startsWith('/en') ? currentPath : '/en' + currentPath;
+    // 現在のパスから言語プレフィックスを除去
+    const pathWithoutLang = currentPath.replace(/^\/(ja|en)/, '') || '/';
+    
+    if (lang === 'ja') {
+      // 日本語の場合は /ja を追加
+      newPath = '/ja' + pathWithoutLang;
     } else {
-      newPath = currentPath.replace(/^\/en/, '') || '/';
+      // 英語の場合はプレフィックスなし
+      newPath = pathWithoutLang;
     }
     
     window.history.pushState({}, '', newPath);

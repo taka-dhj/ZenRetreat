@@ -6,7 +6,7 @@ import CTASection from '../components/CTASection';
 
 const Contact: React.FC = () => {
   const { language, t } = useLanguage();
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
   const [formData, setFormData] = useState({
     name: '',
     email: '',

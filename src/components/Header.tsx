@@ -7,7 +7,7 @@ const Header: React.FC = () => {
   const { language, setLanguage, t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const baseUrl = language === 'en' ? '/en' : '';
+  const baseUrl = language === 'ja' ? '/ja' : '';
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 

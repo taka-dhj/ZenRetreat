@@ -55,27 +55,27 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/en" element={<Home />} />
+              <Route path="/ja" element={<Home />} />
               <Route path="/retreats" element={<Retreats />} />
-              <Route path="/en/retreats" element={<Retreats />} />
+              <Route path="/ja/retreats" element={<Retreats />} />
               <Route path="/retreat/:id" element={<RetreatDetail />} />
-              <Route path="/en/retreat/:id" element={<RetreatDetail />} />
+              <Route path="/ja/retreat/:id" element={<RetreatDetail />} />
               <Route path="/japan" element={<Japan />} />
-              <Route path="/en/japan" element={<Japan />} />
+              <Route path="/ja/japan" element={<Japan />} />
               <Route path="/cebu" element={<Cebu />} />
-              <Route path="/en/cebu" element={<Cebu />} />
+              <Route path="/ja/cebu" element={<Cebu />} />
               <Route path="/blog" element={<Blog />} />
-              <Route path="/en/blog" element={<Blog />} />
+              <Route path="/ja/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogArticle />} />
-              <Route path="/en/blog/:slug" element={<BlogArticle />} />
+              <Route path="/ja/blog/:slug" element={<BlogArticle />} />
               <Route path="/contact" element={<Contact />} />
-              <Route path="/en/contact" element={<Contact />} />
+              <Route path="/ja/contact" element={<Contact />} />
               <Route path="/faq" element={<FAQ />} />
-              <Route path="/en/faq" element={<FAQ />} />
+              <Route path="/ja/faq" element={<FAQ />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/en/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/ja/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/en/terms-of-service" element={<TermsOfService />} />
+              <Route path="/ja/terms-of-service" element={<TermsOfService />} />
             </Routes>
           </main>
           <Footer />
