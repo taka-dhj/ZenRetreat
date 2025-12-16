@@ -2,7 +2,12 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'serif-ja': ['Zen Old Mincho', 'serif'],
+        'serif-en': ['Playfair Display', 'serif'],
+      },
+    },
   },
   plugins: [],
 };

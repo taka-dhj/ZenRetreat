@@ -165,28 +165,37 @@ const Home: React.FC = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-white via-green-50 to-blue-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400&dpr=2')] bg-cover bg-center opacity-50">
+      <section className="relative h-screen flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
           <img
             src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600"
             alt="Hero background"
-            className="w-full h-full object-cover opacity-0"
+            className="w-full h-full object-cover"
             loading="eager"
             fetchPriority="high"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white/40"></div>
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-800 mb-6 leading-tight">
+        
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-5xl px-8 md:px-16 lg:px-24 xl:px-32">
+          <h1 className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium text-white mb-10 leading-[1.1] tracking-tight drop-shadow-lg ${
+            language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+          }`}>
             {t('hero.title')}
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className={`text-lg md:text-xl lg:text-2xl text-white/95 mb-16 max-w-3xl leading-relaxed drop-shadow-md ${
+            language === 'ja' ? 'font-serif-ja font-normal' : 'font-serif-en font-normal'
+          }`}>
             {t('hero.subtitle')}
           </p>
           
           {/* Search Bar */}
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-8">
-            <div className="relative flex items-center bg-white rounded-full shadow-xl border border-gray-200 overflow-hidden">
+          <form onSubmit={handleSearch} className="max-w-2xl mb-12">
+            <div className="relative flex items-center bg-white/95 backdrop-blur-md rounded-full shadow-2xl border border-white/30 overflow-hidden">
               <div className="flex-1 flex items-center px-6 py-4">
                 <Search className="text-gray-400 mr-3 flex-shrink-0" size={20} />
                 <input
@@ -194,7 +203,7 @@ const Home: React.FC = () => {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder={language === 'ja' ? 'ツアーを検索...' : 'Search tours...'}
-                  className="flex-1 outline-none text-gray-800 placeholder-gray-400 text-base md:text-lg"
+                  className="flex-1 outline-none text-gray-800 placeholder-gray-400 text-base md:text-lg bg-transparent"
                 />
               </div>
               <button
@@ -206,19 +215,17 @@ const Home: React.FC = () => {
             </div>
           </form>
 
+          {/* CTA Button */}
           <Link
             to={`${baseUrl}/retreats`}
-            className="inline-flex items-center space-x-2 bg-green-600 text-white px-8 py-4 rounded-full hover:bg-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-md border border-white/40 text-white px-12 py-5 rounded-full hover:bg-white/20 hover:border-white/50 transition-all duration-300 shadow-xl hover:shadow-2xl group"
           >
-            <span className="font-medium">{t('hero.cta')}</span>
-            <ArrowRight size={20} />
+            <span className={`font-medium text-lg tracking-wide ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+              {t('hero.cta')}
+            </span>
+            <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-green-300 rounded-full animate-pulse opacity-60"></div>
-        <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-pulse opacity-40"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-green-200 rounded-full animate-pulse opacity-30"></div>
       </section>
 
       {/* About Section */}
