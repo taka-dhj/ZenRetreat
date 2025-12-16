@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { LanguageProvider } from './contexts/LanguageContext';
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -45,14 +45,29 @@ function ScrollToTop() {
   return null;
 }
 
-function App() {
+function LanguageRedirect() {
+  const { language } = useLanguage();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // ルートパス（/）にアクセスして日本語が検出された場合、/ja/にリダイレクト
+    if (pathname === '/' && language === 'ja') {
+      navigate('/ja/', { replace: true });
+    }
+  }, [pathname, language, navigate]);
+
+  return null;
+}
+
+function AppContent() {
   return (
-    <LanguageProvider>
-      <Router>
-        <ScrollToTop />
-        <div className="min-h-screen bg-white">
-          <Header />
-          <main>
+    <>
+      <ScrollToTop />
+      <LanguageRedirect />
+      <div className="min-h-screen bg-white">
+        <Header />
+        <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/ja" element={<Home />} />
@@ -80,6 +95,15 @@ function App() {
           </main>
           <Footer />
         </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <LanguageProvider>
+      <Router>
+        <AppContent />
       </Router>
     </LanguageProvider>
   );
