@@ -169,7 +169,10 @@ const Home: React.FC = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            src={language === 'en' 
+              ? 'https://images.pexels.com/photos/6648544/pexels-photo-6648544.jpeg?auto=compress&cs=tinysrgb&w=1600'
+              : 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600'
+            }
             alt="Hero background"
             className="w-full h-full object-cover"
             loading="eager"
