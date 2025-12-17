@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Clock, Users, Calendar, Check, ArrowLeft, Sunrise, Coffee, Moon, Utensils, Waves, Mountain, Heart, Sparkles } from 'lucide-react';
+import { MapPin, Clock, Users, Calendar, Check, ArrowLeft, Sunrise, Coffee, Moon, Utensils, Waves, Mountain, Heart, Sparkles, Sun, CircleDot } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreat } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
@@ -32,29 +32,54 @@ const RetreatDetail: React.FC = () => {
   }, []);
 
   // 時間帯に応じたアイコンを取得
-  const getTimeIcon = (time: string, activity: string) => {
+  const getTimeIcon = (time: string, activity: string, index: number, scheduleLength: number) => {
     const hour = parseInt(time.split(':')[0]);
     const activityLower = activity.toLowerCase();
+    const isFirstActivity = index === 0;
 
-    if (hour >= 5 && hour < 8 || activityLower.includes('朝') || activityLower.includes('yoga') || activityLower.includes('morning')) {
+    // 1. 一番最初のアクティビティ = 日の出アイコン
+    if (isFirstActivity) {
       return <Sunrise className="w-6 h-6 text-orange-400" />;
     }
-    if (hour >= 8 && hour < 12 || activityLower.includes('朝食') || activityLower.includes('breakfast') || activityLower.includes('コーヒー') || activityLower.includes('coffee')) {
-      return <Coffee className="w-6 h-6 text-amber-600" />;
-    }
-    if (hour >= 18 || activityLower.includes('夕食') || activityLower.includes('dinner')) {
+
+    // 2. 食事に関する記述がある場合 = 食事アイコン
+    if (
+      activityLower.includes('朝食') || activityLower.includes('breakfast') ||
+      activityLower.includes('昼食') || activityLower.includes('lunch') ||
+      activityLower.includes('夕食') || activityLower.includes('dinner') ||
+      activityLower.includes('食事') || activityLower.includes('meal') ||
+      activityLower.includes('食事') || activityLower.includes('food')
+    ) {
       return <Utensils className="w-6 h-6 text-rose-500" />;
     }
-    if (hour >= 20 || activityLower.includes('夜') || activityLower.includes('night') || activityLower.includes('星空') || activityLower.includes('star')) {
+
+    // 3. ヨガ、禅、坐禅の表示がある場合 = 座禅のアイコン
+    if (
+      activityLower.includes('ヨガ') || activityLower.includes('yoga') ||
+      activityLower.includes('禅') || activityLower.includes('zen') ||
+      activityLower.includes('坐禅') || activityLower.includes('zazen') ||
+      activityLower.includes('瞑想') || activityLower.includes('meditation')
+    ) {
+      return <CircleDot className="w-6 h-6 text-emerald-600" />;
+    }
+
+    // 4. それ以外の午前中（6時〜12時） = 太陽アイコン
+    if (hour >= 6 && hour < 12) {
+      return <Sun className="w-6 h-6 text-amber-500" />;
+    }
+
+    // 5. それ以外の午後（12時〜18時） = ハートアイコン
+    if (hour >= 12 && hour < 18) {
+      return <Heart className="w-6 h-6 text-pink-400" />;
+    }
+
+    // 6. それ以外の夕方以降（18時以降） = 月アイコン
+    if (hour >= 18) {
       return <Moon className="w-6 h-6 text-indigo-400" />;
     }
-    if (activityLower.includes('海') || activityLower.includes('beach') || activityLower.includes('wave')) {
-      return <Waves className="w-6 h-6 text-blue-400" />;
-    }
-    if (activityLower.includes('山') || activityLower.includes('mountain') || activityLower.includes('forest')) {
-      return <Mountain className="w-6 h-6 text-emerald-500" />;
-    }
-    return <Heart className="w-6 h-6 text-pink-400" />;
+
+    // 早朝（6時未満）は太陽アイコン
+    return <Sun className="w-6 h-6 text-amber-500" />;
   };
 
   // 活動内容を情緒的に変換
@@ -222,7 +247,7 @@ const RetreatDetail: React.FC = () => {
                 <div className="space-y-8">
                   {schedule.map((item: any, index: number) => {
                     const emotionalDescription = getEmotionalDescription(item.time, item.activity, language);
-                    const timeIcon = getTimeIcon(item.time, item.activity);
+                    const timeIcon = getTimeIcon(item.time, item.activity, index, schedule.length);
                     
                     return (
                       <div key={index} className="relative pl-14 pb-8 last:pb-0">
