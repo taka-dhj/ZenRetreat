@@ -14,6 +14,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
+import Instructors from './pages/Instructors';
 
 // Google Analytics の型定義
 declare global {
@@ -85,6 +86,8 @@ function AppContent() {
               <Route path="/ja/blog/:slug" element={<BlogArticle />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/ja/contact" element={<Contact />} />
+              <Route path="/instructors" element={<Instructors />} />
+              <Route path="/ja/instructors" element={<Instructors />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/ja/faq" element={<FAQ />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
