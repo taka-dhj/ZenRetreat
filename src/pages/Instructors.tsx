@@ -11,11 +11,11 @@ const Instructors: React.FC = () => {
       id: 'maiko',
       name: 'Princess',
       specialty: language === 'ja' ? 'ヨガ・瞑想・サウンドヒーリング' : 'Yoga, Meditation, Sound Healing',
-      qualifications: language === 'ja' ? 'RYT200、現代舞踊、演劇' : 'RYT200, Modern Dance, Theater',
+      qualifications: language === 'ja' ? 'サウンドヒラー' : 'Sound Healer',
       image: '/instructor/princess.jpeg',
       biography: language === 'ja'
-        ? '幼少期より現代舞踊に携わり、2013年に演劇活動を開始。現在はモデル、ヨガインストラクターとして身体表現活動を行っています。身体と心の調和を重視し、参加者一人一人の内なる美しさを引き出すことを大切にしています。'
-        : 'Involved in modern dance since childhood, began acting career in 2013. Currently engaged in physical expression activities as a model and yoga instructor. Values harmony of body and mind, and cherishes bringing out the inner beauty of each participant.',
+        ? 'フィリピン・セブで最も有名なヨガスタジオ「DAWATA Wellness」で、初心者から上級者まで幅広くヨガを指導しています。サウンドヒーリングにも精通しており、様々なアプローチを通じて心身の改善をサポートします。'
+        : 'Teaches yoga to students of all levels, from beginners to advanced practitioners, at "DAWATA Wellness," the most renowned yoga studio in Cebu, Philippines. Also highly skilled in sound healing, supporting physical and mental wellness through diverse therapeutic approaches.',
       experience: 8,
       rating: 4.9
     },
