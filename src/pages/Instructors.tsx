@@ -11,7 +11,7 @@ const Instructors: React.FC = () => {
       id: 'maiko',
       name: 'Princess',
       specialty: language === 'ja' ? 'ヨガ・瞑想・サウンドヒーリング' : 'Yoga, Meditation, Sound Healing',
-      qualifications: language === 'ja' ? 'サウンドヒラー' : 'Sound Healer',
+      qualifications: language === 'ja' ? 'サウンドヒーラー' : 'Sound Healer',
       image: '/instructor/princess.jpeg',
       biography: language === 'ja'
         ? 'フィリピン・セブで最も有名なヨガスタジオ「DAWATA Wellness」で、初心者から上級者まで幅広くヨガを指導しています。サウンドヒーリングにも精通しており、様々なアプローチを通じて心身の改善をサポートします。'
