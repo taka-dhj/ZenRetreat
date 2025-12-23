@@ -26,8 +26,8 @@ const Instructors: React.FC = () => {
       qualifications: language === 'ja' ? '臨済宗僧侶、瞑想指導者' : 'Rinzai Zen Monk, Meditation Teacher',
       image: '/instructor/hiroshi.jpeg',
       biography: language === 'ja'
-        ? '京都の名刹で20年間修行を積み、現在は寺院での瞑想指導を専門としています。禅の教えを現代人にも親しみやすい形で伝えることを使命とし、初心者でも深い瞑想体験ができるよう丁寧に指導します。茶道や書道にも精通し、日本の精神文化を総合的に学べるプログラムを提供しています。'
-        : 'Practiced for 20 years at famous temples in Kyoto, now specializes in meditation instruction at temples. Has a mission to convey Zen teachings in a form accessible to modern people, providing careful guidance so even beginners can have deep meditation experiences. Also versed in tea ceremony and calligraphy, offering comprehensive programs to learn Japanese spiritual culture.',
+        ? '京都の名刹で20年間修行を積み、現在は寺院での瞑想指導を専門としています。禅の教えを現代人にも親しみやすい形で伝えることを使命とし、初心者でも深い瞑想体験ができるよう丁寧に指導します。'
+        : 'Practiced for 20 years at famous temples in Kyoto, now specializes in meditation instruction at temples. Has a mission to convey Zen teachings in a form accessible to modern people, providing careful guidance so even beginners can have deep meditation experiences.',
       experience: 20,
       rating: 5.0
     },
