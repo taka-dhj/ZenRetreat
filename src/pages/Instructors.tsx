@@ -21,13 +21,13 @@ const Instructors: React.FC = () => {
     },
     {
       id: 'hiroshi',
-      name: 'Hiroshi（寛）',
+      name: 'Sho',
       specialty: language === 'ja' ? '禅瞑想・マインドフルネス・寺院文化' : 'Zen Meditation, Mindfulness, Temple Culture',
-      qualifications: language === 'ja' ? '臨済宗僧侶、瞑想指導者' : 'Rinzai Zen Monk, Meditation Teacher',
-      image: '/instructor/hiroshi.jpeg',
+      qualifications: language === 'ja' ? '瞑想インストラクター（マインドフルネス資格）' : 'Meditation Instructor (Mindfulness Certified)',
+      image: '/instructor/sho.png',
       biography: language === 'ja'
-        ? '京都の名刹で20年間修行を積み、現在は寺院での瞑想指導を専門としています。禅の教えを現代人にも親しみやすい形で伝えることを使命とし、初心者でも深い瞑想体験ができるよう丁寧に指導します。'
-        : 'Practiced for 20 years at famous temples in Kyoto, now specializes in meditation instruction at temples. Has a mission to convey Zen teachings in a form accessible to modern people, providing careful guidance so even beginners can have deep meditation experiences.',
+        ? 'マインドフルネス瞑想インストラクターの資格を持ち、禅瞑想とマインドフルネスを融合した指導を行っています。日本の歴史や寺院文化についても深い知識を持ち、瞑想を通じて日本の精神文化を伝えることを大切にしています。初心者にも分かりやすく、現代の生活に取り入れやすい方法で心の平和と気づきを育みます。'
+        : 'Certified Mindfulness Meditation Instructor who combines Zen meditation with mindfulness practices. Deeply knowledgeable about Japanese history and temple culture, committed to sharing Japan\'s spiritual traditions through meditation. Guides beginners with accessible methods to cultivate inner peace and awareness in modern life.',
       experience: 20,
       rating: 5.0
     },
