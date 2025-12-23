@@ -81,11 +81,11 @@ const Instructors: React.FC = () => {
             {instructors.map((instructor) => (
               <div key={instructor.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="md:flex">
-                  <div className="md:w-1/3">
+                  <div className="md:w-1/3 flex">
                     <img
                       src={instructor.image}
                       alt={instructor.name}
-                      className="w-full h-64 md:h-full object-cover"
+                      className="w-full h-64 md:h-full object-cover self-stretch"
                       loading="lazy"
                       decoding="async"
                     />
