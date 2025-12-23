@@ -24,7 +24,7 @@ const Instructors: React.FC = () => {
       name: 'Sho',
       specialty: language === 'ja' ? '禅瞑想・マインドフルネス・寺院文化' : 'Zen Meditation, Mindfulness, Temple Culture',
       qualifications: language === 'ja' ? '瞑想インストラクター（マインドフルネス資格）' : 'Meditation Instructor (Mindfulness Certified)',
-      image: '/instructor/sho.png',
+      image: '/instructor/Sho.png',
       biography: language === 'ja'
         ? 'マインドフルネス瞑想インストラクターの資格を持ち、禅瞑想とマインドフルネスを融合した指導を行っています。日本の歴史や寺院文化についても深い知識を持ち、瞑想を通じて日本の精神文化を伝えることを大切にしています。初心者にも分かりやすく、現代の生活に取り入れやすい方法で心の平和と気づきを育みます。'
         : 'Certified Mindfulness Meditation Instructor who combines Zen meditation with mindfulness practices. Deeply knowledgeable about Japanese history and temple culture, committed to sharing Japan\'s spiritual traditions through meditation. Guides beginners with accessible methods to cultivate inner peace and awareness in modern life.',
