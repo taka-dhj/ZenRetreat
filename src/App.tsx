@@ -64,11 +64,11 @@ function LanguageRedirect() {
 function AppContent() {
   return (
     <>
-      <ScrollToTop />
+        <ScrollToTop />
       <LanguageRedirect />
-      <div className="min-h-screen bg-white">
-        <Header />
-        <main>
+        <div className="min-h-screen bg-white">
+          <Header />
+          <main>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/ja" element={<Home />} />
