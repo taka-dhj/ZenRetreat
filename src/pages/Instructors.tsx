@@ -32,7 +32,6 @@ const Instructors: React.FC = () => {
       rating: 5.0
     },
     // Temporarily hidden, will be re-enabled later
-    /*
     {
       id: 'ayaka',
       name: 'Ayaka（彩香）',
@@ -57,7 +56,6 @@ const Instructors: React.FC = () => {
       experience: 12,
       rating: 4.9
     }
-    */
   ];
 
   return (
@@ -81,7 +79,7 @@ const Instructors: React.FC = () => {
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {instructors.map((instructor) => (
+            {instructors.filter(instructor => instructor.id !== 'ayaka' && instructor.id !== 'kenji').map((instructor) => (
               <div key={instructor.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="md:flex">
                   <div className="md:w-1/3 flex">
