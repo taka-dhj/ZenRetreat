@@ -31,6 +31,8 @@ const Instructors: React.FC = () => {
       experience: 10,
       rating: 5.0
     },
+    // Temporarily hidden, will be re-enabled later
+    /*
     {
       id: 'ayaka',
       name: 'Ayaka（彩香）',
@@ -55,6 +57,7 @@ const Instructors: React.FC = () => {
       experience: 12,
       rating: 4.9
     }
+    */
   ];
 
   return (
