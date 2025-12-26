@@ -134,7 +134,7 @@ const BlogArticle: React.FC = () => {
           <ul key={key++} className="list-disc list-inside space-y-3 mb-6 text-gray-700 ml-4 marker:text-green-600">
             {listItems.map((item, idx) => {
               const processedText = processBold(item.substring(2));
-              return <li key={idx} className="leading-relaxed pl-2" dangerouslySetInnerHTML={{ __html: processedText }} />;
+              return <li key={idx} className="leading-relaxed pl-2 break-words overflow-visible" dangerouslySetInnerHTML={{ __html: processedText }} />;
             })}
           </ul>
         );
@@ -148,7 +148,7 @@ const BlogArticle: React.FC = () => {
           <ol key={key++} className="list-decimal list-inside space-y-3 mb-6 text-gray-700 ml-4 marker:text-green-600">
             {listItems.map((item, idx) => {
               const processedText = processBold(item.replace(/^\d+\.\s/, ''));
-              return <li key={idx} className="leading-relaxed pl-2" dangerouslySetInnerHTML={{ __html: processedText }} />;
+              return <li key={idx} className="leading-relaxed pl-2 break-words overflow-visible" dangerouslySetInnerHTML={{ __html: processedText }} />;
             })}
           </ol>
         );
@@ -203,7 +203,7 @@ const BlogArticle: React.FC = () => {
         // Process bold text (**text**)
         const processedLine = line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         elements.push(
-          <p key={key++} className="text-gray-700 leading-relaxed text-lg mb-6" dangerouslySetInnerHTML={{ __html: processedLine }} />
+          <p key={key++} className="text-gray-700 leading-relaxed text-base md:text-lg mb-6 break-words overflow-visible" dangerouslySetInnerHTML={{ __html: processedLine }} />
         );
       }
     }

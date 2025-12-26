@@ -42,6 +42,9 @@ const Header: React.FC = () => {
             <Link to={`${baseUrl}/blog`} className="text-gray-700 hover:text-green-600 transition-colors duration-200">
               {t('nav.blog')}
             </Link>
+            <Link to={`${baseUrl}/instructors`} className="text-gray-700 hover:text-green-600 transition-colors duration-200">
+              {t('nav.instructors')}
+            </Link>
             <Link to={`${baseUrl}/contact`} className="text-gray-700 hover:text-green-600 transition-colors duration-200">
               {t('nav.contact')}
             </Link>
@@ -125,6 +128,13 @@ const Header: React.FC = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t('nav.blog')}
+              </Link>
+              <Link
+                to={`${baseUrl}/instructors`}
+                className="text-gray-700 hover:text-green-600 transition-colors duration-200 px-2 py-1"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t('nav.instructors')}
               </Link>
               <Link
                 to={`${baseUrl}/contact`}

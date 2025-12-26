@@ -9,26 +9,26 @@ const Instructors: React.FC = () => {
   const instructors = [
     {
       id: 'maiko',
-      name: 'Maiko（舞子）',
-      specialty: language === 'ja' ? 'ヨガ・瞑想・身体表現' : 'Yoga, Meditation, Physical Expression',
-      qualifications: language === 'ja' ? 'RYT200、現代舞踊、演劇' : 'RYT200, Modern Dance, Theater',
-      image: '/instructor/maiko.jpeg',
+      name: 'Princess',
+      specialty: language === 'ja' ? 'ヨガ・瞑想・サウンドヒーリング' : 'Yoga, Meditation, Sound Healing',
+      qualifications: language === 'ja' ? 'サウンドヒーラー' : 'Sound Healer',
+      image: '/instructor/princess.jpeg',
       biography: language === 'ja'
-        ? '幼少期より現代舞踊に携わり、2013年に演劇活動を開始。現在はモデル、ヨガインストラクターとして身体表現活動を行っています。身体と心の調和を重視し、参加者一人一人の内なる美しさを引き出すことを大切にしています。'
-        : 'Involved in modern dance since childhood, began acting career in 2013. Currently engaged in physical expression activities as a model and yoga instructor. Values harmony of body and mind, and cherishes bringing out the inner beauty of each participant.',
+        ? 'フィリピン・セブで最も有名なヨガスタジオ「DAWATA Wellness」で、初心者から上級者まで幅広くヨガを指導しています。サウンドヒーリングにも精通しており、様々なアプローチを通じて心身の改善をサポートします。'
+        : 'Teaches yoga to students of all levels, from beginners to advanced practitioners, at "DAWATA Wellness," the most renowned yoga studio in Cebu, Philippines. Also highly skilled in sound healing, supporting physical and mental wellness through diverse therapeutic approaches.',
       experience: 8,
       rating: 4.9
     },
     {
       id: 'hiroshi',
-      name: 'Hiroshi（寛）',
+      name: 'Sho',
       specialty: language === 'ja' ? '禅瞑想・マインドフルネス・寺院文化' : 'Zen Meditation, Mindfulness, Temple Culture',
-      qualifications: language === 'ja' ? '臨済宗僧侶、瞑想指導者' : 'Rinzai Zen Monk, Meditation Teacher',
-      image: '/instructor/hiroshi.jpeg',
+      qualifications: language === 'ja' ? '瞑想インストラクター（マインドフルネス）' : 'Meditation Instructor (Mindfulness)',
+      image: '/instructor/Sho.png',
       biography: language === 'ja'
-        ? '京都の名刹で20年間修行を積み、現在は寺院での瞑想指導を専門としています。禅の教えを現代人にも親しみやすい形で伝えることを使命とし、初心者でも深い瞑想体験ができるよう丁寧に指導します。茶道や書道にも精通し、日本の精神文化を総合的に学べるプログラムを提供しています。'
-        : 'Practiced for 20 years at famous temples in Kyoto, now specializes in meditation instruction at temples. Has a mission to convey Zen teachings in a form accessible to modern people, providing careful guidance so even beginners can have deep meditation experiences. Also versed in tea ceremony and calligraphy, offering comprehensive programs to learn Japanese spiritual culture.',
-      experience: 20,
+        ? 'マインドフルネス瞑想インストラクターの資格を持ち、禅瞑想とマインドフルネスを融合した指導を行っています。瞑想を通じて日本の精神文化を伝えることを大切にし、初心者にも分かりやすく、現代の生活に取り入れやすい方法で心の平和と気づきを育みます。'
+        : 'Certified Mindfulness Meditation Instructor who combines Zen meditation with mindfulness practices. Committed to sharing Japan\'s spiritual traditions through meditation, guiding beginners with accessible methods to cultivate inner peace and awareness in modern life.',
+      experience: 10,
       rating: 5.0
     },
     {
@@ -81,11 +81,11 @@ const Instructors: React.FC = () => {
             {instructors.map((instructor) => (
               <div key={instructor.id} className="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="md:flex">
-                  <div className="md:w-1/3">
+                  <div className="md:w-1/3 flex">
                     <img
                       src={instructor.image}
                       alt={instructor.name}
-                      className="w-full h-64 md:h-full object-cover"
+                      className="w-full h-64 md:h-full object-cover self-stretch"
                       loading="lazy"
                       decoding="async"
                     />
@@ -112,7 +112,7 @@ const Instructors: React.FC = () => {
                       </p>
                     </div>
 
-                    <p className="text-gray-600 leading-relaxed mb-6 text-sm">
+                    <p className="text-gray-600 leading-relaxed mb-6 text-sm break-words overflow-visible">
                       {instructor.biography}
                     </p>
 

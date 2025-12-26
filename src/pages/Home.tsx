@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, MapPin, Sparkles, Search } from 'lucide-react';
+import { ArrowRight, MapPin, Sparkles, Waves, Heart, Moon, Users, Building2, Mountain } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useRetreats } from '../hooks/useRetreats';
 import { getImageUrl, handleImageError } from '../lib/imageUtils';
@@ -11,6 +11,7 @@ const Home: React.FC = () => {
   const { retreats } = useRetreats();
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<'purpose' | 'area'>('purpose');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -165,67 +166,255 @@ const Home: React.FC = () => {
   return (
     <div className="pt-16">
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-white via-green-50 to-blue-50 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400&dpr=2')] bg-cover bg-center opacity-50">
+      <section className="relative h-screen flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
           <img
-            src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600"
+            src={language === 'en' 
+              ? 'https://images.pexels.com/photos/6648544/pexels-photo-6648544.jpeg?auto=compress&cs=tinysrgb&w=1600'
+              : 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600'
+            }
             alt="Hero background"
-            className="w-full h-full object-cover opacity-0"
+            className="w-full h-full object-cover"
             loading="eager"
             fetchPriority="high"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white/40"></div>
-        <div className="relative z-10 text-center max-w-4xl mx-auto px-4">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-light text-gray-800 mb-6 leading-tight">
+        
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-5xl px-8 md:px-16 lg:px-24 xl:px-32">
+          <h1 className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium text-white mb-10 leading-[1.1] tracking-tight drop-shadow-lg ${
+            language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+          }`}>
             {t('hero.title')}
           </h1>
-          <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className={`text-lg md:text-xl lg:text-2xl text-white/95 mb-16 max-w-3xl leading-relaxed drop-shadow-md ${
+            language === 'ja' ? 'font-serif-ja font-normal' : 'font-serif-en font-normal'
+          }`}>
             {t('hero.subtitle')}
           </p>
           
-          {/* Search Bar */}
-          <form onSubmit={handleSearch} className="max-w-2xl mx-auto mb-8">
-            <div className="relative flex items-center bg-white rounded-full shadow-xl border border-gray-200 overflow-hidden">
-              <div className="flex-1 flex items-center px-6 py-4">
-                <Search className="text-gray-400 mr-3 flex-shrink-0" size={20} />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={language === 'ja' ? 'ツアーを検索...' : 'Search tours...'}
-                  className="flex-1 outline-none text-gray-800 placeholder-gray-400 text-base md:text-lg"
-                />
-              </div>
-              <button
-                type="submit"
-                className="bg-green-600 text-white px-6 md:px-8 py-4 hover:bg-green-700 transition-colors duration-200 font-medium text-base md:text-lg"
-              >
-                {language === 'ja' ? '検索' : 'Search'}
-              </button>
-            </div>
-          </form>
 
+          {/* CTA Button */}
           <Link
             to={`${baseUrl}/retreats`}
-            className="inline-flex items-center space-x-2 bg-green-600 text-white px-8 py-4 rounded-full hover:bg-green-700 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center space-x-3 bg-gradient-to-r from-white/20 via-white/15 to-white/20 backdrop-blur-md border border-white/50 text-white px-12 py-5 rounded-full hover:from-white/30 hover:via-white/25 hover:to-white/30 hover:border-white/70 transition-all duration-300 shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group relative overflow-hidden"
           >
-            <span className="font-medium">{t('hero.cta')}</span>
-            <ArrowRight size={20} />
+            {/* 光沢感を演出するオーバーレイ */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+            <span className="font-medium text-lg tracking-wide relative z-10">
+              {t('hero.cta')}
+            </span>
+            <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
           </Link>
+              </div>
+      </section>
+
+      {/* Search Section - Tab UI - Temporarily hidden, will be re-enabled later */}
+      {/* <section className="py-32 md:py-40 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-16 text-center ${
+            language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+          }`}>
+            {language === 'ja' ? 'あなたに最適なリトリートを見つける' : 'Find Your Perfect Retreat'}
+          </h2>
+
+          {/* Tab Switcher */}
+          <div className="flex justify-center mb-16">
+            <div className="inline-flex items-center space-x-8">
+              <button
+                onClick={() => setActiveTab('purpose')}
+                className={`relative pb-3 transition-all duration-300 font-medium text-base ${
+                  activeTab === 'purpose'
+                    ? 'text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <span className="flex items-center space-x-2">
+                  <Sparkles size={18} strokeWidth={1.5} />
+                  <span>{language === 'ja' ? '目的・悩みから探す' : 'By Purpose'}</span>
+                </span>
+                {activeTab === 'purpose' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"></span>
+                )}
+              </button>
+              <button
+                onClick={() => setActiveTab('area')}
+                className={`relative pb-3 transition-all duration-300 font-medium text-base ${
+                  activeTab === 'area'
+                    ? 'text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <span className="flex items-center space-x-2">
+                  <MapPin size={18} strokeWidth={1.5} />
+                  <span>{language === 'ja' ? '地域から探す' : 'By Area'}</span>
+                </span>
+                {activeTab === 'area' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"></span>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Tab Content */}
+          <div className="mt-8">
+            {activeTab === 'purpose' ? (
+              /* Purpose/Problem Tab Content */
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {language === 'ja' ? (
+                  <>
+                    {/* 脳疲労リセット */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=瞑想`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Waves className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>脳疲労リセット</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">仕事のプレッシャーを忘れ、頭を空っぽにする。</p>
+                    </Link>
+
+                    {/* デジタルデトックス */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=自然`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>デジタルデトックス</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">圏外の自然の中で、本来の感覚を取り戻す。</p>
+                    </Link>
+
+                    {/* 美肌・体質改善 */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=食事`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Heart className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>美肌・体質改善</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">内側から浄化し、鏡を見るのが楽しみに。</p>
+                    </Link>
+
+                    {/* 睡眠改善 */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=瞑想`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Moon className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>睡眠改善</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">泥のように眠り、朝日で目覚める奇跡。</p>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    {/* Deepen Our Bond */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=meditation`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Users className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Deepen Our Bond</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">Reconnect with your partner in shared silence.</p>
+                    </Link>
+
+                    {/* Authentic Culture */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=culture`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Building2 className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Authentic Culture</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">Exclusive access to hidden Japanese traditions.</p>
+                    </Link>
+
+                    {/* Nature & Adventure */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=nature`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Nature & Adventure</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">Explore the untouched beauty of Japan together.</p>
+                    </Link>
+                  </>
+                )}
+              </div>
+            ) : (
+              /* Area Tab Content */
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <Link
+                  to={`${baseUrl}/cebu`}
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                >
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <Waves className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                  </div>
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+                    {language === 'ja' ? 'セブ島' : 'Cebu'}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {language === 'ja' ? '南国のリゾートでリフレッシュ' : 'Refresh at a tropical resort'}
+                  </p>
+                </Link>
+
+                <Link
+                  to={`${baseUrl}/japan`}
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                >
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <MapPin className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                  </div>
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+                    {language === 'ja' ? '京都' : 'Kyoto'}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {language === 'ja' ? '伝統文化に包まれた特別な体験' : 'An experience wrapped in traditional culture'}
+                  </p>
+                </Link>
+
+          <Link
+                  to={`${baseUrl}/japan`}
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                >
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                  </div>
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+                    {language === 'ja' ? '山梨' : 'Yamanashi'}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {language === 'ja' ? '自然に囲まれた静寂のひととき' : 'A moment of silence surrounded by nature'}
+                  </p>
+          </Link>
+              </div>
+            )}
+          </div>
         </div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-green-300 rounded-full animate-pulse opacity-60"></div>
-        <div className="absolute top-1/3 right-1/4 w-1 h-1 bg-blue-300 rounded-full animate-pulse opacity-40"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-green-200 rounded-full animate-pulse opacity-30"></div>
       </section>
 
       {/* About Section */}
-      <section className="py-24 bg-white">
+      <section className="py-36 md:py-48 bg-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-light text-gray-800 mb-6">
+          <div className="text-center mb-20">
+            <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-6 ${
+              language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+            }`}>
               {t('about.title')}
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -245,7 +434,9 @@ const Home: React.FC = () => {
                   decoding="async"
                 />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.expertise')}</h3>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.expertise')}</h3>
               <p className="text-gray-600">{t('home.why.expertise.desc')}</p>
             </div>
             <div className="text-center group">
@@ -258,7 +449,9 @@ const Home: React.FC = () => {
                   decoding="async"
                 />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.locations')}</h3>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.locations')}</h3>
               <p className="text-gray-600">{t('home.why.locations.desc')}</p>
             </div>
             <div className="text-center group">
@@ -271,7 +464,9 @@ const Home: React.FC = () => {
                   decoding="async"
                 />
               </div>
-              <h3 className="text-xl font-medium text-gray-800 mb-4">{t('home.why.holistic')}</h3>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.holistic')}</h3>
               <p className="text-gray-600">{t('home.why.holistic.desc')}</p>
             </div>
           </div>
@@ -279,10 +474,12 @@ const Home: React.FC = () => {
       </section>
 
       {/* Featured Retreats */}
-      <section className="py-24 bg-gray-50">
+      <section className="py-36 md:py-48 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-light text-gray-800 mb-6">
+          <div className="text-center mb-20">
+            <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-6 ${
+              language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+            }`}>
               {t('retreats.featured')}
             </h2>
           </div>
@@ -463,7 +660,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+      <section className="py-36 md:py-48 bg-gradient-to-r from-green-600 to-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-light mb-6">
             {language === 'ja' 

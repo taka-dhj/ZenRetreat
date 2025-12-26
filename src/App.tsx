@@ -14,6 +14,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
+import Instructors from './pages/Instructors';
 
 // Google Analytics の型定義
 declare global {
@@ -68,33 +69,35 @@ function AppContent() {
       <div className="min-h-screen bg-white">
         <Header />
         <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/ja" element={<Home />} />
-              <Route path="/retreats" element={<Retreats />} />
-              <Route path="/ja/retreats" element={<Retreats />} />
-              <Route path="/retreat/:id" element={<RetreatDetail />} />
-              <Route path="/ja/retreat/:id" element={<RetreatDetail />} />
-              <Route path="/japan" element={<Japan />} />
-              <Route path="/ja/japan" element={<Japan />} />
-              <Route path="/cebu" element={<Cebu />} />
-              <Route path="/ja/cebu" element={<Cebu />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/ja/blog" element={<Blog />} />
-              <Route path="/blog/:slug" element={<BlogArticle />} />
-              <Route path="/ja/blog/:slug" element={<BlogArticle />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/ja/contact" element={<Contact />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/ja/faq" element={<FAQ />} />
-              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/ja/privacy-policy" element={<PrivacyPolicy />} />
-              <Route path="/terms-of-service" element={<TermsOfService />} />
-              <Route path="/ja/terms-of-service" element={<TermsOfService />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/ja" element={<Home />} />
+            <Route path="/retreats" element={<Retreats />} />
+            <Route path="/ja/retreats" element={<Retreats />} />
+            <Route path="/retreat/:id" element={<RetreatDetail />} />
+            <Route path="/ja/retreat/:id" element={<RetreatDetail />} />
+            <Route path="/japan" element={<Japan />} />
+            <Route path="/ja/japan" element={<Japan />} />
+            <Route path="/cebu" element={<Cebu />} />
+            <Route path="/ja/cebu" element={<Cebu />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/ja/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogArticle />} />
+            <Route path="/ja/blog/:slug" element={<BlogArticle />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/ja/contact" element={<Contact />} />
+            <Route path="/instructors" element={<Instructors />} />
+            <Route path="/ja/instructors" element={<Instructors />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route path="/ja/faq" element={<FAQ />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/ja/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/ja/terms-of-service" element={<TermsOfService />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </>
   );
 }
