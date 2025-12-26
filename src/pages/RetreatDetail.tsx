@@ -182,7 +182,7 @@ const RetreatDetail: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative min-h-96 py-20 md:py-32 overflow-hidden mt-16">
+      <section className="relative min-h-96 py-16 md:py-24 overflow-hidden mt-16">
         <img
           src={imageUrl}
           alt={title}
@@ -190,7 +190,7 @@ const RetreatDetail: React.FC = () => {
           onError={handleImageError}
         />
         <div className="absolute inset-0 bg-black/40"></div>
-        <div className="relative z-10 flex items-center justify-center min-h-96 py-12">
+        <div className="relative z-10 flex items-center justify-center min-h-96 py-8 md:py-12">
           <div className="text-center text-white max-w-4xl mx-auto px-4">
             <div className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 ${
               retreat.type === 'Japan' ? 'bg-green-500' : 'bg-blue-500'
@@ -201,7 +201,7 @@ const RetreatDetail: React.FC = () => {
               }
             </div>
             <h1 className="text-3xl md:text-5xl font-light mb-4">{title}</h1>
-            <p className="text-base md:text-xl opacity-90 break-words px-4">{description}</p>
+            <p className="text-lg md:text-xl opacity-90 break-words px-4 leading-relaxed">{description}</p>
           </div>
         </div>
       </section>
