@@ -112,7 +112,7 @@ const Instructors: React.FC = () => {
                       </p>
                     </div>
 
-                    <p className="text-gray-600 leading-relaxed mb-6 text-sm">
+                    <p className="text-gray-600 leading-relaxed mb-6 text-sm break-words overflow-visible">
                       {instructor.biography}
                     </p>
 

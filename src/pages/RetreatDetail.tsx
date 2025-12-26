@@ -226,13 +226,13 @@ const RetreatDetail: React.FC = () => {
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-12">
               {/* Overview */}
-              <div className="bg-white rounded-2xl shadow-sm p-8">
+              <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
                 <h2 className="text-2xl font-medium text-gray-800 mb-6">
                   {t('retreat.overview')}
                 </h2>
-                <div className="text-gray-600 leading-relaxed text-lg whitespace-pre-line space-y-4">
+                <div className="text-gray-600 leading-relaxed text-base md:text-lg whitespace-pre-line overflow-visible">
                   {longDescription.split('\n\n').map((paragraph, index) => (
-                    <p key={index} className="mb-4 last:mb-0">
+                    <p key={index} className="mb-4 last:mb-0 break-words">
                       {paragraph.trim()}
                     </p>
                   ))}
@@ -305,7 +305,7 @@ const RetreatDetail: React.FC = () => {
                   {language === 'ja' ? (
                     <>
                       <blockquote className="relative pl-8 border-l-4 border-green-500">
-                        <p className={`text-gray-700 text-lg leading-relaxed mb-4 ${
+                        <p className={`text-gray-700 text-base md:text-lg leading-relaxed mb-4 break-words overflow-visible ${
                           language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
                         }`}>
                           「今までで一番よく眠れた。日常の雑音から解放されて、本当の自分を取り戻せた気がします。」
@@ -315,7 +315,7 @@ const RetreatDetail: React.FC = () => {
                         </footer>
                       </blockquote>
                       <blockquote className="relative pl-8 border-l-4 border-green-500">
-                        <p className={`text-gray-700 text-lg leading-relaxed mb-4 ${
+                        <p className={`text-gray-700 text-base md:text-lg leading-relaxed mb-4 break-words overflow-visible ${
                           language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
                         }`}>
                           「自然の中で過ごす時間が、こんなにも心を満たしてくれるとは思わなかった。人生を変える体験でした。」
@@ -328,7 +328,7 @@ const RetreatDetail: React.FC = () => {
                   ) : (
                     <>
                       <blockquote className="relative pl-8 border-l-4 border-green-500">
-                        <p className={`text-gray-700 text-lg leading-relaxed mb-4 ${
+                        <p className={`text-gray-700 text-base md:text-lg leading-relaxed mb-4 break-words overflow-visible ${
                           language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
                         }`}>
                           "A life-changing experience for both of us. We found peace we didn't know we were searching for."
@@ -338,7 +338,7 @@ const RetreatDetail: React.FC = () => {
                         </footer>
                       </blockquote>
                       <blockquote className="relative pl-8 border-l-4 border-green-500">
-                        <p className={`text-gray-700 text-lg leading-relaxed mb-4 ${
+                        <p className={`text-gray-700 text-base md:text-lg leading-relaxed mb-4 break-words overflow-visible ${
                           language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
                         }`}>
                           "The silence, the nature, the meditation—everything came together perfectly. I've never felt so connected to myself."

@@ -181,7 +181,7 @@ const FAQ: React.FC = () => {
                     <h3 className="text-lg font-medium text-gray-800 mb-3">
                       {item.q}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed break-words overflow-visible">
                       {item.a}
                     </p>
                   </div>
