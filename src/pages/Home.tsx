@@ -406,7 +406,7 @@ const Home: React.FC = () => {
             )}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* About Section */}
       <section className="py-36 md:py-48 bg-white">
