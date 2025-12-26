@@ -214,7 +214,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Search Section - Tab UI - Temporarily hidden, will be re-enabled later */}
-      {/* <section className="py-32 md:py-40 bg-gradient-to-b from-white to-gray-50">
+      {false && <section className="py-32 md:py-40 bg-gradient-to-b from-white to-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-16 text-center ${
             language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
@@ -406,7 +406,7 @@ const Home: React.FC = () => {
             )}
           </div>
         </div>
-      </section> */}
+      </section>}
 
       {/* About Section */}
       <section className="py-36 md:py-48 bg-white">
