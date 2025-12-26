@@ -224,7 +224,7 @@ const RetreatDetail: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
-            <div className="lg:col-span-2 space-y-12">
+            <div className="lg:col-span-2 space-y-12 overflow-visible">
               {/* Overview */}
               <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8 overflow-visible">
                 <h2 className="text-2xl font-medium text-gray-800 mb-6">
