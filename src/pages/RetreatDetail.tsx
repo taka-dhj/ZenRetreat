@@ -226,13 +226,13 @@ const RetreatDetail: React.FC = () => {
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-12">
               {/* Overview */}
-              <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8">
+              <div className="bg-white rounded-2xl shadow-sm p-6 md:p-8 overflow-visible">
                 <h2 className="text-2xl font-medium text-gray-800 mb-6">
                   {t('retreat.overview')}
                 </h2>
-                <div className="text-gray-600 leading-relaxed text-base md:text-lg whitespace-pre-line overflow-visible">
+                <div className="text-gray-600 leading-relaxed text-base md:text-lg overflow-visible">
                   {longDescription.split('\n\n').map((paragraph, index) => (
-                    <p key={index} className="mb-4 last:mb-0 break-words">
+                    <p key={index} className="mb-4 last:mb-0 break-words overflow-visible">
                       {paragraph.trim()}
                     </p>
                   ))}
