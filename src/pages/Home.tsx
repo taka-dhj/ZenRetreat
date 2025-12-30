@@ -1,0 +1,692 @@
+import React, { useMemo, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, MapPin, Sparkles, Waves, Heart, Moon, Users, Building2, Mountain } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useRetreats } from '../hooks/useRetreats';
+import { getImageUrl, handleImageError } from '../lib/imageUtils';
+
+const Home: React.FC = () => {
+  const { language, t } = useLanguage();
+  const baseUrl = language === 'ja' ? '/ja' : '';
+  const { retreats } = useRetreats();
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<'purpose' | 'area'>('purpose');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`${baseUrl}/retreats?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      navigate(`${baseUrl}/retreats`);
+    }
+  };
+
+  // 都道府県リスト（日本語と英語のマッピング）
+  const prefectureMap: { [key: string]: { ja: string; en: string } } = {
+    '北海道': { ja: '北海道', en: 'Hokkaido' },
+    '青森': { ja: '青森', en: 'Aomori' },
+    '岩手': { ja: '岩手', en: 'Iwate' },
+    '宮城': { ja: '宮城', en: 'Miyagi' },
+    '秋田': { ja: '秋田', en: 'Akita' },
+    '山形': { ja: '山形', en: 'Yamagata' },
+    '福島': { ja: '福島', en: 'Fukushima' },
+    '茨城': { ja: '茨城', en: 'Ibaraki' },
+    '栃木': { ja: '栃木', en: 'Tochigi' },
+    '群馬': { ja: '群馬', en: 'Gunma' },
+    '埼玉': { ja: '埼玉', en: 'Saitama' },
+    '千葉': { ja: '千葉', en: 'Chiba' },
+    '東京': { ja: '東京', en: 'Tokyo' },
+    '神奈川': { ja: '神奈川', en: 'Kanagawa' },
+    '新潟': { ja: '新潟', en: 'Niigata' },
+    '富山': { ja: '富山', en: 'Toyama' },
+    '石川': { ja: '石川', en: 'Ishikawa' },
+    '福井': { ja: '福井', en: 'Fukui' },
+    '山梨': { ja: '山梨', en: 'Yamanashi' },
+    '長野': { ja: '長野', en: 'Nagano' },
+    '岐阜': { ja: '岐阜', en: 'Gifu' },
+    '静岡': { ja: '静岡', en: 'Shizuoka' },
+    '愛知': { ja: '愛知', en: 'Aichi' },
+    '三重': { ja: '三重', en: 'Mie' },
+    '滋賀': { ja: '滋賀', en: 'Shiga' },
+    '京都': { ja: '京都', en: 'Kyoto' },
+    '大阪': { ja: '大阪', en: 'Osaka' },
+    '兵庫': { ja: '兵庫', en: 'Hyogo' },
+    '奈良': { ja: '奈良', en: 'Nara' },
+    '和歌山': { ja: '和歌山', en: 'Wakayama' },
+    '鳥取': { ja: '鳥取', en: 'Tottori' },
+    '島根': { ja: '島根', en: 'Shimane' },
+    '岡山': { ja: '岡山', en: 'Okayama' },
+    '広島': { ja: '広島', en: 'Hiroshima' },
+    '山口': { ja: '山口', en: 'Yamaguchi' },
+    '徳島': { ja: '徳島', en: 'Tokushima' },
+    '香川': { ja: '香川', en: 'Kagawa' },
+    '愛媛': { ja: '愛媛', en: 'Ehime' },
+    '高知': { ja: '高知', en: 'Kochi' },
+    '福岡': { ja: '福岡', en: 'Fukuoka' },
+    '佐賀': { ja: '佐賀', en: 'Saga' },
+    '長崎': { ja: '長崎', en: 'Nagasaki' },
+    '熊本': { ja: '熊本', en: 'Kumamoto' },
+    '大分': { ja: '大分', en: 'Oita' },
+    '宮崎': { ja: '宮崎', en: 'Miyazaki' },
+    '鹿児島': { ja: '鹿児島', en: 'Kagoshima' },
+    '沖縄': { ja: '沖縄', en: 'Okinawa' },
+  };
+
+  // 都道府県を抽出する関数
+  const extractPrefecture = (locationJa: string, locationEn: string): string => {
+    for (const [prefJa, prefData] of Object.entries(prefectureMap)) {
+      if (locationJa.includes(prefJa)) {
+        return language === 'ja' ? prefData.ja : prefData.en;
+      }
+    }
+    const fallback = locationJa.split(/[・・,、]/)[0] || locationJa;
+    return fallback;
+  };
+
+  // タイトルから都道府県を削除する関数
+  const removePrefectureFromTitle = (title: string, locationJa: string): string => {
+    if (language !== 'ja') return title;
+    for (const [prefJa] of Object.entries(prefectureMap)) {
+      if (locationJa.includes(prefJa)) {
+        const patterns = [
+          new RegExp(`^${prefJa}[・・]`, 'g'),
+          new RegExp(`^${prefJa}\\s*[・・]`, 'g'),
+        ];
+        let cleanedTitle = title;
+        for (const pattern of patterns) {
+          cleanedTitle = cleanedTitle.replace(pattern, '');
+        }
+        return cleanedTitle.trim() || title;
+      }
+    }
+    return title;
+  };
+
+  // 場所から都道府県を削除する関数
+  const removePrefectureFromLocation = (location: string, locationJa: string): string => {
+    if (language !== 'ja') return location;
+    
+    let cleanedLocation = location;
+    
+    // 都道府県を前後から削除
+    for (const [prefJa] of Object.entries(prefectureMap)) {
+      if (locationJa.includes(prefJa)) {
+        // 前から削除：「都道府県・」「都道府県・」
+        const frontPatterns = [
+          new RegExp(`^${prefJa}[・・]`, 'g'),
+          new RegExp(`^${prefJa}\\s*[・・]`, 'g'),
+        ];
+        for (const pattern of frontPatterns) {
+          cleanedLocation = cleanedLocation.replace(pattern, '');
+        }
+        
+        // 後ろから削除：「、都道府県」「・都道府県」
+        const backPatterns = [
+          new RegExp(`[、,]${prefJa}$`, 'g'),
+          new RegExp(`[・・]${prefJa}$`, 'g'),
+          new RegExp(`\\s+${prefJa}$`, 'g'),
+        ];
+        for (const pattern of backPatterns) {
+          cleanedLocation = cleanedLocation.replace(pattern, '');
+        }
+      }
+    }
+    
+    return cleanedLocation.trim() || location;
+  };
+
+  const featuredRetreats = useMemo(() => {
+    const featured = retreats.filter(r =>
+      ['kyoto-chishakuin', 'yamanashi-forest', 'cebu-beach'].includes(r.id)
+    );
+    return featured.map(retreat => {
+      const location = language === 'ja' ? retreat.location_ja : retreat.location_en;
+      const originalTitle = language === 'ja' ? retreat.title_ja : retreat.title_en;
+      const cleanedTitle = removePrefectureFromTitle(originalTitle, retreat.location_ja);
+      const cleanedLocation = removePrefectureFromLocation(location, retreat.location_ja);
+      const prefecture = retreat.type === 'Japan' 
+        ? extractPrefecture(retreat.location_ja, retreat.location_en)
+        : (language === 'ja' ? 'セブ' : 'Cebu');
+      
+      return {
+        id: retreat.id,
+        title: cleanedTitle,
+        location: cleanedLocation,
+        prefecture: prefecture,
+        price: retreat.price,
+        type: retreat.type,
+        image: retreat.image,
+        description: language === 'ja' ? retreat.description_ja : retreat.description_en,
+        includes: language === 'ja' ? retreat.includes_ja : retreat.includes_en
+      };
+    });
+  }, [retreats, language]);
+
+  return (
+    <div className="pt-16">
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src={language === 'en' 
+              ? 'https://images.pexels.com/photos/6648544/pexels-photo-6648544.jpeg?auto=compress&cs=tinysrgb&w=1600'
+              : 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=1600'
+            }
+            alt="Hero background"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+          />
+        </div>
+        
+        {/* Dark Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/40 to-transparent"></div>
+        
+        {/* Content */}
+        <div className="relative z-10 max-w-5xl px-8 md:px-16 lg:px-24 xl:px-32">
+          <h1 className={`text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-medium text-white mb-10 leading-[1.1] tracking-tight drop-shadow-lg ${
+            language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+          }`}>
+            {t('hero.title')}
+          </h1>
+          <p className={`text-lg md:text-xl lg:text-2xl text-white/95 mb-16 max-w-3xl leading-relaxed drop-shadow-md ${
+            language === 'ja' ? 'font-serif-ja font-normal' : 'font-serif-en font-normal'
+          }`}>
+            {t('hero.subtitle')}
+          </p>
+          
+
+          {/* CTA Button */}
+          <Link
+            to={`${baseUrl}/retreats`}
+            className="inline-flex items-center space-x-3 bg-gradient-to-r from-white/20 via-white/15 to-white/20 backdrop-blur-md border border-white/50 text-white px-12 py-5 rounded-full hover:from-white/30 hover:via-white/25 hover:to-white/30 hover:border-white/70 transition-all duration-300 shadow-2xl hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] group relative overflow-hidden"
+          >
+            {/* 光沢感を演出するオーバーレイ */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+            <span className="font-medium text-lg tracking-wide relative z-10">
+              {t('hero.cta')}
+            </span>
+            <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform duration-300 relative z-10" />
+          </Link>
+              </div>
+      </section>
+
+      {/* Search Section - Tab UI - Temporarily hidden, will be re-enabled later */}
+      {false && <section className="py-32 md:py-40 bg-gradient-to-b from-white to-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-16 text-center ${
+            language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+          }`}>
+            {language === 'ja' ? 'あなたに最適なリトリートを見つける' : 'Find Your Perfect Retreat'}
+          </h2>
+
+          {/* Tab Switcher */}
+          <div className="flex justify-center mb-16">
+            <div className="inline-flex items-center space-x-8">
+              <button
+                onClick={() => setActiveTab('purpose')}
+                className={`relative pb-3 transition-all duration-300 font-medium text-base ${
+                  activeTab === 'purpose'
+                    ? 'text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <span className="flex items-center space-x-2">
+                  <Sparkles size={18} strokeWidth={1.5} />
+                  <span>{language === 'ja' ? '目的・悩みから探す' : 'By Purpose'}</span>
+                </span>
+                {activeTab === 'purpose' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"></span>
+                )}
+              </button>
+              <button
+                onClick={() => setActiveTab('area')}
+                className={`relative pb-3 transition-all duration-300 font-medium text-base ${
+                  activeTab === 'area'
+                    ? 'text-gray-900'
+                    : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                <span className="flex items-center space-x-2">
+                  <MapPin size={18} strokeWidth={1.5} />
+                  <span>{language === 'ja' ? '地域から探す' : 'By Area'}</span>
+                </span>
+                {activeTab === 'area' && (
+                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-green-600"></span>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Tab Content */}
+          <div className="mt-8">
+            {activeTab === 'purpose' ? (
+              /* Purpose/Problem Tab Content */
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {language === 'ja' ? (
+                  <>
+                    {/* 脳疲労リセット */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=瞑想`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Waves className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>脳疲労リセット</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">仕事のプレッシャーを忘れ、頭を空っぽにする。</p>
+                    </Link>
+
+                    {/* デジタルデトックス */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=自然`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>デジタルデトックス</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">圏外の自然の中で、本来の感覚を取り戻す。</p>
+                    </Link>
+
+                    {/* 美肌・体質改善 */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=食事`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Heart className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>美肌・体質改善</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">内側から浄化し、鏡を見るのが楽しみに。</p>
+                    </Link>
+
+                    {/* 睡眠改善 */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=瞑想`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Moon className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>睡眠改善</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">泥のように眠り、朝日で目覚める奇跡。</p>
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    {/* Deepen Our Bond */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=meditation`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Users className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Deepen Our Bond</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">Reconnect with your partner in shared silence.</p>
+                    </Link>
+
+                    {/* Authentic Culture */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=culture`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Building2 className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Authentic Culture</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">Exclusive access to hidden Japanese traditions.</p>
+                    </Link>
+
+                    {/* Nature & Adventure */}
+                    <Link
+                      to={`${baseUrl}/retreats?search=nature`}
+                      className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                    >
+                      <div className="flex items-center justify-center w-14 h-14 mb-6">
+                        <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                      </div>
+                      <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>Nature & Adventure</h3>
+                      <p className="text-gray-600 text-sm leading-relaxed">Explore the untouched beauty of Japan together.</p>
+                    </Link>
+                  </>
+                )}
+              </div>
+            ) : (
+              /* Area Tab Content */
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <Link
+                  to={`${baseUrl}/cebu`}
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                >
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <Waves className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                  </div>
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+                    {language === 'ja' ? 'セブ島' : 'Cebu'}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {language === 'ja' ? '南国のリゾートでリフレッシュ' : 'Refresh at a tropical resort'}
+                  </p>
+                </Link>
+
+                <Link
+                  to={`${baseUrl}/japan`}
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                >
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <MapPin className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                  </div>
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+                    {language === 'ja' ? '京都' : 'Kyoto'}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {language === 'ja' ? '伝統文化に包まれた特別な体験' : 'An experience wrapped in traditional culture'}
+                  </p>
+                </Link>
+
+          <Link
+                  to={`${baseUrl}/japan`}
+                  className="group bg-white rounded-lg p-8 border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                >
+                  <div className="flex items-center justify-center w-14 h-14 mb-6">
+                    <Mountain className="w-7 h-7 text-gray-600 stroke-[1.5]" />
+                  </div>
+                  <h3 className={`text-xl font-medium text-gray-800 mb-3 ${language === 'ja' ? 'font-serif-ja' : 'font-serif-en'}`}>
+                    {language === 'ja' ? '山梨' : 'Yamanashi'}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed">
+                    {language === 'ja' ? '自然に囲まれた静寂のひととき' : 'A moment of silence surrounded by nature'}
+                  </p>
+          </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>}
+
+      {/* About Section */}
+      <section className="py-36 md:py-48 bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-6 ${
+              language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+            }`}>
+              {t('about.title')}
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              {t('about.description')}
+            </p>
+          </div>
+
+          {/* Why Choose Us */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+            <div className="text-center group">
+              <div className="w-48 h-48 rounded-2xl overflow-hidden mx-auto mb-6 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://images.pexels.com/photos/3823488/pexels-photo-3823488.jpeg?auto=compress&cs=tinysrgb&w=200"
+                  alt="Expert instructor"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.expertise')}</h3>
+              <p className="text-gray-600">{t('home.why.expertise.desc')}</p>
+            </div>
+            <div className="text-center group">
+              <div className="w-48 h-48 rounded-2xl overflow-hidden mx-auto mb-6 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://images.pexels.com/photos/3408354/pexels-photo-3408354.jpeg?auto=compress&cs=tinysrgb&w=200"
+                  alt="Beautiful location"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.locations')}</h3>
+              <p className="text-gray-600">{t('home.why.locations.desc')}</p>
+            </div>
+            <div className="text-center group">
+              <div className="w-48 h-48 rounded-2xl overflow-hidden mx-auto mb-6 group-hover:scale-105 transition-transform duration-300">
+                <img
+                  src="https://images.pexels.com/photos/3822621/pexels-photo-3822621.jpeg?auto=compress&cs=tinysrgb&w=200"
+                  alt="Holistic approach"
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <h3 className={`text-xl font-medium text-gray-800 mb-4 ${
+                language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+              }`}>{t('home.why.holistic')}</h3>
+              <p className="text-gray-600">{t('home.why.holistic.desc')}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Retreats */}
+      <section className="py-36 md:py-48 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className={`text-3xl md:text-4xl font-medium text-gray-800 mb-6 ${
+              language === 'ja' ? 'font-serif-ja' : 'font-serif-en'
+            }`}>
+              {t('retreats.featured')}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            {featuredRetreats.map((retreat) => {
+              // 価格フォーマット関数
+              const formatPrice = (price: number | undefined | null) => {
+                if (price == null || isNaN(price)) {
+                  return language === 'ja' ? 'お問い合わせ' : 'Contact us';
+                }
+                if (language === 'ja') {
+                  return `¥${price.toLocaleString('ja-JP')}`;
+                }
+                return `¥${price.toLocaleString('en-US')}`;
+              };
+
+              // 特別なポイントを取得（includesの最初の要素、またはdescriptionから抽出）
+              // 日数情報（○泊）を削除、一般的な内容を除外
+              const getSpecialPoint = () => {
+                let specialPoint = '';
+                
+                // 除外する一般的な内容
+                const excludePatterns = [
+                  /空港送迎/i,
+                  /送迎/i,
+                  /移動/i,
+                  /交通/i,
+                  /食事/i,
+                  /朝食/i,
+                  /夕食/i,
+                  /ランチ/i,
+                ];
+                
+                if (retreat.includes && Array.isArray(retreat.includes) && retreat.includes.length > 0) {
+                  for (const item of retreat.includes) {
+                    // 一般的な内容をスキップ
+                    if (excludePatterns.some(pattern => pattern.test(item))) {
+                      continue;
+                    }
+                    
+                    let cleaned = item
+                      .replace(/[（(]\d+泊[）)]/g, '')
+                      .replace(/[（(]\d+日[）)]/g, '')
+                      .replace(/\d+泊/g, '')
+                      .replace(/\d+日/g, '')
+                      .replace(/\s*[（(].*?[）)]\s*/g, '')
+                      .trim();
+                    
+                    if (cleaned.endsWith('宿泊')) {
+                      cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned.endsWith('で')) {
+                      cleaned = cleaned.replace(/で$/, '').trim();
+                    }
+                    
+                    if (cleaned && cleaned.length > 0) {
+                      specialPoint = cleaned;
+                      break;
+                    }
+                  }
+                  if (!specialPoint && retreat.includes[0]) {
+                    let cleaned = retreat.includes[0]
+                      .replace(/[（(]\d+泊[）)]/g, '')
+                      .replace(/[（(]\d+日[）)]/g, '')
+                      .replace(/\d+泊/g, '')
+                      .replace(/\d+日/g, '')
+                      .replace(/\s*[（(].*?[）)]\s*/g, '')
+                      .trim();
+                    
+                    if (cleaned.endsWith('宿泊')) {
+                      cleaned = cleaned.replace(/[での]宿泊$/, '').replace(/宿泊$/, '').trim();
+                    }
+                    
+                    if (cleaned.endsWith('で')) {
+                      cleaned = cleaned.replace(/で$/, '').trim();
+                    }
+                    
+                    specialPoint = cleaned;
+                  }
+                }
+                
+                if (!specialPoint && retreat.description) {
+                  const firstSentence = retreat.description.split(/[。\.]/)[0];
+                  specialPoint = firstSentence || (language === 'ja' ? '特別な体験' : 'Special Experience');
+                }
+                
+                return specialPoint || (language === 'ja' ? '特別な体験' : 'Special Experience');
+              };
+
+              return (
+                <div key={retreat.id} className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group flex flex-col h-full">
+                  <div className="relative aspect-[5/4] overflow-hidden">
+                    <img
+                      src={getImageUrl(retreat.image)}
+                      alt={retreat.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                      onError={handleImageError}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className={`absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-md backdrop-blur-sm ${
+                      retreat.type === 'Japan' ? 'bg-green-600' : 'bg-blue-600'
+                    }`}>
+                      {retreat.prefecture}
+                    </div>
+                  </div>
+                  <div className="p-8 flex flex-col flex-grow">
+                    <div className="h-[4.5rem] flex items-center mb-3">
+                      <h3 className={`text-2xl font-bold text-gray-900 leading-tight line-clamp-2 transition-colors duration-300 ${
+                        retreat.type === 'Japan' ? 'group-hover:text-green-700' : 'group-hover:text-blue-700'
+                      }`}>
+                        {retreat.title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 text-sm">
+                      {retreat.description}
+                    </p>
+                    <div className="flex flex-wrap gap-3 mb-6">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700 whitespace-nowrap">
+                        <MapPin size={14} className={`flex-shrink-0 ${retreat.type === 'Japan' ? 'text-green-600' : 'text-blue-600'}`} />
+                        <span>{retreat.location}</span>
+                      </div>
+                      <div className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border whitespace-nowrap ${
+                        retreat.type === 'Japan'
+                          ? 'bg-green-50 text-green-700 border-green-200'
+                          : 'bg-blue-50 text-blue-700 border-blue-200'
+                      }`}>
+                        <Sparkles size={14} className={`flex-shrink-0 ${retreat.type === 'Japan' ? 'text-green-600' : 'text-blue-600'}`} />
+                        <span>{getSpecialPoint()}</span>
+                      </div>
+                    </div>
+                    {retreat.price != null && !isNaN(retreat.price) && (
+                      <div className="mb-6 pt-4 border-t border-gray-100">
+                        <div className="flex items-baseline gap-2">
+                          <span className={`text-2xl font-bold ${retreat.type === 'Japan' ? 'text-green-700' : 'text-blue-700'}`}>
+                            {formatPrice(retreat.price)}
+                          </span>
+                          {language === 'ja' && (
+                            <span className="text-sm text-gray-500">から</span>
+                          )}
+                          {language === 'en' && (
+                            <span className="text-sm text-gray-500">from</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    <Link
+                      to={`${baseUrl}/retreat/${retreat.id}`}
+                      className={`mt-auto block w-full text-center text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02] ${
+                        retreat.type === 'Japan'
+                          ? 'bg-gradient-to-r from-emerald-700 to-emerald-800 hover:from-emerald-800 hover:to-emerald-900'
+                          : 'bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900'
+                      }`}
+                    >
+                      {t('common.learn-more')}
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link
+              to={`${baseUrl}/retreats`}
+              className="inline-flex items-center space-x-2 border-2 border-green-600 text-green-600 px-8 py-3 rounded-full hover:bg-green-600 hover:text-white transition-all duration-300"
+            >
+              <span className="font-medium">
+                {language === 'ja' ? 'すべてのリトリートを見る' : 'View All Retreats'}
+              </span>
+              <ArrowRight size={18} />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-36 md:py-48 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-light mb-6">
+            {language === 'ja' 
+              ? 'あなたの人生を変える旅を始めませんか？' 
+              : 'Ready to Begin Your Life-Changing Journey?'
+            }
+          </h2>
+          <p className="text-xl mb-8 opacity-90">
+            {language === 'ja' 
+              ? '心と体の調和を求める特別な体験が、あなたを待っています。' 
+              : 'A special experience seeking harmony of mind and body awaits you.'
+            }
+          </p>
+          <Link
+            to={`${baseUrl}/contact`}
+            className="inline-flex items-center space-x-2 bg-white text-green-600 px-8 py-4 rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            <span className="font-medium">
+              {language === 'ja' ? 'お問い合わせ' : 'Contact Us'}
+            </span>
+            <ArrowRight size={20} />
+          </Link>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Home;

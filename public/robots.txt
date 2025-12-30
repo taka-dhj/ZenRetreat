@@ -1,0 +1,16 @@
+# robots.txt for zen-retreat-asia.com
+# Allow all search engine crawlers
+
+User-agent: *
+Allow: /
+
+# Disallow admin and API endpoints
+Disallow: /api/
+Disallow: /functions/
+
+# Sitemap location
+Sitemap: https://zen-retreat-asia.com/sitemap.xml
+
+# Cloudflare AI bot control (managed by Cloudflare)
+# This file works in conjunction with Cloudflare's AI Crawler Control settings
+
