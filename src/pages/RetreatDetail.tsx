@@ -311,7 +311,7 @@ const RetreatDetail: React.FC = () => {
                           「今までで一番よく眠れた。日常の雑音から解放されて、本当の自分を取り戻せた気がします。」
                         </p>
                         <footer className="text-gray-600 text-sm font-medium">
-                          — 30代女性・会社員
+                          — 30代女性・会社員・山梨 森林セラピー
                         </footer>
                       </blockquote>
                       <blockquote className="relative pl-8 border-l-4 border-green-500">
@@ -321,7 +321,7 @@ const RetreatDetail: React.FC = () => {
                           「自然の中で過ごす時間が、こんなにも心を満たしてくれるとは思わなかった。人生を変える体験でした。」
                         </p>
                         <footer className="text-gray-600 text-sm font-medium">
-                          — 40代男性・自営業
+                          — 40代男性・自営業・セブ ビーチリトリート
                         </footer>
                       </blockquote>
                     </>
