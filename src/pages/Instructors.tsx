@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star, Award, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, Award, Heart, ChevronLeft, ChevronRight, Instagram } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 import CTASection from '../components/CTASection';
 
@@ -107,7 +107,8 @@ const Instructors: React.FC = () => {
         ? 'フィリピン・セブで最も有名なヨガスタジオ「DAWATA Wellness」で、初心者から上級者まで幅広くヨガを指導しています。サウンドヒーリングにも精通しており、様々なアプローチを通じて心身の改善をサポートします。'
         : 'Teaches yoga to students of all levels, from beginners to advanced practitioners, at "DAWATA Wellness," the most renowned yoga studio in Cebu, Philippines. Also highly skilled in sound healing, supporting physical and mental wellness through diverse therapeutic approaches.',
       experience: 8,
-      rating: 4.9
+      rating: 4.9,
+      instagram: 'https://www.instagram.com/princessliezamanzon?igsh=MTAwNWQya3MxMm45cg=='
     },
     {
       id: 'hiroshi',
@@ -134,7 +135,8 @@ const Instructors: React.FC = () => {
         ? 'セブ島で最も革新的なヨガ&ウェルネススタジオで多数のインストラクターが在籍。朝6時から夜10時まで、初心者から上級者まで幅広くサポート。ヨガ、瞑想、サウンドヒーリング、フローティングサウンドバスなど、多彩なプログラムを提供。TOPSでのサンライズヨガやフルムーンヨガリトリートなど、セブの自然を活かした特別な体験も。'
         : 'Cebu\'s most innovative yoga & wellness studio with numerous instructors. Open from 6 AM to 10 PM, supporting everyone from beginners to advanced practitioners. Offers diverse programs including yoga, meditation, sound healing, and floating sound baths. Special experiences like sunrise yoga at TOPS and full moon yoga retreats that utilize Cebu\'s natural beauty.',
       experience: 4,
-      rating: 4.9
+      rating: 4.9,
+      instagram: 'https://www.instagram.com/dawata.wellness?igsh=d2Z0bWlpaGtyYzl6'
     },
     {
       id: 'kenji',
@@ -222,6 +224,17 @@ const Instructors: React.FC = () => {
                           </span>
                         </div>
                       </div>
+                      {instructor.instagram && (
+                        <a
+                          href={instructor.instagram}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-1 text-pink-600 hover:text-pink-700 transition-colors"
+                          aria-label="Instagram"
+                        >
+                          <Instagram size={18} />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
