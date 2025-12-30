@@ -97,7 +97,7 @@ const Instructors: React.FC = () => {
     {
       id: 'maiko',
       name: 'Princess',
-      specialty: language === 'ja' ? 'ヨガ・瞑想・サウンドヒーリング' : 'Yoga, Meditation, Sound Healing',
+      specialty: language === 'ja' ? 'ヨガ・瞑想・サウンドヒーリング・カカオセレモニー' : 'Yoga, Meditation, Sound Healing, Cacao Ceremony',
       qualifications: language === 'ja' ? 'サウンドヒーラー' : 'Sound Healer',
       images: [
         '/instructor/princess.jpeg',
@@ -127,7 +127,7 @@ const Instructors: React.FC = () => {
     {
       id: 'dawata',
       name: 'DAWATA Wellness',
-      specialty: language === 'ja' ? 'ヨガ・瞑想・サウンドヒーリング・ウェルネス' : 'Yoga, Meditation, Sound Healing, Wellness',
+      specialty: language === 'ja' ? 'ヨガ・瞑想・サウンドヒーリング' : 'Yoga, Meditation, Sound Healing',
       qualifications: language === 'ja' ? 'Best of Cebu Yoga Studio 2022 & 2023 / Global Innovative Yoga Studio 2024' : 'Best of Cebu Yoga Studio 2022 & 2023 / Global Innovative Yoga Studio 2024',
       images: ['/instructor/dawata.jpeg', '/instructor/dawata2.jpeg'],
       biography: language === 'ja'
