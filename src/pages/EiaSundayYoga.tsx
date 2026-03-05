@@ -384,20 +384,34 @@ const EiaSundayYoga: React.FC = () => {
             <div className="w-16 h-0.5 bg-amber-400 mx-auto" />
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2 rounded-2xl overflow-hidden">
-              <img src="https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Yoga class" className="w-full h-56 object-cover" />
+            {/* EIAの会場・プール — 横幅フル */}
+            <div className="col-span-2 rounded-2xl overflow-hidden shadow-sm">
+              <img src="/eia_venue_pool.jpg" alt="EIA by DAWATA 会場" className="w-full h-56 object-cover object-center" />
             </div>
-            <div className="rounded-2xl overflow-hidden">
-              <img src="https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Meditation" className="w-full h-40 object-cover" />
+            {/* ヨガクラス */}
+            <div className="rounded-2xl overflow-hidden shadow-sm">
+              <img src="/eia_yoga_class.jpg" alt="ヨガクラスの様子" className="w-full h-44 object-cover object-center" />
             </div>
-            <div className="rounded-2xl overflow-hidden">
-              <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Organic lunch" className="w-full h-40 object-cover" />
+            {/* スタジオ内部 */}
+            <div className="rounded-2xl overflow-hidden shadow-sm">
+              <img src="/eia_studio.jpg" alt="ヨガスタジオ" className="w-full h-44 object-cover object-center" />
             </div>
-            <div className="rounded-2xl overflow-hidden">
-              <img src="https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Yoga pose" className="w-full h-40 object-cover" />
+            {/* ランチ */}
+            <div className="rounded-2xl overflow-hidden shadow-sm">
+              <img src="/eia_food.jpg" alt="ランチ" className="w-full h-44 object-cover object-center" />
             </div>
-            <div className="rounded-2xl overflow-hidden">
-              <img src="https://images.pexels.com/photos/3094230/pexels-photo-3094230.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Yoga studio" className="w-full h-40 object-cover" />
+            {/* ヨガポーズ（pexels） */}
+            <div className="rounded-2xl overflow-hidden shadow-sm">
+              <img src="https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=600" alt="ヨガ" className="w-full h-44 object-cover object-center" />
+            </div>
+            {/* 用語集 — 横幅フル */}
+            <div className="col-span-2 rounded-2xl overflow-hidden shadow-sm border border-amber-100">
+              <div className="bg-amber-50 px-4 py-2.5 border-b border-amber-100 flex items-center gap-2">
+                <span className="text-base">📖</span>
+                <span className="text-sm font-semibold text-amber-700">ヨガ初心者ガイド：呼吸と基本動作</span>
+                <span className="ml-auto text-xs text-amber-500">事前に配布します</span>
+              </div>
+              <img src="/yoga_glossary.png" alt="ヨガ用語集 呼吸と基本動作" className="w-full object-contain bg-white" />
             </div>
           </div>
         </div>
