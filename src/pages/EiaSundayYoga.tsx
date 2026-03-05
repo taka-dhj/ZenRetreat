@@ -37,7 +37,7 @@ const EiaSundayYoga: React.FC = () => {
   const schedule = [
     { time: '11:30', label: '開場・受付',       en: 'Doors open & Check-in',  icon: '🚪' },
     { time: '12:00', label: 'ビギナーヨガ',      en: 'Beginner Yoga',           icon: '🧘' },
-    { time: '13:00', label: '有機野菜ランチ',    en: 'Organic Lunch',           icon: '🥗' },
+    { time: '13:00', label: '野菜ランチ',    en: 'Organic Lunch',           icon: '🥗' },
     { time: '14:00', label: 'ガイド瞑想',        en: 'Guided Meditation',       icon: '🌿' },
     { time: '14:30', label: 'ビジョンボード作成', en: 'Vision Board Making',     icon: '✨' },
     { time: '15:15', label: 'シェアタイム',      en: 'Sharing Time',            icon: '💬' },
@@ -54,7 +54,7 @@ const EiaSundayYoga: React.FC = () => {
     {
       name: 'M.T さん（32歳）',
       role: '会社員',
-      comment: '初めてのヨガで不安でしたが、先生がとても丁寧で、終わった後は体も心もすっきりしました。有機野菜ランチもとても美味しくて、また参加したいです！',
+      comment: '初めてのヨガで不安でしたが、先生がとても丁寧で、終わった後は体も心もすっきりしました。野菜ランチもとても美味しくて、また参加したいです！',
       stars: 5,
     },
     {
@@ -79,7 +79,7 @@ const EiaSundayYoga: React.FC = () => {
 
   const highlights = [
     { icon: <Leaf size={32} className="text-amber-600" />,  title: '初心者歓迎のヨガ',    desc: 'ヨガ経験ゼロでも大丈夫。超シンプルな英語のみ使用＆事前に用語集も配布。誰でも安心して参加できます。', bg: 'bg-amber-50' },
-    { icon: <Leaf size={32} className="text-yellow-600" />,     title: '有機野菜ランチ',       desc: '地元の有機野菜をたっぷり使ったヘルシーなランチ付き。体の中からもきれいに。', bg: 'bg-yellow-50' },
+    { icon: <Leaf size={32} className="text-yellow-600" />,     title: '野菜ランチ',       desc: '地元の野菜をたっぷり使ったヘルシーなランチ付き。体の中からもきれいに。', bg: 'bg-yellow-50' },
     { icon: <Heart size={32} className="text-rose-500" />,    title: 'ガイド瞑想',           desc: '忙しい日常から完全に離れ、丁寧にガイドされる瞑想で深いリラックスを体験。', bg: 'bg-rose-50' },
     { icon: <Star size={32} className="text-amber-500" />,    title: 'ビジョンボード作成',   desc: '自分の未来を視覚化するビジョンボードを作成。自分の本当にやりたいことが見えてくる時間。', bg: 'bg-amber-50' },
     { icon: <Users size={32} className="text-blue-500" />,    title: 'コミュニティ',         desc: 'シェアタイムで新しい仲間と出会える。同じ志を持つ人たちとのつながりが生まれます。', bg: 'bg-blue-50' },
@@ -161,7 +161,7 @@ const EiaSundayYoga: React.FC = () => {
             <span className="text-white/40">|</span>
             <span className="text-white/70">学生割引あり</span>
             <span className="text-white/40">|</span>
-            <span className="text-white/70">有機ランチ込み</span>
+            <span className="text-white/70">ランチ込み</span>
           </div>
         </div>
 
@@ -183,7 +183,7 @@ const EiaSundayYoga: React.FC = () => {
             <p className="text-gray-600 text-base leading-relaxed">
               日々の忙しさに追われて、自分のことを後回しにしていませんか？<br /><br />
               EIA SUNDAY RETREATは、セブ島の緑あふれるスペースで、
-              ヨガ・瞑想・有機ランチ・ビジョンボードを通じて
+              ヨガ・瞑想・ランチ・ビジョンボードを通じて
               <strong className="text-gray-800">「本当の自分」</strong>と向き合う半日リトリートです。
             </p>
           </div>
@@ -521,7 +521,7 @@ const EiaSundayYoga: React.FC = () => {
             {[
               { icon: '📅', text: '3/22・4/5・4/26 開催' },
               { icon: '💰', text: '₱2,000（学割あり）' },
-              { icon: '🥗', text: '有機ランチ込み' },
+              { icon: '🥗', text: 'ランチ込み' },
               { icon: '🧘', text: '初心者歓迎' },
             ].map((pill, i) => (
               <div key={i} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 px-4 py-3 rounded-xl text-sm">
