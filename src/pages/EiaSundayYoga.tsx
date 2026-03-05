@@ -384,7 +384,7 @@ const EiaSundayYoga: React.FC = () => {
             <div className="w-16 h-0.5 bg-amber-400 mx-auto" />
           </div>
           <div className="grid grid-cols-2 gap-3">
-            {/* EIAの会場・プール — 横幅フル */}
+            {/* 会場・プール — 横幅フル */}
             <div className="col-span-2 rounded-2xl overflow-hidden shadow-sm">
               <img src="/eia_venue_pool.jpg" alt="EIA by DAWATA 会場" className="w-full h-56 object-cover object-center" />
             </div>
@@ -392,7 +392,7 @@ const EiaSundayYoga: React.FC = () => {
             <div className="rounded-2xl overflow-hidden shadow-sm">
               <img src="/eia_yoga_class.jpg" alt="ヨガクラスの様子" className="w-full h-44 object-cover object-center" />
             </div>
-            {/* スタジオ内部 */}
+            {/* スタジオ */}
             <div className="rounded-2xl overflow-hidden shadow-sm">
               <img src="/eia_studio.jpg" alt="ヨガスタジオ" className="w-full h-44 object-cover object-center" />
             </div>
@@ -400,9 +400,9 @@ const EiaSundayYoga: React.FC = () => {
             <div className="rounded-2xl overflow-hidden shadow-sm">
               <img src="/eia_food.jpg" alt="ランチ" className="w-full h-44 object-cover object-center" />
             </div>
-            {/* ヨガポーズ（pexels） */}
+            {/* ヨガポーズ */}
             <div className="rounded-2xl overflow-hidden shadow-sm">
-              <img src="https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=600" alt="ヨガ" className="w-full h-44 object-cover object-center" />
+              <img src="https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=600" alt="ヨガポーズ" className="w-full h-44 object-cover object-center" />
             </div>
             {/* 用語集 — 横幅フル */}
             <div className="col-span-2 rounded-2xl overflow-hidden shadow-sm border border-amber-100">
