@@ -15,6 +15,7 @@ import TermsOfService from './pages/TermsOfService';
 import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
 import Instructors from './pages/Instructors';
+import EiaSundayYoga from './pages/EiaSundayYoga';
 
 // Google Analytics の型定義
 declare global {
@@ -94,6 +95,7 @@ function AppContent() {
             <Route path="/ja/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/ja/terms-of-service" element={<TermsOfService />} />
+            <Route path="/eia" element={<EiaSundayYoga />} />
           </Routes>
         </main>
         <Footer />
