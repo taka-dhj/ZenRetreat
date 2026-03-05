@@ -275,6 +275,57 @@ const Retreats: React.FC = () => {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+            {/* EIA Sunday Yoga — 半日リトリート固定カード */}
+            {(selectedType === 'all' || selectedType === 'cebu') && (
+              <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden group flex flex-col h-full">
+                <div className="relative aspect-[5/4] overflow-hidden">
+                  <img
+                    src="/eia_yoga_class.jpg"
+                    alt="EIA Sunday Yoga Retreat"
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold text-white shadow-md backdrop-blur-sm bg-blue-600">
+                    セブ
+                  </div>
+                </div>
+                <div className="p-8 flex flex-col flex-grow">
+                  <div className="h-[4.5rem] flex items-center mb-3">
+                    <h3 className="text-2xl font-bold text-gray-900 leading-tight line-clamp-2 transition-colors duration-300 group-hover:text-blue-700">
+                      {language === 'ja' ? 'セブ・半日リトリート' : 'Cebu Half-Day Retreat'}
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 mb-6 leading-relaxed line-clamp-3 text-sm">
+                    {language === 'ja'
+                      ? '忙しい日常から離れて、ヨガ・瞑想・ランチ・ビジョンボードを通じて自分と向き合う特別な半日。初心者大歓迎。'
+                      : 'A special half-day to reconnect with yourself through yoga, meditation, lunch & vision board. Beginners welcome.'}
+                  </p>
+                  <div className="flex flex-wrap gap-3 mb-6">
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 rounded-lg text-xs font-medium text-gray-700 whitespace-nowrap">
+                      <MapPin size={14} className="flex-shrink-0 text-blue-600" />
+                      <span>{language === 'ja' ? 'フィリピン・セブ島' : 'Cebu, Philippines'}</span>
+                    </div>
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border whitespace-nowrap bg-blue-50 text-blue-700 border-blue-200">
+                      <Sparkles size={14} className="flex-shrink-0 text-blue-600" />
+                      <span>{language === 'ja' ? '初心者大歓迎' : 'Beginners Welcome'}</span>
+                    </div>
+                  </div>
+                  <div className="mb-6 pt-4 border-t border-gray-100">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl font-bold text-blue-700">₱2,000</span>
+                      <span className="text-sm text-gray-500">{language === 'ja' ? 'から' : 'from'}</span>
+                    </div>
+                  </div>
+                  <Link
+                    to="/eia"
+                    className="mt-auto block w-full text-center text-white py-4 px-6 rounded-lg transition-all duration-300 font-semibold text-base shadow-md hover:shadow-lg transform hover:scale-[1.02] bg-gradient-to-r from-blue-700 to-blue-800 hover:from-blue-800 hover:to-blue-900"
+                  >
+                    {language === 'ja' ? '詳細を見る' : 'Learn More'}
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {filteredRetreats.map((retreat) => {
               // 価格フォーマット関数
               const formatPrice = (price: number | undefined | null) => {
