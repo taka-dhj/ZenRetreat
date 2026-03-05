@@ -408,7 +408,7 @@ const EiaSundayYoga: React.FC = () => {
             <div className="col-span-2 rounded-2xl overflow-hidden shadow-sm border border-amber-100">
               <div className="bg-amber-50 px-4 py-2.5 border-b border-amber-100 flex items-center gap-2">
                 <span className="text-base">📖</span>
-                <span className="text-sm font-semibold text-amber-700">ヨガ初心者ガイド：呼吸と基本動作</span>
+                <span className="text-sm font-semibold text-amber-700">ヨガ用語集</span>
                 <span className="ml-auto text-xs text-amber-500">事前に配布します</span>
               </div>
               <img src="/yoga_glossary.png" alt="ヨガ用語集 呼吸と基本動作" className="w-full object-contain bg-white" />
