@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Clock, MapPin, Phone, Mail, ChevronDown, ChevronUp, Star, ExternalLink } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Clock, Phone, Mail, ChevronDown, ChevronUp, Star, ExternalLink, MapPin } from 'lucide-react';
 
-const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLScHxDk3I7DcBB_eMJlxeOfFMR7s3kgOlMR5sxD5A6C9q03R4A/viewform?embedded=true';
+// ✅ 正しいフォームID（短縮URLのリダイレクト先から取得）
+const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfgLzMQmd0Jz5VunP3sh5NfbbghRGtVigKrHX2YtfWxkL2rBA/viewform?embedded=true';
 const FORM_DIRECT_URL = 'https://forms.gle/mH7ur3Bqe78ReFxX7';
 
+// Google Maps embed — EIA by DAWATA (Place ID: 0x33a9992f9c25a687:0x748d0b860a8e0a18)
+const MAP_EMBED_URL = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d976.8!2d123.8854!3d10.3327!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a9992f9c25a687%3A0x748d0b860a8e0a18!2sEia%20by%20Dawata!5e0!3m2!1sja!2sph!4v1709600000000!5m2!1sja!2sph';
+
 // ────────────────────────────────────────────────
-// チラシのカラーパレット
+// カラーパレット（チラシ準拠）
 //   ゴールデンイエロー : #C9A227 / #D4AF37
 //   コーラルオレンジ   : #E85D4A / #F07060
 //   クリーム背景       : #FBF7F0 / #F5EFE6
@@ -15,27 +19,11 @@ const FORM_DIRECT_URL = 'https://forms.gle/mH7ur3Bqe78ReFxX7';
 
 const EiaSundayYoga: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [formLoaded, setFormLoaded] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
   const formSectionRef = useRef<HTMLElement>(null);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsFormVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (formSectionRef.current) observer.observe(formSectionRef.current);
-    return () => observer.disconnect();
-  }, []);
 
   const scrollToForm = () => {
     const el = document.getElementById('apply-form');
@@ -43,18 +31,18 @@ const EiaSundayYoga: React.FC = () => {
   };
 
   const schedule = [
-    { time: '11:30', label: '開場・受付',        en: 'Doors open & Check-in',  icon: '🚪' },
-    { time: '12:00', label: 'Beginner Yoga',      en: 'ビギナーヨガ',           icon: '🧘' },
-    { time: '13:00', label: 'Organic Lunch',      en: '有機野菜ランチ',         icon: '🥗' },
-    { time: '14:00', label: 'Guided Meditation',  en: 'ガイド瞑想',             icon: '🌿' },
-    { time: '14:30', label: 'Vision Board Making',en: 'ビジョンボード作成',     icon: '✨' },
-    { time: '15:15', label: 'Sharing Time',       en: 'シェアタイム',           icon: '💬' },
-    { time: '16:00', label: '終了・解散',          en: 'End',                   icon: '🌅' },
+    { time: '11:30', label: '開場・受付',         en: 'Doors open & Check-in', icon: '🚪' },
+    { time: '12:00', label: 'Beginner Yoga',       en: 'ビギナーヨガ',          icon: '🧘' },
+    { time: '13:00', label: 'Organic Lunch',       en: '有機野菜ランチ',        icon: '🥗' },
+    { time: '14:00', label: 'Guided Meditation',   en: 'ガイド瞑想',            icon: '🌿' },
+    { time: '14:30', label: 'Vision Board Making', en: 'ビジョンボード作成',    icon: '✨' },
+    { time: '15:15', label: 'Sharing Time',        en: 'シェアタイム',          icon: '💬' },
+    { time: '16:00', label: '終了・解散',           en: 'End',                  icon: '🌅' },
   ];
 
   const dates = [
     { date: '22', month: '3', dayName: 'SUN', full: '2025年3月22日（日）' },
-    { date: '5',  month: '4', dayName: 'SUN', full: '2025年4月5日（日）' },
+    { date: '5',  month: '4', dayName: 'SUN', full: '2025年4月5日（日）'  },
     { date: '26', month: '4', dayName: 'SUN', full: '2025年4月26日（日）' },
   ];
 
@@ -88,42 +76,46 @@ const EiaSundayYoga: React.FC = () => {
   return (
     <div className="min-h-screen" style={{ fontFamily: "'Hiragino Sans', 'Noto Sans JP', sans-serif", backgroundColor: '#FBF7F0' }}>
 
-      {/* ════════════════════════════════════════
-          HERO — チラシ風：ヨガ写真 + ゴールドタイトル
-      ════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════════════
+          HERO — ヨガ写真 + ゴールドグラデーション
+      ══════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         {/* 背景写真 */}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url('https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=1600')` }}
         />
-        {/* チラシ風：やや明るめのオーバーレイ（クリーム寄り） */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(251,247,240,0.55) 0%, rgba(251,247,240,0.35) 40%, rgba(44,44,44,0.70) 100%)' }} />
+        {/* ゴールド寄りのグラデーションオーバーレイ */}
+        <div className="absolute inset-0" style={{
+          background: 'linear-gradient(160deg, rgba(201,162,39,0.55) 0%, rgba(251,247,240,0.25) 35%, rgba(44,44,44,0.75) 100%)'
+        }} />
+        {/* ゴールドのトップライン */}
+        <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: 'linear-gradient(to right, #C9A227, #F0D060, #C9A227)' }} />
 
         <div className="relative z-10 w-full max-w-xl mx-auto px-6 text-center">
-          {/* バッジ */}
+          {/* ブランドバッジ */}
           <div
             className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium tracking-widest mb-8"
-            style={{ background: 'rgba(251,247,240,0.85)', color: '#2C2C2C', border: '1px solid rgba(201,162,39,0.4)' }}
+            style={{ background: 'rgba(251,247,240,0.88)', color: '#2C2C2C', border: '1px solid rgba(201,162,39,0.5)' }}
           >
-            <span style={{ color: '#C9A227' }}>ZEN RETREAT ASIA</span>
+            <span style={{ color: '#C9A227', fontWeight: 700 }}>ZEN RETREAT ASIA</span>
             <span style={{ color: '#C9A227', opacity: 0.5 }}>×</span>
             <span style={{ color: '#2C2C2C' }}>EIA by DAWATA</span>
           </div>
 
           {/* サブコピー */}
-          <p className="text-base tracking-widest mb-4 font-light" style={{ color: 'rgba(44,44,44,0.85)', textShadow: '0 1px 3px rgba(255,255,255,0.6)' }}>
+          <p className="text-base tracking-widest mb-4 font-light" style={{ color: 'rgba(255,255,255,0.92)', textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>
             忙しさから離れ、自分を見つめ直す週末
           </p>
 
           {/* ビッグタイトル — チラシのゴールドを再現 */}
           <h1
-            className="font-black leading-none tracking-tight mb-2"
+            className="font-black leading-none tracking-tight mb-1"
             style={{
               fontSize: 'clamp(4rem, 16vw, 7rem)',
-              color: '#C9A227',
-              textShadow: '2px 2px 0px rgba(255,255,255,0.6), 0 4px 20px rgba(201,162,39,0.3)',
-              WebkitTextStroke: '1px rgba(180,140,20,0.4)',
+              color: '#D4AF37',
+              textShadow: '3px 3px 0px rgba(255,255,255,0.4), 0 6px 30px rgba(201,162,39,0.5)',
+              WebkitTextStroke: '1px rgba(160,120,10,0.35)',
             }}
           >
             SUNDAY
@@ -132,26 +124,26 @@ const EiaSundayYoga: React.FC = () => {
             className="font-black leading-none tracking-tight mb-6"
             style={{
               fontSize: 'clamp(3.5rem, 15vw, 6.5rem)',
-              color: '#C9A227',
-              textShadow: '2px 2px 0px rgba(255,255,255,0.6), 0 4px 20px rgba(201,162,39,0.3)',
-              WebkitTextStroke: '1px rgba(180,140,20,0.4)',
+              color: '#D4AF37',
+              textShadow: '3px 3px 0px rgba(255,255,255,0.4), 0 6px 30px rgba(201,162,39,0.5)',
+              WebkitTextStroke: '1px rgba(160,120,10,0.35)',
             }}
           >
             RETREAT
           </h1>
 
           {/* イタリック英語コピー */}
-          <p className="text-lg italic font-light mb-8 tracking-wide" style={{ color: 'rgba(255,255,255,0.9)', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>
+          <p className="text-lg italic font-light mb-8 tracking-wide" style={{ color: 'rgba(255,255,255,0.90)', textShadow: '0 1px 6px rgba(0,0,0,0.6)' }}>
             "Take A Pose, Find Yourself"
           </p>
 
-          {/* 日付バッジ — チラシ風 */}
-          <div className="flex justify-center gap-4 mb-10">
+          {/* 日付バッジ — チラシ風ゴールド枠 */}
+          <div className="flex justify-center gap-3 mb-10">
             {dates.map((d, i) => (
               <div
                 key={i}
-                className="text-center px-4 py-3 rounded-xl"
-                style={{ background: 'rgba(251,247,240,0.90)', border: '2px solid #C9A227', minWidth: '72px' }}
+                className="text-center px-3 py-2.5 rounded-xl"
+                style={{ background: 'rgba(251,247,240,0.92)', border: '2px solid #C9A227', minWidth: '68px', boxShadow: '0 4px 14px rgba(201,162,39,0.30)' }}
               >
                 <div className="text-xs font-bold tracking-widest" style={{ color: '#C9A227' }}>{d.month}/</div>
                 <div className="font-black leading-none" style={{ fontSize: '2.4rem', color: '#C9A227' }}>{d.date}</div>
@@ -160,25 +152,25 @@ const EiaSundayYoga: React.FC = () => {
             ))}
           </div>
 
-          {/* 詳細情報ボックス */}
+          {/* TIME / VENUE / FEE ボックス */}
           <div
-            className="inline-flex flex-col gap-2 text-left px-6 py-5 rounded-2xl mb-10 w-full"
-            style={{ background: 'rgba(251,247,240,0.92)', border: '1px solid rgba(201,162,39,0.3)' }}
+            className="text-left px-5 py-4 rounded-2xl mb-10 w-full space-y-3"
+            style={{ background: 'rgba(251,247,240,0.93)', border: '1px solid rgba(201,162,39,0.35)', boxShadow: '0 6px 24px rgba(0,0,0,0.18)' }}
           >
             {[
-              { label: 'TIME', value: '11:30am – 4:00pm' },
-              { label: 'VENUE', value: 'EIA by DAWATA', sub: 'Near Country Mall, Banilad｜IT Parkから車で約8分' },
-              { label: 'FEE', value: '₱2,000 (For Student)', bold: true },
+              { label: 'TIME',  value: '11:30am – 4:00pm',   sub: null, gold: false },
+              { label: 'VENUE', value: 'EIA by DAWATA',       sub: 'Near Country Mall, Banilad　ITパークから車で約8分', gold: false },
+              { label: 'FEE',   value: '₱2,000 (For Student)', sub: null, gold: true },
             ].map((row, i) => (
-              <div key={i} className="flex items-start gap-4">
+              <div key={i} className="flex items-start gap-3">
                 <div
-                  className="flex-shrink-0 text-xs font-bold tracking-widest px-2 py-1 rounded"
-                  style={{ background: '#2C2C2C', color: '#FBF7F0', minWidth: '56px', textAlign: 'center' }}
+                  className="flex-shrink-0 text-xs font-bold tracking-widest px-2 py-1 rounded mt-0.5"
+                  style={{ background: '#2C2C2C', color: '#FBF7F0', minWidth: '54px', textAlign: 'center' }}
                 >
                   {row.label}
                 </div>
                 <div>
-                  <div className={`text-base font-bold leading-tight`} style={{ color: row.bold ? '#C9A227' : '#2C2C2C', fontSize: row.bold ? '1.25rem' : '1rem' }}>
+                  <div className="font-bold leading-tight" style={{ color: row.gold ? '#C9A227' : '#2C2C2C', fontSize: row.gold ? '1.25rem' : '1rem' }}>
                     {row.value}
                   </div>
                   {row.sub && <div className="text-xs mt-0.5" style={{ color: '#888' }}>{row.sub}</div>}
@@ -187,14 +179,12 @@ const EiaSundayYoga: React.FC = () => {
             ))}
           </div>
 
-          {/* CTA ボタン */}
+          {/* CTAボタン */}
           <div className="flex flex-col gap-3">
             <button
               onClick={scrollToForm}
-              className="w-full font-bold py-5 rounded-2xl text-lg tracking-wide transition-all duration-300"
-              style={{ background: '#E85D4A', color: '#fff', boxShadow: '0 6px 24px rgba(232,93,74,0.4)' }}
-              onMouseOver={e => (e.currentTarget.style.background = '#F07060')}
-              onMouseOut={e => (e.currentTarget.style.background = '#E85D4A')}
+              className="w-full font-bold py-5 rounded-2xl text-lg tracking-wide transition-all duration-300 active:scale-95"
+              style={{ background: 'linear-gradient(135deg, #E85D4A, #F07060)', color: '#fff', boxShadow: '0 6px 24px rgba(232,93,74,0.45)' }}
             >
               お申し込みはこちら ↓
             </button>
@@ -209,26 +199,29 @@ const EiaSundayYoga: React.FC = () => {
         </div>
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <ChevronDown size={32} style={{ color: 'rgba(255,255,255,0.5)' }} />
+          <ChevronDown size={32} style={{ color: 'rgba(255,255,255,0.55)' }} />
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          ABOUT — クリーム背景・コーラル見出し
-      ════════════════════════════════════════ */}
-      <section id="about" className="py-20" style={{ background: '#FBF7F0' }}>
-        <div className="max-w-xl mx-auto px-6">
-          {/* セクションヘッド */}
+      {/* ══════════════════════════════════════════════
+          ABOUT — クリーム背景・ゴールド→コーラルグラデ
+      ══════════════════════════════════════════════ */}
+      <section id="about" className="py-20 relative overflow-hidden" style={{ background: '#FBF7F0' }}>
+        {/* 淡いゴールドグラデ装飾 */}
+        <div className="absolute top-0 right-0 w-72 h-72 rounded-full opacity-20 -translate-y-1/3 translate-x-1/3"
+          style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }} />
+
+        <div className="max-w-xl mx-auto px-6 relative">
           <div className="mb-12">
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#E85D4A' }} />
+              <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #C9A227, #E85D4A)' }} />
               <h2 className="text-2xl font-bold leading-snug" style={{ color: '#2C2C2C' }}>
                 忙しい日常から一歩下がって、<br />
                 <span style={{ color: '#E85D4A' }}>本来の自分とつながる</span>特別な時間
               </h2>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-1.5 h-10 rounded-full flex-shrink-0 opacity-0" />
+              <div className="w-1.5 flex-shrink-0 opacity-0" />
               <div>
                 <p className="text-base leading-relaxed mb-4" style={{ color: '#444' }}>
                   セブに来たきっかけは？1年後、どんな自分でいたい？<br />
@@ -243,15 +236,16 @@ const EiaSundayYoga: React.FC = () => {
             </div>
           </div>
 
-          {/* 3カードのコンセプト */}
           <div className="space-y-4">
             {[
-              { emoji: '🌿', title: '心を整える',   desc: 'ヨガと瞑想で日常のストレスをリリース。静けさの中で本来の自分に戻る時間。' },
-              { emoji: '✨', title: '未来を描く',   desc: 'ビジョンボード作成で自分の夢や目標を可視化。新しい一歩を踏み出すきっかけに。' },
-              { emoji: '🤝', title: '仲間と繋がる', desc: '同じ気持ちを持つ仲間と出会い、シェアすることで心が軽くなる。新しいコミュニティへ。' },
+              { emoji: '🌿', title: '心を整える',   desc: 'ヨガと瞑想で日常のストレスをリリース。静けさの中で本来の自分に戻る時間。', accent: '#C9A227' },
+              { emoji: '✨', title: '未来を描く',   desc: 'ビジョンボード作成で自分の夢や目標を可視化。新しい一歩を踏み出すきっかけに。', accent: '#D4AF37' },
+              { emoji: '🤝', title: '仲間と繋がる', desc: '同じ気持ちを持つ仲間と出会い、シェアすることで心が軽くなる。新しいコミュニティへ。', accent: '#E85D4A' },
             ].map((c, i) => (
-              <div key={i} className="flex items-start gap-4 p-5 rounded-2xl" style={{ background: '#fff', border: '1px solid #EDE6D8', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
-                <span className="text-4xl flex-shrink-0">{c.emoji}</span>
+              <div key={i} className="flex items-start gap-4 p-5 rounded-2xl" style={{ background: '#fff', border: '1px solid #EDE6D8', boxShadow: '0 2px 12px rgba(201,162,39,0.08)' }}>
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0" style={{ background: `${c.accent}18` }}>
+                  {c.emoji}
+                </div>
                 <div>
                   <h3 className="text-lg font-bold mb-1.5" style={{ color: '#2C2C2C' }}>{c.title}</h3>
                   <p className="text-base leading-relaxed" style={{ color: '#666' }}>{c.desc}</p>
@@ -262,13 +256,13 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          WHAT YOU'LL EXPERIENCE — チラシ見出し風
-      ════════════════════════════════════════ */}
-      <section className="py-20" style={{ background: '#F5EFE6' }}>
+      {/* ══════════════════════════════════════════════
+          WHAT YOU'LL EXPERIENCE — ベージュ背景
+      ══════════════════════════════════════════════ */}
+      <section className="py-20" style={{ background: 'linear-gradient(180deg, #F5EFE6 0%, #FBF7F0 100%)' }}>
         <div className="max-w-xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#C9A227' }} />
+            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #C9A227, #D4AF37)' }} />
             <div>
               <div className="text-xs font-bold tracking-widest uppercase" style={{ color: '#C9A227' }}>What You'll Experience</div>
               <h2 className="text-2xl font-bold" style={{ color: '#2C2C2C' }}>含まれるもの</h2>
@@ -277,21 +271,21 @@ const EiaSundayYoga: React.FC = () => {
 
           <div className="space-y-3">
             {[
-              { time: '12:00', en: 'Beginner Yoga',       ja: 'ビギナーヨガ',      icon: '🧘', desc: '初心者OK。超シンプルな英語のみ＆事前に用語集配布。' },
-              { time: '13:00', en: 'Organic Lunch',       ja: '有機野菜ランチ',    icon: '🥗', desc: '地元の有機野菜をたっぷり使ったヘルシーなランチ付き。' },
-              { time: '14:00', en: 'Guided Meditation',   ja: 'ガイド瞑想',        icon: '🌿', desc: '丁寧にガイドされる瞑想で深いリラックスを体験。' },
+              { time: '12:00', en: 'Beginner Yoga',       ja: 'ビギナーヨガ',       icon: '🧘', desc: '初心者OK。超シンプルな英語のみ＆事前に用語集配布。' },
+              { time: '13:00', en: 'Organic Lunch',       ja: '有機野菜ランチ',     icon: '🥗', desc: '地元の有機野菜をたっぷり使ったヘルシーなランチ付き。' },
+              { time: '14:00', en: 'Guided Meditation',   ja: 'ガイド瞑想',         icon: '🌿', desc: '丁寧にガイドされる瞑想で深いリラックスを体験。' },
               { time: '14:30', en: 'Vision Board Making', ja: 'ビジョンボード作成', icon: '✨', desc: '自分の未来を視覚化。本当にやりたいことが見えてくる。' },
-              { time: '15:15', en: 'Sharing Time',        ja: 'シェアタイム',      icon: '💬', desc: '同じ志を持つ仲間とつながれる交流タイム。' },
+              { time: '15:15', en: 'Sharing Time',        ja: 'シェアタイム',       icon: '💬', desc: '同じ志を持つ仲間とつながれる交流タイム。' },
             ].map((item, i) => (
-              <div key={i} className="flex items-start gap-4 p-5 rounded-2xl" style={{ background: '#fff', border: '1px solid #EDE6D8' }}>
+              <div key={i} className="flex items-start gap-4 p-5 rounded-2xl" style={{ background: '#fff', border: '1px solid #EDE6D8', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
                 <div className="flex-shrink-0 text-center" style={{ minWidth: '52px' }}>
                   <div className="text-2xl mb-1">{item.icon}</div>
                   <div className="text-xs font-bold" style={{ color: '#C9A227' }}>{item.time}</div>
                 </div>
-                <div className="w-px self-stretch mx-1" style={{ background: '#EDE6D8' }} />
+                <div className="w-px self-stretch mx-1" style={{ background: 'linear-gradient(to bottom, #C9A227, #EDE6D8)' }} />
                 <div className="flex-1">
                   <div className="font-bold text-base" style={{ color: '#2C2C2C' }}>{item.en}</div>
-                  <div className="text-sm mb-1.5" style={{ color: '#C9A227', fontWeight: 600 }}>{item.ja}</div>
+                  <div className="text-sm mb-1.5 font-semibold" style={{ color: '#C9A227' }}>{item.ja}</div>
                   <p className="text-sm leading-relaxed" style={{ color: '#666' }}>{item.desc}</p>
                 </div>
               </div>
@@ -300,17 +294,17 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          ENGLISH BEGINNERS? NO PROBLEM!
-      ════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════════════
+          ENGLISH BEGINNERS — ゴールドボーダー
+      ══════════════════════════════════════════════ */}
       <section className="py-16" style={{ background: '#FBF7F0' }}>
         <div className="max-w-xl mx-auto px-6">
           <div
             className="p-7 rounded-3xl"
-            style={{ background: '#fff', border: '2px solid #C9A227', boxShadow: '0 4px 24px rgba(201,162,39,0.12)' }}
+            style={{ background: '#fff', border: '2px solid #C9A227', boxShadow: '0 4px 24px rgba(201,162,39,0.15)' }}
           >
             <div className="flex items-center gap-3 mb-5">
-              <div className="w-1.5 h-8 rounded-full flex-shrink-0" style={{ background: '#E85D4A' }} />
+              <div className="w-1.5 h-8 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #E85D4A, #C9A227)' }} />
               <h2 className="text-xl font-bold" style={{ color: '#E85D4A' }}>English Beginners? No Problem!</h2>
             </div>
             <ul className="space-y-3 mb-5">
@@ -334,39 +328,38 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          SCHEDULE — タイムライン
-      ════════════════════════════════════════ */}
-      <section id="schedule" className="py-20" style={{ background: '#F5EFE6' }}>
-        <div className="max-w-xl mx-auto px-6">
+      {/* ══════════════════════════════════════════════
+          SCHEDULE — ゴールドグラデ背景
+      ══════════════════════════════════════════════ */}
+      <section id="schedule" className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #FBF7F0 0%, #F5EFE6 50%, #EDE6D8 100%)' }}>
+        {/* 装飾円 */}
+        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-15 translate-y-1/3 -translate-x-1/3"
+          style={{ background: 'radial-gradient(circle, #C9A227 0%, transparent 70%)' }} />
+
+        <div className="max-w-xl mx-auto px-6 relative">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#C9A227' }} />
+            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #C9A227, #D4AF37)' }} />
             <div>
               <div className="text-xs font-bold tracking-widest uppercase" style={{ color: '#C9A227' }}>Schedule</div>
               <h2 className="text-2xl font-bold" style={{ color: '#2C2C2C' }}>当日のタイムテーブル</h2>
             </div>
           </div>
-          <div
-            className="flex items-center gap-2 mb-8 ml-5 text-base font-bold"
-            style={{ color: '#2C2C2C' }}
-          >
+          <div className="flex items-center gap-2 mb-8 ml-5 text-base font-bold" style={{ color: '#2C2C2C' }}>
             <Clock size={18} style={{ color: '#C9A227' }} />
             11:30am – 4:00pm
           </div>
           <div className="relative">
-            {/* 縦ライン */}
-            <div className="absolute left-6 top-0 bottom-0 w-0.5" style={{ background: '#EDE6D8' }} />
+            <div className="absolute left-6 top-0 bottom-0 w-0.5" style={{ background: 'linear-gradient(to bottom, #C9A227, #EDE6D8)' }} />
             <div className="space-y-4">
               {schedule.map((item, i) => (
                 <div key={i} className="flex items-center gap-4 pl-14 relative">
-                  {/* ドット */}
                   <div
                     className="absolute left-4 w-5 h-5 rounded-full border-2 flex items-center justify-center z-10"
-                    style={{ background: '#fff', borderColor: '#C9A227' }}
+                    style={{ background: '#fff', borderColor: '#C9A227', boxShadow: '0 0 0 3px rgba(201,162,39,0.15)' }}
                   >
                     <div className="w-2 h-2 rounded-full" style={{ background: '#C9A227' }} />
                   </div>
-                  <div className="flex items-center gap-4 flex-1 p-4 rounded-2xl" style={{ background: '#fff', border: '1px solid #EDE6D8' }}>
+                  <div className="flex items-center gap-4 flex-1 p-4 rounded-2xl" style={{ background: '#fff', border: '1px solid #EDE6D8', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
                     <span className="text-2xl flex-shrink-0">{item.icon}</span>
                     <div className="flex-1">
                       <div className="flex items-baseline gap-2 flex-wrap">
@@ -383,66 +376,85 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          VENUE & DETAILS
-      ════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════════════
+          VENUE & DETAILS — Googleマップ表示
+      ══════════════════════════════════════════════ */}
       <section className="py-20" style={{ background: '#FBF7F0' }}>
         <div className="max-w-xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#E85D4A' }} />
+            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #E85D4A, #C9A227)' }} />
             <div>
               <div className="text-xs font-bold tracking-widest uppercase" style={{ color: '#E85D4A' }}>Venue & Details</div>
               <h2 className="text-2xl font-bold" style={{ color: '#2C2C2C' }}>開催詳細</h2>
             </div>
           </div>
 
-          <div className="rounded-3xl overflow-hidden mb-8" style={{ boxShadow: '0 4px 20px rgba(0,0,0,0.12)' }}>
-            <img
-              src="https://images.pexels.com/photos/5537213/pexels-photo-5537213.jpeg?auto=compress&cs=tinysrgb&w=800"
-              alt="EIA by DAWATA venue"
-              className="w-full h-52 object-cover"
+          {/* ✅ Googleマップ埋め込み */}
+          <div className="rounded-3xl overflow-hidden mb-8" style={{ boxShadow: '0 4px 24px rgba(0,0,0,0.12)', border: '1px solid #EDE6D8' }}>
+            <iframe
+              src={MAP_EMBED_URL}
+              width="100%"
+              height="280"
+              style={{ border: 0, display: 'block' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="EIA by DAWATA - Banilad, Cebu City"
             />
+            {/* マップ下のラベル */}
+            <div className="flex items-center gap-3 px-5 py-3" style={{ background: '#fff', borderTop: '1px solid #EDE6D8' }}>
+              <MapPin size={16} style={{ color: '#E85D4A', flexShrink: 0 }} />
+              <div className="flex-1">
+                <div className="font-bold text-sm" style={{ color: '#2C2C2C' }}>EIA by DAWATA</div>
+                <div className="text-xs" style={{ color: '#888' }}>8 Adelfa St, El Dorado Subdivision, Banilad, Cebu City</div>
+              </div>
+              <a
+                href="https://maps.app.goo.gl/nUrNdLw7G9gQN1Vk6"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-full flex-shrink-0 transition-all"
+                style={{ background: '#E85D4A', color: '#fff' }}
+              >
+                <ExternalLink size={11} />
+                地図を開く
+              </a>
+            </div>
           </div>
 
           {/* 詳細ボックス */}
-          <div className="p-6 rounded-3xl mb-6" style={{ background: '#fff', border: '1px solid #EDE6D8' }}>
+          <div className="p-6 rounded-3xl" style={{ background: '#fff', border: '1px solid #EDE6D8', boxShadow: '0 2px 12px rgba(0,0,0,0.05)' }}>
             {[
-              { label: 'TIME', value: '11:30am – 4:00pm', icon: '🕐' },
-              { label: 'VENUE', value: 'EIA by DAWATA', sub: 'Near Country Mall, Banilad\nIT Parkから車で約8分', icon: '📍' },
-              { label: 'FEE', value: '₱2,000', sub: '学生割引あり（For Student）', icon: '💰', gold: true },
-              { label: 'LANGUAGE', value: '日本語 & English', sub: '超シンプルな英語のみ・事前に用語集配布', icon: '🌐' },
+              { label: 'TIME',     value: '11:30am – 4:00pm',   sub: null, gold: false },
+              { label: 'VENUE',    value: 'EIA by DAWATA',       sub: 'Near Country Mall, Banilad　ITパークから車で約8分', gold: false },
+              { label: 'FEE',      value: '₱2,000',              sub: '学生割引あり（For Student）', gold: true },
+              { label: 'LANGUAGE', value: '日本語 & English',    sub: '超シンプルな英語のみ・事前に用語集配布', gold: false },
             ].map((row, i) => (
               <div key={i} className={`flex items-start gap-4 py-4 ${i !== 3 ? 'border-b' : ''}`} style={{ borderColor: '#EDE6D8' }}>
                 <div
                   className="flex-shrink-0 text-xs font-bold tracking-widest px-2.5 py-1.5 rounded-lg mt-0.5"
-                  style={{ background: '#2C2C2C', color: '#FBF7F0', minWidth: '64px', textAlign: 'center' }}
+                  style={{ background: '#2C2C2C', color: '#FBF7F0', minWidth: '72px', textAlign: 'center' }}
                 >
                   {row.label}
                 </div>
                 <div className="flex-1">
-                  <div
-                    className="font-bold text-base leading-tight"
-                    style={{ color: row.gold ? '#C9A227' : '#2C2C2C', fontSize: row.gold ? '1.5rem' : '1rem' }}
-                  >
+                  <div className="font-bold text-base leading-tight" style={{ color: row.gold ? '#C9A227' : '#2C2C2C', fontSize: row.gold ? '1.5rem' : '1rem' }}>
                     {row.value}
                   </div>
-                  {row.sub && (
-                    <div className="text-sm mt-1 whitespace-pre-line" style={{ color: '#888' }}>{row.sub}</div>
-                  )}
+                  {row.sub && <div className="text-sm mt-1" style={{ color: '#888' }}>{row.sub}</div>}
                 </div>
               </div>
             ))}
           </div>
 
-          {/* 日程リスト */}
-          <div className="p-5 rounded-2xl" style={{ background: '#F5EFE6', border: '1px solid #EDE6D8' }}>
+          {/* 日程カレンダー */}
+          <div className="mt-6 p-5 rounded-2xl" style={{ background: 'linear-gradient(135deg, #FBF7F0, #F5EFE6)', border: '1px solid #EDE6D8' }}>
             <div className="text-xs font-bold tracking-widest uppercase mb-4" style={{ color: '#888' }}>開催日程</div>
             <div className="flex justify-around">
               {dates.map((d, i) => (
                 <div key={i} className="text-center">
                   <div
                     className="w-16 h-16 rounded-2xl flex flex-col items-center justify-center mx-auto mb-1"
-                    style={{ background: '#fff', border: '2px solid #C9A227' }}
+                    style={{ background: '#fff', border: '2px solid #C9A227', boxShadow: '0 2px 8px rgba(201,162,39,0.2)' }}
                   >
                     <div className="text-xs font-bold" style={{ color: '#C9A227' }}>{d.month}月</div>
                     <div className="font-black leading-none" style={{ fontSize: '1.8rem', color: '#C9A227' }}>{d.date}</div>
@@ -455,49 +467,51 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
+      {/* ══════════════════════════════════════════════
           GALLERY
-      ════════════════════════════════════════ */}
-      <section className="py-20" style={{ background: '#F5EFE6' }}>
+      ══════════════════════════════════════════════ */}
+      <section className="py-20" style={{ background: 'linear-gradient(180deg, #F5EFE6 0%, #FBF7F0 100%)' }}>
         <div className="max-w-xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#C9A227' }} />
+            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #C9A227, #D4AF37)' }} />
             <div>
               <div className="text-xs font-bold tracking-widest uppercase" style={{ color: '#C9A227' }}>Gallery</div>
               <h2 className="text-2xl font-bold" style={{ color: '#2C2C2C' }}>リトリートの雰囲気</h2>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <div className="col-span-2 rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }}>
-              <img
-                src="https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=900"
-                alt="Yoga class"
-                className="w-full h-56 object-cover"
-              />
+            <div className="col-span-2 rounded-2xl overflow-hidden" style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.12)' }}>
+              <img src="https://images.pexels.com/photos/3822864/pexels-photo-3822864.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Yoga class" className="w-full h-56 object-cover" />
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }}>
+            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 10px rgba(0,0,0,0.10)' }}>
               <img src="https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Meditation" className="w-full h-40 object-cover" />
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }}>
+            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 10px rgba(0,0,0,0.10)' }}>
               <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Organic lunch" className="w-full h-40 object-cover" />
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }}>
+            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 10px rgba(0,0,0,0.10)' }}>
               <img src="https://images.pexels.com/photos/3759657/pexels-photo-3759657.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Yoga pose" className="w-full h-40 object-cover" />
             </div>
-            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.10)' }}>
+            <div className="rounded-2xl overflow-hidden" style={{ boxShadow: '0 2px 10px rgba(0,0,0,0.10)' }}>
               <img src="https://images.pexels.com/photos/3094230/pexels-photo-3094230.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Yoga studio" className="w-full h-40 object-cover" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          TESTIMONIALS — 参加者の声
-      ════════════════════════════════════════ */}
-      <section className="py-20" style={{ background: '#2C2C2C' }}>
-        <div className="max-w-xl mx-auto px-6">
+      {/* ══════════════════════════════════════════════
+          TESTIMONIALS — ダークゴールドグラデ
+      ══════════════════════════════════════════════ */}
+      <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #2C2C2C 0%, #3D3020 50%, #2C2C2C 100%)' }}>
+        {/* 装飾 */}
+        <div className="absolute top-0 right-0 w-80 h-80 rounded-full opacity-10 -translate-y-1/4 translate-x-1/4"
+          style={{ background: 'radial-gradient(circle, #C9A227 0%, transparent 70%)' }} />
+        <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-10 translate-y-1/4 -translate-x-1/4"
+          style={{ background: 'radial-gradient(circle, #D4AF37 0%, transparent 70%)' }} />
+
+        <div className="relative max-w-xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#C9A227' }} />
+            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #D4AF37, #C9A227)' }} />
             <div>
               <div className="text-xs font-bold tracking-widest uppercase" style={{ color: '#C9A227' }}>Testimonials</div>
               <h2 className="text-2xl font-bold" style={{ color: '#FBF7F0' }}>参加者の声</h2>
@@ -505,10 +519,10 @@ const EiaSundayYoga: React.FC = () => {
           </div>
           <div className="space-y-5">
             {testimonials.map((t, i) => (
-              <div key={i} className="p-6 rounded-2xl" style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(201,162,39,0.25)' }}>
+              <div key={i} className="p-6 rounded-2xl" style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(201,162,39,0.30)', boxShadow: '0 2px 16px rgba(0,0,0,0.2)' }}>
                 <div className="flex gap-1 mb-4">
                   {[...Array(t.stars)].map((_, j) => (
-                    <Star key={j} size={16} style={{ color: '#C9A227', fill: '#C9A227' }} />
+                    <Star key={j} size={16} style={{ color: '#D4AF37', fill: '#D4AF37' }} />
                   ))}
                 </div>
                 <p className="text-base leading-relaxed mb-5 italic" style={{ color: 'rgba(251,247,240,0.90)' }}>
@@ -517,13 +531,13 @@ const EiaSundayYoga: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <div
                     className="w-11 h-11 rounded-full flex items-center justify-center font-bold text-base flex-shrink-0"
-                    style={{ background: 'rgba(201,162,39,0.25)', color: '#C9A227' }}
+                    style={{ background: 'rgba(201,162,39,0.22)', color: '#D4AF37', border: '1px solid rgba(201,162,39,0.35)' }}
                   >
                     {t.name.charAt(0)}
                   </div>
                   <div>
                     <div className="font-bold text-base" style={{ color: '#FBF7F0' }}>{t.name}</div>
-                    <div className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>{t.role}</div>
+                    <div className="text-sm" style={{ color: 'rgba(255,255,255,0.50)' }}>{t.role}</div>
                   </div>
                 </div>
               </div>
@@ -532,13 +546,16 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
+      {/* ══════════════════════════════════════════════
           UPCOMING DATES
-      ════════════════════════════════════════ */}
-      <section className="py-20" style={{ background: '#FBF7F0' }}>
-        <div className="max-w-xl mx-auto px-6">
+      ══════════════════════════════════════════════ */}
+      <section className="py-20 relative overflow-hidden" style={{ background: '#FBF7F0' }}>
+        <div className="absolute top-0 right-0 w-56 h-56 rounded-full opacity-15 -translate-y-1/4 translate-x-1/4"
+          style={{ background: 'radial-gradient(circle, #E85D4A 0%, transparent 70%)' }} />
+
+        <div className="max-w-xl mx-auto px-6 relative">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#E85D4A' }} />
+            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #E85D4A, #C9A227)' }} />
             <div>
               <div className="text-xs font-bold tracking-widest uppercase" style={{ color: '#E85D4A' }}>Upcoming Dates</div>
               <h2 className="text-2xl font-bold" style={{ color: '#2C2C2C' }}>開催スケジュール</h2>
@@ -550,7 +567,7 @@ const EiaSundayYoga: React.FC = () => {
                 <div className="flex items-center gap-4 mb-4">
                   <div
                     className="w-16 h-16 rounded-2xl flex flex-col items-center justify-center flex-shrink-0"
-                    style={{ background: '#FBF7F0', border: '2px solid #C9A227' }}
+                    style={{ background: 'linear-gradient(135deg, #FBF7F0, #F5EFE6)', border: '2px solid #C9A227', boxShadow: '0 2px 8px rgba(201,162,39,0.2)' }}
                   >
                     <span className="text-xs font-bold" style={{ color: '#C9A227' }}>{d.month}月</span>
                     <span className="font-black leading-none" style={{ fontSize: '2rem', color: '#C9A227' }}>{d.date}</span>
@@ -565,10 +582,8 @@ const EiaSundayYoga: React.FC = () => {
                 </div>
                 <button
                   onClick={scrollToForm}
-                  className="w-full font-bold py-4 rounded-xl text-base transition-all duration-300"
-                  style={{ background: '#E85D4A', color: '#fff' }}
-                  onMouseOver={e => (e.currentTarget.style.background = '#F07060')}
-                  onMouseOut={e => (e.currentTarget.style.background = '#E85D4A')}
+                  className="w-full font-bold py-4 rounded-xl text-base transition-all duration-300 active:scale-95"
+                  style={{ background: 'linear-gradient(135deg, #E85D4A, #F07060)', color: '#fff', boxShadow: '0 4px 14px rgba(232,93,74,0.30)' }}
                 >
                   この日程で申し込む
                 </button>
@@ -578,13 +593,13 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          FAQ
-      ════════════════════════════════════════ */}
-      <section className="py-20" style={{ background: '#F5EFE6' }}>
+      {/* ══════════════════════════════════════════════
+          FAQ — ベージュ背景
+      ══════════════════════════════════════════════ */}
+      <section className="py-20" style={{ background: 'linear-gradient(180deg, #F5EFE6 0%, #FBF7F0 100%)' }}>
         <div className="max-w-xl mx-auto px-6">
           <div className="flex items-center gap-3 mb-10">
-            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: '#C9A227' }} />
+            <div className="w-1.5 h-10 rounded-full flex-shrink-0" style={{ background: 'linear-gradient(to bottom, #C9A227, #D4AF37)' }} />
             <div>
               <div className="text-xs font-bold tracking-widest uppercase" style={{ color: '#C9A227' }}>FAQ</div>
               <h2 className="text-2xl font-bold" style={{ color: '#2C2C2C' }}>よくあるご質問</h2>
@@ -599,7 +614,7 @@ const EiaSundayYoga: React.FC = () => {
               { q: '会場へのアクセスを教えてください。',   a: 'EIA by DAWATA（バニラッド、カントリーモール近く）です。ITパークから車で約8分のところにあります。詳しいアクセス方法はお申し込み後にご連絡します。' },
               { q: 'キャンセルポリシーを教えてください。', a: '開催3日前まではキャンセルを承ります。それ以降のキャンセルについてはご返金が難しい場合があります。詳細はお申し込み時にご確認ください。' },
             ].map((faq, i) => (
-              <div key={i} className="rounded-2xl overflow-hidden" style={{ background: '#fff', border: '1px solid #EDE6D8' }}>
+              <div key={i} className="rounded-2xl overflow-hidden" style={{ background: '#fff', border: '1px solid #EDE6D8', boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
                 <button
                   className="w-full flex items-center justify-between px-5 py-5 text-left"
                   onClick={() => toggleFaq(i)}
@@ -620,35 +635,30 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          APPLY FORM — メインCV
-      ════════════════════════════════════════ */}
+      {/* ══════════════════════════════════════════════
+          APPLY FORM — メインCV（ダーク＋ゴールドグラデ）
+      ══════════════════════════════════════════════ */}
       <section
         id="apply-form"
         ref={formSectionRef}
         className="py-20 relative overflow-hidden"
-        style={{ background: '#2C2C2C' }}
+        style={{ background: 'linear-gradient(160deg, #2C2C2C 0%, #3D3020 40%, #2C2020 100%)' }}
       >
-        {/* 背景パターン */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: `url('https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?auto=compress&cs=tinysrgb&w=1200')` }}
-        />
+        {/* 背景装飾 */}
+        <div className="absolute inset-0 bg-cover bg-center opacity-10"
+          style={{ backgroundImage: `url('https://images.pexels.com/photos/2294354/pexels-photo-2294354.jpeg?auto=compress&cs=tinysrgb&w=1200')` }} />
+        <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10 -translate-y-1/3 translate-x-1/3"
+          style={{ background: 'radial-gradient(circle, #C9A227 0%, transparent 70%)' }} />
         {/* ゴールドのトップライン */}
-        <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: 'linear-gradient(to right, #C9A227, #D4AF37, #C9A227)' }} />
+        <div className="absolute top-0 left-0 right-0 h-1.5" style={{ background: 'linear-gradient(to right, #C9A227, #F0D060, #C9A227)' }} />
 
         <div className="relative max-w-xl mx-auto px-6">
+          {/* ヘッダー */}
           <div className="text-center mb-10">
             <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: '#C9A227' }}>Apply Now</div>
-            <h2 className="font-black mb-3 leading-tight" style={{ fontSize: '2.5rem', color: '#FBF7F0' }}>
-              お申し込み
-            </h2>
-            <p className="text-base mb-2" style={{ color: 'rgba(251,247,240,0.7)' }}>
-              下記フォームにご記入ください
-            </p>
-            <p className="text-sm" style={{ color: '#C9A227' }}>
-              ✓ 所要時間：約2分　｜　✓ ご質問もお気軽に
-            </p>
+            <h2 className="font-black mb-3 leading-tight" style={{ fontSize: '2.5rem', color: '#FBF7F0' }}>お申し込み</h2>
+            <p className="text-base mb-2" style={{ color: 'rgba(251,247,240,0.70)' }}>下記フォームにご記入ください</p>
+            <p className="text-sm" style={{ color: '#C9A227' }}>✓ 所要時間：約2分　｜　✓ ご質問もお気軽に</p>
           </div>
 
           {/* 情報ピル */}
@@ -659,7 +669,8 @@ const EiaSundayYoga: React.FC = () => {
               { icon: '🥗', text: '有機ランチ込み' },
               { icon: '🧘', text: '初心者歓迎' },
             ].map((pill, i) => (
-              <div key={i} className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm" style={{ background: 'rgba(201,162,39,0.12)', border: '1px solid rgba(201,162,39,0.3)', color: '#FBF7F0' }}>
+              <div key={i} className="flex items-center gap-2 px-4 py-3 rounded-xl text-sm"
+                style={{ background: 'rgba(201,162,39,0.12)', border: '1px solid rgba(201,162,39,0.30)', color: '#FBF7F0' }}>
                 <span className="text-lg">{pill.icon}</span>
                 <span className="font-medium">{pill.text}</span>
               </div>
@@ -667,23 +678,23 @@ const EiaSundayYoga: React.FC = () => {
           </div>
 
           {/* フォームカード */}
-          <div className="rounded-3xl overflow-hidden" style={{ boxShadow: '0 10px 50px rgba(0,0,0,0.4)', border: '1px solid rgba(201,162,39,0.3)' }}>
+          <div className="rounded-3xl overflow-hidden" style={{ boxShadow: '0 10px 50px rgba(0,0,0,0.45)', border: '1px solid rgba(201,162,39,0.30)' }}>
             {/* カードヘッダー */}
-            <div className="px-5 py-4 flex items-center justify-between" style={{ background: '#C9A227' }}>
+            <div className="px-5 py-4 flex items-center justify-between" style={{ background: 'linear-gradient(135deg, #C9A227, #D4AF37)' }}>
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'rgba(255,255,255,0.25)' }}>
                   <span className="text-white text-base font-bold">✎</span>
                 </div>
                 <div>
                   <div className="font-bold text-sm leading-tight" style={{ color: '#fff' }}>EIA SUNDAY YOGA 申し込みフォーム</div>
-                  <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.8)' }}>ZEN RETREAT ASIA × EIA by DAWATA</div>
+                  <div className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.80)' }}>ZEN RETREAT ASIA × EIA by DAWATA</div>
                 </div>
               </div>
               <a
                 href={FORM_DIRECT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs flex-shrink-0 ml-2 transition-all"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-full text-xs flex-shrink-0 ml-2"
                 style={{ background: 'rgba(255,255,255,0.25)', color: '#fff' }}
               >
                 <ExternalLink size={12} />
@@ -691,30 +702,20 @@ const EiaSundayYoga: React.FC = () => {
               </a>
             </div>
 
-            {/* iframe */}
-            <div className="relative" style={{ minHeight: '700px', background: '#fff' }}>
-              {!formLoaded && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center z-10" style={{ background: '#FBF7F0' }}>
-                  <div className="w-14 h-14 border-4 rounded-full animate-spin mb-5" style={{ borderColor: '#EDE6D8', borderTopColor: '#C9A227' }} />
-                  <p className="text-base" style={{ color: '#888' }}>フォームを読み込み中...</p>
-                </div>
-              )}
-              {isFormVisible && (
-                <iframe
-                  src={FORM_URL}
-                  title="EIA Sunday Yoga 申し込みフォーム"
-                  width="100%"
-                  height="700"
-                  frameBorder="0"
-                  marginHeight={0}
-                  marginWidth={0}
-                  className="block"
-                  onLoad={() => setFormLoaded(true)}
-                  style={{ opacity: formLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
-                >
-                  読み込んでいます…
-                </iframe>
-              )}
+            {/* ✅ Google Form iframe（正しいURL） */}
+            <div style={{ background: '#fff' }}>
+              <iframe
+                src={FORM_URL}
+                title="EIA Sunday Yoga 申し込みフォーム"
+                width="100%"
+                height="900"
+                frameBorder="0"
+                marginHeight={0}
+                marginWidth={0}
+                style={{ display: 'block' }}
+              >
+                読み込んでいます…
+              </iframe>
             </div>
 
             {/* フォームフッター */}
@@ -727,7 +728,7 @@ const EiaSundayYoga: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 font-bold py-4 px-6 rounded-xl text-base transition-all duration-300 w-full"
-                style={{ background: '#E85D4A', color: '#fff' }}
+                style={{ background: 'linear-gradient(135deg, #E85D4A, #F07060)', color: '#fff', boxShadow: '0 4px 14px rgba(232,93,74,0.35)' }}
               >
                 <ExternalLink size={18} />
                 フォームを直接開く
@@ -737,20 +738,16 @@ const EiaSundayYoga: React.FC = () => {
 
           {/* 連絡先 */}
           <div className="mt-10 text-center space-y-4">
-            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>ご不明な点はお気軽にご連絡ください</p>
-            <a
-              href="mailto:retreat-eia@zen-retreat-asia.com"
-              className="flex items-center justify-center gap-2 text-base transition-colors"
-              style={{ color: '#C9A227' }}
-            >
+            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.45)' }}>ご不明な点はお気軽にご連絡ください</p>
+            <a href="mailto:retreat-eia@zen-retreat-asia.com"
+              className="flex items-center justify-center gap-2 text-base"
+              style={{ color: '#D4AF37' }}>
               <Mail size={18} />
               retreat-eia@zen-retreat-asia.com
             </a>
-            <a
-              href="tel:+639560831462"
-              className="flex items-center justify-center gap-2 text-base transition-colors"
-              style={{ color: 'rgba(251,247,240,0.65)' }}
-            >
+            <a href="tel:+639560831462"
+              className="flex items-center justify-center gap-2 text-base"
+              style={{ color: 'rgba(251,247,240,0.65)' }}>
               <Phone size={18} />
               +63 956 083 1462（Taka）
             </a>
@@ -758,20 +755,20 @@ const EiaSundayYoga: React.FC = () => {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════
-          FOOTER STRIP — チラシ風 ゴールド底面
-      ════════════════════════════════════════ */}
-      <section className="py-8" style={{ background: '#C9A227' }}>
+      {/* ══════════════════════════════════════════════
+          FOOTER — ゴールドグラデーション
+      ══════════════════════════════════════════════ */}
+      <section className="py-8" style={{ background: 'linear-gradient(135deg, #C9A227, #D4AF37, #B8911F)' }}>
         <div className="max-w-xl mx-auto px-6">
           <div className="flex flex-col items-center gap-3 text-center">
             <div className="font-black text-lg tracking-wide" style={{ color: '#fff' }}>ZEN RETREAT ASIA</div>
             <div className="font-medium text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>× EIA by DAWATA</div>
-            <div className="w-12 h-px my-1" style={{ background: 'rgba(255,255,255,0.4)' }} />
-            <a href="mailto:retreat-eia@zen-retreat-asia.com" className="flex items-center gap-2 text-sm transition-colors" style={{ color: '#fff' }}>
+            <div className="w-12 h-px my-1" style={{ background: 'rgba(255,255,255,0.40)' }} />
+            <a href="mailto:retreat-eia@zen-retreat-asia.com" className="flex items-center gap-2 text-sm" style={{ color: '#fff' }}>
               <Mail size={14} />
               retreat-eia@zen-retreat-asia.com
             </a>
-            <a href="tel:+639560831462" className="flex items-center gap-2 text-sm transition-colors" style={{ color: 'rgba(255,255,255,0.85)' }}>
+            <a href="tel:+639560831462" className="flex items-center gap-2 text-sm" style={{ color: 'rgba(255,255,255,0.85)' }}>
               <Phone size={14} />
               +63 956 083 1462（Taka）
             </a>
