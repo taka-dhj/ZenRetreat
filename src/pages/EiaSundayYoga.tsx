@@ -45,9 +45,9 @@ const EiaSundayYoga: React.FC = () => {
   ];
 
   const dates = [
-    { date: '3/22', month: '3月', full: '2025年3月22日（日）' },
-    { date: '4/5',  month: '4月', full: '2025年4月5日（日）' },
-    { date: '4/26', month: '4月', full: '2025年4月26日（日）' },
+    { date: '3/22', month: '3月', full: '2026年3月22日（日）' },
+    { date: '4/5',  month: '4月', full: '2026年4月5日（日）' },
+    { date: '4/26', month: '4月', full: '2026年4月26日（日）' },
   ];
 
   const testimonials = [
