@@ -72,7 +72,7 @@ const EiaSundayYoga: React.FC = () => {
     {
       name: 'S.H さん（26歳）',
       role: '大学生',
-      comment: '学生割引もあって気軽に参加できました。ビジョンボード作りでこれからの目標が明確になって、参加してよかったです！タカ先生のお話もとても印象的でした。',
+      comment: '学生価格で参加できて、内容の充実度に驚きました。ビジョンボード作りでこれからの目標が明確になって、参加してよかったです！タカ先生のお話もとても印象的でした。',
       stars: 5,
     },
   ];
@@ -90,7 +90,7 @@ const EiaSundayYoga: React.FC = () => {
     { q: 'ヨガが初めてでも参加できますか？',      a: 'もちろんです！このリトリートはビギナーヨガを中心としており、初心者の方を大歓迎しています。柔軟性や体力は必要ありません。ヨガマットや道具もご用意しています。' },
     { q: '英語が話せなくても大丈夫ですか？',       a: 'ご安心ください！使用するのは超シンプルな英語のみです。事前にヨガ・瞑想の用語集も配布しますので、英語レベルは問いません。日本語でのフォローも可能です（日本語OK：タカ）。' },
     { q: '何を持参すればよいですか？',             a: '動きやすい服装でお越しください。ヨガマット・小道具は会場にご用意があります。タオルと水筒（または水）をお持ちいただけると快適です。ランチはご用意しています。' },
-    { q: '学生割引はありますか？',                 a: 'はい！学生の方は特別割引価格でご参加いただけます。申し込みフォームにて学生である旨をご記入ください。詳細はお申し込み確認後にご連絡します。' },
+    { q: '参加費を教えてください。',               a: '一般 ₱2,500、学生 ₱2,000、リピーター ₱1,500 です（いずれもランチ込み）。申し込みフォームにて該当の区分をご記入ください。' },
     { q: '会場へのアクセスを教えてください。',     a: 'EIA by DAWATA（バニラッド、カントリーモール近く）です。ITパークから車で約8分のところにあります。詳しいアクセス方法はお申し込み後にご連絡します。' },
     { q: 'キャンセルポリシーを教えてください。',   a: '開催3日前まではキャンセルを承ります。それ以降のキャンセルについてはご返金が難しい場合があります。詳細はお申し込み時にご確認ください。' },
   ];
@@ -156,12 +156,25 @@ const EiaSundayYoga: React.FC = () => {
             </a>
           </div>
 
-          <div className="inline-flex flex-wrap items-center justify-center gap-3 text-white/80 bg-white/10 backdrop-blur-sm px-6 py-3 rounded-2xl border border-white/20">
-            <span className="text-2xl font-bold text-white">₱2,000</span>
-            <span className="text-white/40">|</span>
-            <span className="text-white/70">学生割引あり</span>
-            <span className="text-white/40">|</span>
-            <span className="text-white/70">ランチ込み</span>
+          <div className="bg-white/10 backdrop-blur-sm px-6 py-4 rounded-2xl border border-white/20 w-full">
+            <div className="text-xs text-white/50 tracking-widest uppercase text-center mb-3">参加費</div>
+            <div className="flex justify-around gap-2">
+              <div className="text-center">
+                <div className="text-xs text-white/60 mb-1">一般</div>
+                <div className="text-xl font-bold text-white">₱2,500</div>
+              </div>
+              <div className="w-px bg-white/20" />
+              <div className="text-center">
+                <div className="text-xs text-amber-300 font-semibold mb-1">学生</div>
+                <div className="text-2xl font-bold text-amber-300">₱2,000</div>
+              </div>
+              <div className="w-px bg-white/20" />
+              <div className="text-center">
+                <div className="text-xs text-white/60 mb-1">リピーター</div>
+                <div className="text-xl font-bold text-white">₱1,500</div>
+              </div>
+            </div>
+            <div className="text-center text-white/50 text-xs mt-3">ランチ込み</div>
           </div>
         </div>
 
@@ -317,7 +330,23 @@ const EiaSundayYoga: React.FC = () => {
               {
                 bg: 'bg-amber-50', borderColor: 'border-amber-100',
                 icon: '💰', label: '参加費',
-                content: <><div className="text-amber-600 font-bold text-2xl">₱2,000</div><div className="text-gray-500 text-sm mt-0.5">学生割引あり（For Student）</div></>
+                content: <>
+                  <div className="flex gap-4 flex-wrap">
+                    <div>
+                      <div className="text-xs text-gray-400 mb-0.5">一般</div>
+                      <div className="font-bold text-lg text-gray-800">₱2,500</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-amber-500 font-semibold mb-0.5">学生</div>
+                      <div className="font-bold text-xl text-amber-600">₱2,000</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-gray-400 mb-0.5">リピーター</div>
+                      <div className="font-bold text-lg text-gray-800">₱1,500</div>
+                    </div>
+                  </div>
+                  <div className="text-gray-400 text-xs mt-1">ランチ込み</div>
+                </>
               },
               {
                 bg: 'bg-purple-50', borderColor: 'border-purple-100',
@@ -520,7 +549,7 @@ const EiaSundayYoga: React.FC = () => {
           <div className="grid grid-cols-2 gap-3 mb-8">
             {[
               { icon: '📅', text: '3/22・4/5・4/26 開催' },
-              { icon: '💰', text: '₱2,000（学割あり）' },
+              { icon: '💰', text: '一般₱2,500 / 学生₱2,000' },
               { icon: '🥗', text: 'ランチ込み' },
               { icon: '🧘', text: '初心者歓迎' },
             ].map((pill, i) => (
