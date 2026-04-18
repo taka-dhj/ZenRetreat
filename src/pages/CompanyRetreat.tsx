@@ -463,17 +463,17 @@ const CompanyRetreat: React.FC = () => {
       </section>
 
       {/* ======== DIRECTOR PROFILE ======== */}
-      <section className="py-20 bg-gradient-to-br from-slate-800 to-blue-900 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full -translate-y-48 translate-x-48" />
+      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-48 translate-x-48" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-32 -translate-x-32" />
 
         <div className="relative max-w-4xl mx-auto px-6">
           <div className="text-center mb-12">
-            <span className="inline-block text-blue-300 text-xs tracking-widest font-semibold mb-4 uppercase">Profile</span>
+            <span className="inline-block text-white/70 text-xs tracking-widest font-semibold mb-4 uppercase">Profile</span>
             <h2 className="text-3xl sm:text-4xl font-light text-white mb-4">
-              取締役<span className="text-blue-300 font-medium">プロフィール</span>
+              取締役<span className="text-white font-medium">プロフィール</span>
             </h2>
-            <div className="w-16 h-0.5 bg-blue-400 mx-auto" />
+            <div className="w-16 h-0.5 bg-white/60 mx-auto" />
           </div>
 
           <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 lg:p-10">
@@ -481,7 +481,7 @@ const CompanyRetreat: React.FC = () => {
               {/* 写真エリア */}
               <div className="flex justify-center">
                 <div className="relative">
-                  <div className="w-48 h-48 rounded-3xl overflow-hidden ring-4 ring-blue-400/30 shadow-2xl">
+                  <div className="w-48 h-48 rounded-3xl overflow-hidden ring-4 ring-white/30 shadow-2xl">
                     <img
                       src={imgSrc(PHOTOS.director, FALLBACK.director)}
                       alt="取締役プロフィール"
@@ -490,7 +490,7 @@ const CompanyRetreat: React.FC = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="absolute -bottom-2 -right-2 bg-blue-500 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg">
+                  <div className="absolute -bottom-2 -right-2 bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg border border-white/30">
                     セブ在住8年
                   </div>
                 </div>
@@ -502,7 +502,7 @@ const CompanyRetreat: React.FC = () => {
                   セブ在住8年、現地NGO活動を通じて地域社会に貢献。
                   企業向けリトリートの企画・運営経験豊富。
                 </p>
-                <p className="text-white/70 text-base leading-relaxed mb-8">
+                <p className="text-white/80 text-base leading-relaxed mb-8">
                   参加企業の満足度向上と、セブ地域社会への貢献の両立を目指しています。
                 </p>
 
@@ -516,7 +516,7 @@ const CompanyRetreat: React.FC = () => {
                   ].map((badge, i) => (
                     <div
                       key={i}
-                      className="flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 px-4 py-2 rounded-xl text-sm font-medium"
+                      className="flex items-center gap-2 bg-white/15 border border-white/25 text-white/90 px-4 py-2 rounded-xl text-sm font-medium"
                     >
                       <span>{badge.icon}</span>
                       <span>{badge.label}</span>
