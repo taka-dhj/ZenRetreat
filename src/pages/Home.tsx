@@ -659,6 +659,74 @@ const Home: React.FC = () => {
         </div>
       </section>
 
+      {/* Corporate Retreat Banner */}
+      <section className="py-20 bg-white border-t border-gray-100">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            {/* 背景画像レイヤー */}
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url('/company-retreat/gallery2.jpg')` }}
+            />
+            {/* グラデーションオーバーレイ */}
+            <div className="absolute inset-0 bg-gradient-to-r from-gray-900/85 via-gray-900/70 to-green-900/60" />
+
+            <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 px-10 py-14">
+              {/* 左：テキスト */}
+              <div className="text-center lg:text-left">
+                {/* バッジ */}
+                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/30 text-white/80 text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
+                  <Building2 size={12} />
+                  <span>{language === 'ja' ? 'Corporate Retreat' : 'Corporate Retreat'}</span>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+                  {language === 'ja'
+                    ? <>チームを、<span className="text-green-300">もっと遠くへ。</span></>
+                    : <>Take Your Team <span className="text-green-300">Further.</span></>
+                  }
+                </h2>
+                <p className="text-white/75 text-base md:text-lg leading-relaxed max-w-xl">
+                  {language === 'ja'
+                    ? '社員旅行・経営合宿・表彰旅行をセブで。非日常の環境が、チームに新たな視点と結束をもたらします。'
+                    : 'Team trips, strategy retreats, and award tours in Cebu. Step outside the ordinary and bring your team closer together.'
+                  }
+                </p>
+                {/* フィーチャーピル */}
+                <div className="flex flex-wrap justify-center lg:justify-start gap-2 mt-5">
+                  {(language === 'ja'
+                    ? ['社員旅行', '経営合宿', '表彰旅行', 'チームビルディング']
+                    : ['Team Trip', 'Strategy Retreat', 'Award Tour', 'Team Building']
+                  ).map((tag, i) => (
+                    <span
+                      key={i}
+                      className="bg-white/10 border border-white/25 text-white/80 text-xs px-3 py-1 rounded-full font-medium"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* 右：CTA */}
+              <div className="flex-shrink-0 text-center">
+                <Link
+                  to={`${baseUrl}/company-retreat`}
+                  className="group inline-flex items-center gap-3 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-400 hover:to-blue-400 text-white font-bold px-9 py-5 rounded-2xl text-lg shadow-xl transition-all duration-300 hover:shadow-green-500/40 hover:scale-105"
+                >
+                  <span>
+                    {language === 'ja' ? '企業リトリートはこちら' : 'View Corporate Retreat'}
+                  </span>
+                  <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform duration-200" />
+                </Link>
+                <p className="text-white/50 text-xs mt-3">
+                  {language === 'ja' ? '無料でご相談いただけます' : 'Free consultation available'}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CTA Section */}
       <section className="py-36 md:py-48 bg-gradient-to-r from-green-600 to-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
