@@ -178,12 +178,14 @@ const ContactFormModal: React.FC<ContactFormModalProps> = ({ isOpen, onClose }) 
   const retreatOptions = language === 'ja' ? [
     { value: '', label: '選択してください' },
     { value: 'general', label: '一般的なお問い合わせ' },
+    { value: 'corporate', label: '企業リトリート' },
     { value: 'Japan', label: '日本ツアー' },
     { value: 'Cebu', label: 'セブツアー' },
     { value: 'other', label: 'その他' }
   ] : [
     { value: '', label: 'Please select' },
     { value: 'general', label: 'General Inquiry' },
+    { value: 'corporate', label: 'Corporate Retreat' },
     { value: 'Japan', label: 'Japan Tours' },
     { value: 'Cebu', label: 'Cebu Tours' },
     { value: 'other', label: 'Other' }

@@ -12,9 +12,9 @@ const PHOTOS = {
   hero: '/company-retreat/hero.jpg',
 
   // 「選ばれる理由」セクション
-  reason1: '/company-retreat/reason1.jpg',    // セブ現地の深い知見
-  reason2: '/company-retreat/reason2.jpg',    // 多様な要望に応える設計力
-  reason3: '/company-retreat/reason3.jpg',    // 安心感のある現地サポート
+  reason1: '/company-retreat/reason1.jpg',    // セブ現地の深い知見（ヨガスタジオ）
+  reason2: '/company-retreat/gallery2.jpg',   // 多様な要望に応える設計力（ヨガクラス屋外）
+  reason3: '/company-retreat/gallery1.jpg',   // 安心感のある現地サポート（NGO子どもたち）
 
   // プラン紹介セクション
   plan1: '/company-retreat/plan-refresh.jpg', // 心と身体のリフレッシュプラン
@@ -29,12 +29,12 @@ const PHOTOS = {
 
   // ギャラリー（最大6枚）
   gallery: [
-    '/company-retreat/gallery1.jpg',
-    '/company-retreat/gallery2.jpg',
-    '/company-retreat/gallery3.jpg',
-    '/company-retreat/gallery4.jpg',
-    '/company-retreat/gallery5.jpg',
-    '/company-retreat/gallery6.jpg',
+    '/company-retreat/gallery5.jpg',   // 瞑想クラス（竹の建物）→ メイン大画像
+    '/company-retreat/gallery3.jpg',   // ボウル瞑想（夜景）
+    '/company-retreat/reason2.jpg',    // 農園・夕日
+    '/company-retreat/gallery6.jpg',   // グループ集合写真
+    '/company-retreat/gallery4.jpg',   // 子どもたち学習（NGO）
+    '/company-retreat/gallery1.jpg',   // 子どもたち（NGO活動）
   ],
 };
 
@@ -213,7 +213,7 @@ const CompanyRetreat: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 mb-8 justify-center">
             <button
               onClick={scrollToContact}
-              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold py-5 px-10 rounded-2xl text-xl shadow-2xl transition-all duration-300 hover:shadow-blue-500/40"
+              className="w-full sm:w-auto bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-500 hover:to-blue-500 active:from-green-700 active:to-blue-700 text-white font-bold py-5 px-10 rounded-2xl text-xl shadow-2xl transition-all duration-300 hover:shadow-green-500/40"
             >
               無料相談・お問い合わせ ↓
             </button>
@@ -538,9 +538,7 @@ const CompanyRetreat: React.FC = () => {
               リトリートの<span className="text-blue-600 font-medium">雰囲気</span>
             </h2>
             <div className="w-16 h-0.5 bg-blue-500 mx-auto mb-4" />
-            <p className="text-gray-400 text-sm">
-              ※ 写真は入れ替え可能です。public/company-retreat/ フォルダに画像を配置してください。
-            </p>
+
           </div>
 
           {/* Gallery Grid */}
