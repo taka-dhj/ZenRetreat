@@ -46,7 +46,7 @@ const FALLBACK = {
   reason3:  'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
   plan1:    'https://images.pexels.com/photos/1051838/pexels-photo-1051838.jpeg?auto=compress&cs=tinysrgb&w=800',
   plan2:    'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
-  plan3:    'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800',
+  plan3:    'https://images.pexels.com/photos/1709003/pexels-photo-1709003.jpeg?auto=compress&cs=tinysrgb&w=800',
   support:  'https://images.pexels.com/photos/1450360/pexels-photo-1450360.jpeg?auto=compress&cs=tinysrgb&w=800',
   director: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
   gallery: [
@@ -266,7 +266,7 @@ const CompanyRetreat: React.FC = () => {
               それがZEN RETREAT ASIAの考える海外リトリートです。
             </p>
             <p className="text-gray-500 text-base leading-relaxed">
-              海という非日常の環境に身を置くことで、社員同士の対話はより深まり、<br className="hidden sm:block" />
+              海外という非日常の環境に身を置くことで、社員同士の対話はより深まり、<br className="hidden sm:block" />
               日常の業務では見えにくい課題や可能性が見えてきます。
             </p>
           </div>
