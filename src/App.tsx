@@ -16,6 +16,7 @@ import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
 import Instructors from './pages/Instructors';
 import EiaSundayYoga from './pages/EiaSundayYoga';
+import CompanyRetreat from './pages/CompanyRetreat';
 
 // Google Analytics の型定義
 declare global {
@@ -96,6 +97,8 @@ function AppContent() {
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/ja/terms-of-service" element={<TermsOfService />} />
             <Route path="/eia" element={<EiaSundayYoga />} />
+            <Route path="/company-retreat" element={<CompanyRetreat />} />
+            <Route path="/ja/company-retreat" element={<CompanyRetreat />} />
           </Routes>
         </main>
         <Footer />
