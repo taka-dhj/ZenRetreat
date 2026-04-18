@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, ChevronUp, Mail, Phone, Users, Lightbulb, Shield, MapPin, CheckCircle, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronDown, ChevronUp, Users, Lightbulb, Shield, MapPin, CheckCircle, ArrowRight } from 'lucide-react';
+import ContactFormModal from '../components/ContactFormModal';
 
 // ============================================================
 // 📸 PHOTO CONFIGURATION
@@ -65,33 +66,13 @@ function imgSrc(local: string, fallback: string): string {
   return local || fallback;
 }
 
-const CONTACT_FORM_URL =
-  'https://docs.google.com/forms/d/e/1FAIpQLSfgLzMQmd0Jz5VunP3sh5NfbbghRGtVigKrHX2YtfWxkL2rBA/viewform?embedded=true';
-const CONTACT_FORM_DIRECT = 'https://forms.gle/mH7ur3Bqe78ReFxX7';
-
 // ============================================================
 const CompanyRetreat: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [formLoaded, setFormLoaded] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-  const formSectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsFormVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (formSectionRef.current) observer.observe(formSectionRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const scrollToContact = () => {
-    const el = document.getElementById('contact-form');
+    const el = document.getElementById('contact-section');
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
@@ -635,141 +616,31 @@ const CompanyRetreat: React.FC = () => {
         </div>
       </section>
 
-      {/* ======== CONTACT FORM ======== */}
+      {/* ======== CONTACT CTA ======== */}
       <section
-        id="contact-form"
-        ref={formSectionRef}
-        className="py-20 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 relative overflow-hidden"
+        id="contact-section"
+        className="py-24 bg-gradient-to-r from-green-600 to-blue-600 text-white"
       >
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: `url('${FALLBACK.hero}')` }}
-        />
-        <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-600 via-blue-400 to-blue-600" />
-
-        <div className="relative max-w-2xl mx-auto px-6">
-          <div className="text-center mb-10">
-            <span className="inline-block text-blue-300 text-xs tracking-widest font-semibold mb-4 uppercase">Contact</span>
-            <h2 className="text-4xl font-bold text-white mb-4 leading-tight">
-              お問い合わせ
-            </h2>
-            <p className="text-white/70 text-lg mb-3">
-              リトリートプランについてのご質問やご相談は、<br />
-              以下のフォームからお気軽にお問い合わせください。
-            </p>
-            <p className="text-blue-300 text-sm">
-              ✓ 所要時間：約2分　｜　✓ 無料でご相談いただけます
-            </p>
-          </div>
-
-          {/* Info pills */}
-          <div className="grid grid-cols-2 gap-3 mb-8">
-            {[
-              { icon: '🏝️', text: 'セブ島での企業リトリート' },
-              { icon: '👥', text: '5名様〜対応可能' },
-              { icon: '✏️', text: 'フルカスタマイズ対応' },
-              { icon: '🌐', text: '日本語で安心サポート' },
-            ].map((pill, i) => (
-              <div key={i} className="flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 px-4 py-3 rounded-xl text-sm">
-                <span className="text-lg">{pill.icon}</span>
-                <span className="font-medium">{pill.text}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Form card */}
-          <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-            {/* Top bar */}
-            <div className="bg-blue-600 px-5 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-base font-bold">✎</span>
-                </div>
-                <div>
-                  <div className="text-white font-bold text-sm leading-tight">企業リトリート お問い合わせフォーム</div>
-                  <div className="text-blue-100 text-xs mt-0.5">Discovery Hidden Japan</div>
-                </div>
-              </div>
-              <a
-                href={CONTACT_FORM_DIRECT}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs px-3 py-2 rounded-full transition-colors flex-shrink-0 ml-2"
-              >
-                <ExternalLink size={12} />
-                別タブ
-              </a>
-            </div>
-
-            {/* iframe */}
-            <div className="relative" style={{ minHeight: '700px' }}>
-              {!formLoaded && (
-                <div className="absolute inset-0 flex flex-col items-center justify-center bg-stone-50 z-10">
-                  <div className="w-14 h-14 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-5" />
-                  <p className="text-gray-500 text-base">フォームを読み込み中...</p>
-                </div>
-              )}
-              {isFormVisible && (
-                <iframe
-                  src={CONTACT_FORM_URL}
-                  title="企業リトリート お問い合わせフォーム"
-                  width="100%"
-                  height="700"
-                  frameBorder="0"
-                  marginHeight={0}
-                  marginWidth={0}
-                  className="block"
-                  onLoad={() => setFormLoaded(true)}
-                  style={{ opacity: formLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
-                >
-                  読み込んでいます…
-                </iframe>
-              )}
-            </div>
-
-            {/* Form footer */}
-            <div className="bg-stone-50 border-t border-stone-100 px-5 py-5">
-              <p className="text-gray-500 text-sm text-center mb-3">
-                フォームが表示されない場合はこちら
-              </p>
-              <a
-                href={CONTACT_FORM_DIRECT}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold py-4 px-6 rounded-xl text-base transition-all duration-300 w-full"
-              >
-                <ExternalLink size={18} />
-                フォームを直接開く
-              </a>
-            </div>
-          </div>
-
-          {/* Post-form contact */}
-          <div className="mt-10 text-center space-y-4">
-            <p className="text-white/60 text-sm">ご不明な点はお気軽にご連絡ください</p>
-            <a
-              href="mailto:info@zen-retreat-asia.com"
-              className="flex items-center justify-center gap-2 text-blue-300 hover:text-blue-200 transition-colors text-base"
-            >
-              <Mail size={18} />
-              info@zen-retreat-asia.com
-            </a>
-          </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl md:text-4xl font-light mb-6">
+            リトリートプランについてのご相談は<br className="hidden sm:block" />お気軽にどうぞ
+          </h2>
+          <p className="text-xl mb-8 opacity-90">
+            セブ在住の取締役が、御社に最適なプランをご提案します。
+          </p>
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center space-x-2 bg-white text-green-600 px-8 py-4 rounded-full hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg"
+          >
+            <span className="font-medium">お問い合わせ</span>
+            <ArrowRight size={20} />
+          </button>
         </div>
       </section>
 
-      {/* ======== FOOTER STRIP ======== */}
-      <section className="py-6 bg-blue-700">
-        <div className="max-w-2xl mx-auto px-6">
-          <div className="flex flex-col items-center gap-3 text-white text-center">
-            <div className="font-semibold text-base">Discovery Hidden Japan — セブ企業リトリート</div>
-            <a href="mailto:info@zen-retreat-asia.com" className="flex items-center gap-2 hover:text-blue-200 transition-colors text-sm">
-              <Mail size={15} />
-              info@zen-retreat-asia.com
-            </a>
-          </div>
-        </div>
-      </section>
+      <ContactFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+
 
     </div>
   );
