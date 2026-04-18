@@ -99,7 +99,7 @@ const CompanyRetreat: React.FC = () => {
     },
     {
       q: '日本語での対応は可能ですか？',
-      a: 'はい。取締役が日本語・英語・現地語に対応しており、日本からの企業様も安心してご参加いただけます。',
+      a: 'はい。取締役が日本語・英語に対応しており、日本からの企業様も安心してご参加いただけます。',
     },
   ];
 
@@ -179,7 +179,7 @@ const CompanyRetreat: React.FC = () => {
         <div className="relative z-10 text-center px-6 max-w-3xl mx-auto w-full">
           {/* Brand badge */}
           <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/30 text-white/90 px-5 py-2.5 rounded-full text-sm font-light tracking-wider mb-8">
-            <span className="text-blue-300 font-medium">Discovery Hidden Japan</span>
+            <span className="text-blue-300 font-medium">ZEN RETREAT ASIA</span>
             <span className="text-white/40">×</span>
             <span className="text-blue-200 font-medium">Cebu Retreat</span>
           </div>
@@ -229,8 +229,8 @@ const CompanyRetreat: React.FC = () => {
           <div className="bg-white/10 backdrop-blur-sm px-6 py-4 rounded-2xl border border-white/20 w-full max-w-lg mx-auto">
             <div className="flex justify-around gap-2">
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">8<span className="text-sm font-normal">年</span></div>
-                <div className="text-xs text-white/60">現地在住歴</div>
+                <div className="text-2xl font-bold text-white">2019<span className="text-sm font-normal">年〜</span></div>
+                <div className="text-xs text-white/60">セブ在住</div>
               </div>
               <div className="w-px bg-white/20" />
               <div className="text-center">
@@ -263,7 +263,7 @@ const CompanyRetreat: React.FC = () => {
             <div className="w-16 h-0.5 bg-blue-500 mx-auto mb-8" />
             <p className="text-gray-600 text-lg leading-relaxed mb-6">
               社員旅行を「ただの慰安」で終わらせず、組織の結束や視野の拡張につなげる。<br />
-              それがDHJの考える海外リトリートです。
+              それがZEN RETREAT ASIAの考える海外リトリートです。
             </p>
             <p className="text-gray-500 text-base leading-relaxed">
               海という非日常の環境に身を置くことで、社員同士の対話はより深まり、<br className="hidden sm:block" />
@@ -308,7 +308,7 @@ const CompanyRetreat: React.FC = () => {
           <div className="text-center mb-14">
             <span className="inline-block text-blue-600 text-xs tracking-widest font-semibold mb-4 uppercase">Why Choose Us</span>
             <h2 className="text-3xl sm:text-4xl font-light text-gray-800 mb-4">
-              DHJが<span className="text-blue-600 font-medium">選ばれる理由</span>
+              ZEN RETREAT ASIAが<span className="text-blue-600 font-medium">選ばれる理由</span>
             </h2>
             <div className="w-16 h-0.5 bg-blue-500 mx-auto mb-5" />
             <p className="text-gray-500 text-base">
@@ -438,7 +438,7 @@ const CompanyRetreat: React.FC = () => {
             {/* テキスト */}
             <div>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                Discovery Hidden Japanの取締役は、セブに<strong className="text-gray-800">8年間在住</strong>し、
+                ZEN RETREAT ASIAの取締役は、2019年よりセブに在住し、
                 現地NGO活動を通じて地域と深い関係を構築しています。<br /><br />
                 この経験と現地ネットワークを活かし、安全で快適、かつ意義あるリトリート体験を実現します。
               </p>
@@ -491,7 +491,7 @@ const CompanyRetreat: React.FC = () => {
                     />
                   </div>
                   <div className="absolute -bottom-2 -right-2 bg-white/20 backdrop-blur-sm text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg border border-white/30">
-                    セブ在住8年
+                    2019年よりセブに在住
                   </div>
                 </div>
               </div>
@@ -499,7 +499,7 @@ const CompanyRetreat: React.FC = () => {
               {/* プロフィール本文 */}
               <div className="lg:col-span-2">
                 <p className="text-white/90 text-lg leading-relaxed mb-6">
-                  セブ在住8年、現地NGO活動を通じて地域社会に貢献。
+                  2019年よりセブに在住し、現地NGO活動を通じて地域社会に貢献。
                   企業向けリトリートの企画・運営経験豊富。
                 </p>
                 <p className="text-white/80 text-base leading-relaxed mb-8">
@@ -509,9 +509,9 @@ const CompanyRetreat: React.FC = () => {
                 {/* バッジ群 */}
                 <div className="flex flex-wrap gap-3">
                   {[
-                    { icon: '🗓️', label: 'セブ在住8年' },
+                    { icon: '🗓️', label: '2019年よりセブに在住' },
                     { icon: '🤝', label: '現地NGO活動' },
-                    { icon: '🌏', label: '日本語・英語・現地語対応' },
+                    { icon: '🌏', label: '日本語・英語対応' },
                     { icon: '🏢', label: '企業リトリート実績多数' },
                   ].map((badge, i) => (
                     <div
