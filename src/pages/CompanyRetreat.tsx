@@ -438,7 +438,7 @@ const CompanyRetreat: React.FC = () => {
             {/* テキスト */}
             <div>
               <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                ZEN RETREAT ASIAの取締役は、2019年よりセブに在住し、
+                ZEN RETREAT ASIAの工程をコーディネートするDiscovery Hidden Japan株式会社取締役は、2019年よりセブに在住し、
                 現地NGO活動を通じて地域と深い関係を構築しています。<br /><br />
                 この経験と現地ネットワークを活かし、安全で快適、かつ意義あるリトリート体験を実現します。
               </p>
@@ -471,7 +471,7 @@ const CompanyRetreat: React.FC = () => {
           <div className="text-center mb-12">
             <span className="inline-block text-white/70 text-xs tracking-widest font-semibold mb-4 uppercase">Profile</span>
             <h2 className="text-3xl sm:text-4xl font-light text-white mb-4">
-              取締役<span className="text-white font-medium">プロフィール</span>
+              DHJ取締役<span className="text-white font-medium">プロフィール</span>
             </h2>
             <div className="w-16 h-0.5 bg-white/60 mx-auto" />
           </div>
